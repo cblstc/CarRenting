@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zuche.mapper.GarageMapper" >
+  <resultMap id="BaseResultMap" type="com.zuche.entity.Garage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="configuration_id" property="configurationId" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="TIMESTAMP" />
+    <result column="seats" property="seats" jdbcType="INTEGER" />
+    <result column="doors" property="doors" jdbcType="INTEGER" />
+    <result column="displacement" property="displacement" jdbcType="VARCHAR" />
+    <result column="navigator" property="navigator" jdbcType="INTEGER" />
+    <result column="pdc" property="pdc" jdbcType="INTEGER" />
+    <result column="drivenMode" property="drivenmode" jdbcType="INTEGER" />
+    <result column="fuelTankage" property="fueltankage" jdbcType="INTEGER" />
+    <result column="gearbox" property="gearbox" jdbcType="INTEGER" />
+    <result column="skylight" property="skylight" jdbcType="INTEGER" />
+    <result column="aircell" property="aircell" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zuche.entity.Garage" extends="BaseResultMap" >
+    <result column="carPhoto" property="carphoto" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, configuration_id, year, seats, doors, displacement, navigator, pdc, drivenMode, 
+    fuelTankage, gearbox, skylight, aircell
+  </sql>
+  <sql id="Blob_Column_List" >
+    carPhoto
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zuche.entity.GarageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from garage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.GarageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from garage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from garage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from garage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zuche.entity.GarageExample" >
+    delete from garage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zuche.entity.Garage" >
+    insert into garage (id, configuration_id, year, 
+      seats, doors, displacement, 
+      navigator, pdc, drivenMode, 
+      fuelTankage, gearbox, skylight, 
+      aircell, carPhoto)
+    values (#{id,jdbcType=INTEGER}, #{configurationId,jdbcType=INTEGER}, #{year,jdbcType=TIMESTAMP}, 
+      #{seats,jdbcType=INTEGER}, #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, 
+      #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
+      #{fueltankage,jdbcType=INTEGER}, #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, 
+      #{aircell,jdbcType=INTEGER}, #{carphoto,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zuche.entity.Garage" >
+    insert into garage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="configurationId != null" >
+        configuration_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="seats != null" >
+        seats,
+      </if>
+      <if test="doors != null" >
+        doors,
+      </if>
+      <if test="displacement != null" >
+        displacement,
+      </if>
+      <if test="navigator != null" >
+        navigator,
+      </if>
+      <if test="pdc != null" >
+        pdc,
+      </if>
+      <if test="drivenmode != null" >
+        drivenMode,
+      </if>
+      <if test="fueltankage != null" >
+        fuelTankage,
+      </if>
+      <if test="gearbox != null" >
+        gearbox,
+      </if>
+      <if test="skylight != null" >
+        skylight,
+      </if>
+      <if test="aircell != null" >
+        aircell,
+      </if>
+      <if test="carphoto != null" >
+        carPhoto,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="configurationId != null" >
+        #{configurationId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seats != null" >
+        #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="doors != null" >
+        #{doors,jdbcType=INTEGER},
+      </if>
+      <if test="displacement != null" >
+        #{displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="navigator != null" >
+        #{navigator,jdbcType=INTEGER},
+      </if>
+      <if test="pdc != null" >
+        #{pdc,jdbcType=INTEGER},
+      </if>
+      <if test="drivenmode != null" >
+        #{drivenmode,jdbcType=INTEGER},
+      </if>
+      <if test="fueltankage != null" >
+        #{fueltankage,jdbcType=INTEGER},
+      </if>
+      <if test="gearbox != null" >
+        #{gearbox,jdbcType=INTEGER},
+      </if>
+      <if test="skylight != null" >
+        #{skylight,jdbcType=INTEGER},
+      </if>
+      <if test="aircell != null" >
+        #{aircell,jdbcType=INTEGER},
+      </if>
+      <if test="carphoto != null" >
+        #{carphoto,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zuche.entity.GarageExample" resultType="java.lang.Integer" >
+    select count(*) from garage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update garage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.configurationId != null" >
+        configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.seats != null" >
+        seats = #{record.seats,jdbcType=INTEGER},
+      </if>
+      <if test="record.doors != null" >
+        doors = #{record.doors,jdbcType=INTEGER},
+      </if>
+      <if test="record.displacement != null" >
+        displacement = #{record.displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.navigator != null" >
+        navigator = #{record.navigator,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdc != null" >
+        pdc = #{record.pdc,jdbcType=INTEGER},
+      </if>
+      <if test="record.drivenmode != null" >
+        drivenMode = #{record.drivenmode,jdbcType=INTEGER},
+      </if>
+      <if test="record.fueltankage != null" >
+        fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
+      </if>
+      <if test="record.gearbox != null" >
+        gearbox = #{record.gearbox,jdbcType=INTEGER},
+      </if>
+      <if test="record.skylight != null" >
+        skylight = #{record.skylight,jdbcType=INTEGER},
+      </if>
+      <if test="record.aircell != null" >
+        aircell = #{record.aircell,jdbcType=INTEGER},
+      </if>
+      <if test="record.carphoto != null" >
+        carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update garage
+    set id = #{record.id,jdbcType=INTEGER},
+      configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      year = #{record.year,jdbcType=TIMESTAMP},
+      seats = #{record.seats,jdbcType=INTEGER},
+      doors = #{record.doors,jdbcType=INTEGER},
+      displacement = #{record.displacement,jdbcType=VARCHAR},
+      navigator = #{record.navigator,jdbcType=INTEGER},
+      pdc = #{record.pdc,jdbcType=INTEGER},
+      drivenMode = #{record.drivenmode,jdbcType=INTEGER},
+      fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
+      gearbox = #{record.gearbox,jdbcType=INTEGER},
+      skylight = #{record.skylight,jdbcType=INTEGER},
+      aircell = #{record.aircell,jdbcType=INTEGER},
+      carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update garage
+    set id = #{record.id,jdbcType=INTEGER},
+      configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      year = #{record.year,jdbcType=TIMESTAMP},
+      seats = #{record.seats,jdbcType=INTEGER},
+      doors = #{record.doors,jdbcType=INTEGER},
+      displacement = #{record.displacement,jdbcType=VARCHAR},
+      navigator = #{record.navigator,jdbcType=INTEGER},
+      pdc = #{record.pdc,jdbcType=INTEGER},
+      drivenMode = #{record.drivenmode,jdbcType=INTEGER},
+      fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
+      gearbox = #{record.gearbox,jdbcType=INTEGER},
+      skylight = #{record.skylight,jdbcType=INTEGER},
+      aircell = #{record.aircell,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zuche.entity.Garage" >
+    update garage
+    <set >
+      <if test="configurationId != null" >
+        configuration_id = #{configurationId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seats != null" >
+        seats = #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="doors != null" >
+        doors = #{doors,jdbcType=INTEGER},
+      </if>
+      <if test="displacement != null" >
+        displacement = #{displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="navigator != null" >
+        navigator = #{navigator,jdbcType=INTEGER},
+      </if>
+      <if test="pdc != null" >
+        pdc = #{pdc,jdbcType=INTEGER},
+      </if>
+      <if test="drivenmode != null" >
+        drivenMode = #{drivenmode,jdbcType=INTEGER},
+      </if>
+      <if test="fueltankage != null" >
+        fuelTankage = #{fueltankage,jdbcType=INTEGER},
+      </if>
+      <if test="gearbox != null" >
+        gearbox = #{gearbox,jdbcType=INTEGER},
+      </if>
+      <if test="skylight != null" >
+        skylight = #{skylight,jdbcType=INTEGER},
+      </if>
+      <if test="aircell != null" >
+        aircell = #{aircell,jdbcType=INTEGER},
+      </if>
+      <if test="carphoto != null" >
+        carPhoto = #{carphoto,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.Garage" >
+    update garage
+    set configuration_id = #{configurationId,jdbcType=INTEGER},
+      year = #{year,jdbcType=TIMESTAMP},
+      seats = #{seats,jdbcType=INTEGER},
+      doors = #{doors,jdbcType=INTEGER},
+      displacement = #{displacement,jdbcType=VARCHAR},
+      navigator = #{navigator,jdbcType=INTEGER},
+      pdc = #{pdc,jdbcType=INTEGER},
+      drivenMode = #{drivenmode,jdbcType=INTEGER},
+      fuelTankage = #{fueltankage,jdbcType=INTEGER},
+      gearbox = #{gearbox,jdbcType=INTEGER},
+      skylight = #{skylight,jdbcType=INTEGER},
+      aircell = #{aircell,jdbcType=INTEGER},
+      carPhoto = #{carphoto,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zuche.entity.Garage" >
+    update garage
+    set configuration_id = #{configurationId,jdbcType=INTEGER},
+      year = #{year,jdbcType=TIMESTAMP},
+      seats = #{seats,jdbcType=INTEGER},
+      doors = #{doors,jdbcType=INTEGER},
+      displacement = #{displacement,jdbcType=VARCHAR},
+      navigator = #{navigator,jdbcType=INTEGER},
+      pdc = #{pdc,jdbcType=INTEGER},
+      drivenMode = #{drivenmode,jdbcType=INTEGER},
+      fuelTankage = #{fueltankage,jdbcType=INTEGER},
+      gearbox = #{gearbox,jdbcType=INTEGER},
+      skylight = #{skylight,jdbcType=INTEGER},
+      aircell = #{aircell,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

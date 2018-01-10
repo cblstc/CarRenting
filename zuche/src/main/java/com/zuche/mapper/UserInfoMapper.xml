@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zuche.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zuche.entity.UserInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="idcard" property="idcard" jdbcType="CHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="idcardPhoto" property="idcardphoto" jdbcType="VARCHAR" />
+    <result column="licencePhoto" property="licencephoto" jdbcType="VARCHAR" />
+    <result column="licenceVicePhoto" property="licencevicephoto" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, name, sex, idcard, photo, idcardPhoto, licencePhoto, licenceVicePhoto
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zuche.entity.UserInfoExample" >
+    delete from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zuche.entity.UserInfo" >
+    insert into user_info (id, user_id, name, 
+      sex, idcard, photo, idcardPhoto, 
+      licencePhoto, licenceVicePhoto)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{idcard,jdbcType=CHAR}, #{photo,jdbcType=VARCHAR}, #{idcardphoto,jdbcType=VARCHAR}, 
+      #{licencephoto,jdbcType=VARCHAR}, #{licencevicephoto,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zuche.entity.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="idcardphoto != null" >
+        idcardPhoto,
+      </if>
+      <if test="licencephoto != null" >
+        licencePhoto,
+      </if>
+      <if test="licencevicephoto != null" >
+        licenceVicePhoto,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardphoto != null" >
+        #{idcardphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="licencephoto != null" >
+        #{licencephoto,jdbcType=VARCHAR},
+      </if>
+      <if test="licencevicephoto != null" >
+        #{licencevicephoto,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zuche.entity.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=CHAR},
+      </if>
+      <if test="record.photo != null" >
+        photo = #{record.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardphoto != null" >
+        idcardPhoto = #{record.idcardphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licencephoto != null" >
+        licencePhoto = #{record.licencephoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licencevicephoto != null" >
+        licenceVicePhoto = #{record.licencevicephoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_info
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      idcard = #{record.idcard,jdbcType=CHAR},
+      photo = #{record.photo,jdbcType=VARCHAR},
+      idcardPhoto = #{record.idcardphoto,jdbcType=VARCHAR},
+      licencePhoto = #{record.licencephoto,jdbcType=VARCHAR},
+      licenceVicePhoto = #{record.licencevicephoto,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zuche.entity.UserInfo" >
+    update user_info
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardphoto != null" >
+        idcardPhoto = #{idcardphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="licencephoto != null" >
+        licencePhoto = #{licencephoto,jdbcType=VARCHAR},
+      </if>
+      <if test="licencevicephoto != null" >
+        licenceVicePhoto = #{licencevicephoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zuche.entity.UserInfo" >
+    update user_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      idcard = #{idcard,jdbcType=CHAR},
+      photo = #{photo,jdbcType=VARCHAR},
+      idcardPhoto = #{idcardphoto,jdbcType=VARCHAR},
+      licencePhoto = #{licencephoto,jdbcType=VARCHAR},
+      licenceVicePhoto = #{licencevicephoto,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
