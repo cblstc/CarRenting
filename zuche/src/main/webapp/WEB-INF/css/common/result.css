@@ -1,0 +1,36 @@
+.main-content {
+    height: 560px;
+    overflow: hidden;
+    text-align: center;
+}
+.result-content {
+    width: 800px;
+    height: 200px;
+    /*border: 1px solid #dadada;*/
+    margin: 0 auto;
+    margin-top: 150px;
+}
+.result-content .title-content {
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.redirect-content {
+    padding: 5px;
+    font-size: 20px;
+}
+.redirect-content .login-link {
+    color: #002a80;
+    font-size: 24px;
+}
+
+.auto-content {
+    margin-top: 5px;
+    color: #6D6D6D;
+    font-size: 14px;
+}
+
+.auto-content .seconds-text {
+    font-size: 18px;
+}

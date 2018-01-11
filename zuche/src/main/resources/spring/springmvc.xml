@@ -39,4 +39,12 @@
 		</mvc:interceptor>
 	</mvc:interceptors> -->
 	
+	<!-- 拦截器配置 -->
+	<mvc:interceptors>
+        <!-- 配置Token拦截器，防止用户重复提交数据 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/><!--这个地方时你要拦截得路径 我这个意思是拦截所有得URL-->
+            <bean class="com.zuche.intercepter.TokenIntercepter"/>
+        </mvc:interceptor>
+	</mvc:interceptors>
 </beans>

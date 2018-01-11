@@ -60,4 +60,11 @@ public interface UserService {
 	 * @return
 	 */
 	User findUserByPhone(String phone);
+
+	/**
+	 * 根据用户名查询用户
+	 * @param username 用户名
+	 * @return
+	 */
+	User findUserByUsername(String username);
 }

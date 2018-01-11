@@ -4,8 +4,10 @@
   <resultMap id="BaseResultMap" type="com.zuche.entity.UserCar" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="configuration_id" property="configurationId" jdbcType="INTEGER" />
     <result column="plateNumber" property="platenumber" jdbcType="CHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="configuration" property="configuration" jdbcType="VARCHAR" />
     <result column="year" property="year" jdbcType="TIMESTAMP" />
     <result column="gearbox" property="gearbox" jdbcType="INTEGER" />
     <result column="displacement" property="displacement" jdbcType="VARCHAR" />
@@ -88,9 +90,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, configuration_id, plateNumber, year, gearbox, displacement, navigator, 
-    pdc, drivenMode, mileage, capacity, fuelTankage, description, price, disposit, ordertakingCount, 
-    sales, ordertakingRate, status, totalStar, totalComment, avgStar
+    id, user_id, plateNumber, brand, model, configuration, year, gearbox, displacement, 
+    navigator, pdc, drivenMode, mileage, capacity, fuelTankage, description, price, disposit, 
+    ordertakingCount, sales, ordertakingRate, status, totalStar, totalComment, avgStar
   </sql>
   <sql id="Blob_Column_List" >
     carPhoto
@@ -144,24 +146,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.UserCar" >
-    insert into user_car (id, user_id, configuration_id, 
-      plateNumber, year, gearbox, 
-      displacement, navigator, pdc, 
-      drivenMode, mileage, capacity, 
-      fuelTankage, description, price, 
-      disposit, ordertakingCount, sales, 
-      ordertakingRate, status, totalStar, 
-      totalComment, avgStar, carPhoto
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{configurationId,jdbcType=INTEGER}, 
-      #{platenumber,jdbcType=CHAR}, #{year,jdbcType=TIMESTAMP}, #{gearbox,jdbcType=INTEGER}, 
-      #{displacement,jdbcType=VARCHAR}, #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, 
-      #{drivenmode,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{capacity,jdbcType=INTEGER}, 
-      #{fueltankage,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
-      #{disposit,jdbcType=REAL}, #{ordertakingcount,jdbcType=INTEGER}, #{sales,jdbcType=INTEGER}, 
-      #{ordertakingrate,jdbcType=REAL}, #{status,jdbcType=INTEGER}, #{totalstar,jdbcType=INTEGER}, 
-      #{totalcomment,jdbcType=INTEGER}, #{avgstar,jdbcType=REAL}, #{carphoto,jdbcType=LONGVARCHAR}
-      )
+    insert into user_car (id, user_id, plateNumber, 
+      brand, model, configuration, 
+      year, gearbox, displacement, 
+      navigator, pdc, drivenMode, 
+      mileage, capacity, fuelTankage, 
+      description, price, disposit, 
+      ordertakingCount, sales, ordertakingRate, 
+      status, totalStar, totalComment, 
+      avgStar, carPhoto)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{platenumber,jdbcType=CHAR}, 
+      #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, 
+      #{year,jdbcType=TIMESTAMP}, #{gearbox,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, 
+      #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
+      #{mileage,jdbcType=INTEGER}, #{capacity,jdbcType=INTEGER}, #{fueltankage,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{disposit,jdbcType=REAL}, 
+      #{ordertakingcount,jdbcType=INTEGER}, #{sales,jdbcType=INTEGER}, #{ordertakingrate,jdbcType=REAL}, 
+      #{status,jdbcType=INTEGER}, #{totalstar,jdbcType=INTEGER}, #{totalcomment,jdbcType=INTEGER}, 
+      #{avgstar,jdbcType=REAL}, #{carphoto,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.UserCar" >
     insert into user_car
@@ -172,11 +174,17 @@
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="configurationId != null" >
-        configuration_id,
-      </if>
       <if test="platenumber != null" >
         plateNumber,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="configuration != null" >
+        configuration,
       </if>
       <if test="year != null" >
         year,
@@ -246,11 +254,17 @@
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="configurationId != null" >
-        #{configurationId,jdbcType=INTEGER},
-      </if>
       <if test="platenumber != null" >
         #{platenumber,jdbcType=CHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        #{configuration,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
         #{year,jdbcType=TIMESTAMP},
@@ -329,11 +343,17 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.configurationId != null" >
-        configuration_id = #{record.configurationId,jdbcType=INTEGER},
-      </if>
       <if test="record.platenumber != null" >
         plateNumber = #{record.platenumber,jdbcType=CHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configuration != null" >
+        configuration = #{record.configuration,jdbcType=VARCHAR},
       </if>
       <if test="record.year != null" >
         year = #{record.year,jdbcType=TIMESTAMP},
@@ -404,8 +424,10 @@
     update user_car
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      configuration_id = #{record.configurationId,jdbcType=INTEGER},
       plateNumber = #{record.platenumber,jdbcType=CHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      configuration = #{record.configuration,jdbcType=VARCHAR},
       year = #{record.year,jdbcType=TIMESTAMP},
       gearbox = #{record.gearbox,jdbcType=INTEGER},
       displacement = #{record.displacement,jdbcType=VARCHAR},
@@ -434,8 +456,10 @@
     update user_car
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      configuration_id = #{record.configurationId,jdbcType=INTEGER},
       plateNumber = #{record.platenumber,jdbcType=CHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      configuration = #{record.configuration,jdbcType=VARCHAR},
       year = #{record.year,jdbcType=TIMESTAMP},
       gearbox = #{record.gearbox,jdbcType=INTEGER},
       displacement = #{record.displacement,jdbcType=VARCHAR},
@@ -465,11 +489,17 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="configurationId != null" >
-        configuration_id = #{configurationId,jdbcType=INTEGER},
-      </if>
       <if test="platenumber != null" >
         plateNumber = #{platenumber,jdbcType=CHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        configuration = #{configuration,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
         year = #{year,jdbcType=TIMESTAMP},
@@ -537,8 +567,10 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.UserCar" >
     update user_car
     set user_id = #{userId,jdbcType=INTEGER},
-      configuration_id = #{configurationId,jdbcType=INTEGER},
       plateNumber = #{platenumber,jdbcType=CHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      configuration = #{configuration,jdbcType=VARCHAR},
       year = #{year,jdbcType=TIMESTAMP},
       gearbox = #{gearbox,jdbcType=INTEGER},
       displacement = #{displacement,jdbcType=VARCHAR},
@@ -564,8 +596,10 @@
   <update id="updateByPrimaryKey" parameterType="com.zuche.entity.UserCar" >
     update user_car
     set user_id = #{userId,jdbcType=INTEGER},
-      configuration_id = #{configurationId,jdbcType=INTEGER},
       plateNumber = #{platenumber,jdbcType=CHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      configuration = #{configuration,jdbcType=VARCHAR},
       year = #{year,jdbcType=TIMESTAMP},
       gearbox = #{gearbox,jdbcType=INTEGER},
       displacement = #{displacement,jdbcType=VARCHAR},

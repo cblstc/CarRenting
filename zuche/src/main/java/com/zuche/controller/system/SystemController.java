@@ -11,13 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zuche.entity.Brand;
-import com.zuche.entity.Configuration;
 import com.zuche.entity.User;
 import com.zuche.entity.UserCar;
-import com.zuche.service.system.BrandService;
-import com.zuche.service.system.ConfigurationService;
-import com.zuche.service.system.ModelService;
 
 /**
  * 系统管理controller
@@ -28,7 +23,7 @@ import com.zuche.service.system.ModelService;
 @RequestMapping("/system")
 public class SystemController {
 	
-	@Autowired
+	/*@Autowired
 	private BrandService brandService;
 	
 	@Autowired
@@ -38,13 +33,13 @@ public class SystemController {
 	private ConfigurationService configurationService;
 	
 	
-	/**
+	*//**
 	 * 页面跳转
 	 * @param page 跳转的页面
 	 * @param model
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping("/to{page}")
 	public String toPage(@PathVariable String page, Model model) throws Exception {
 		String result = null;
@@ -108,5 +103,5 @@ public class SystemController {
 		// 保存品牌
 		configurationService.saveConfiguration(configuration, method);
 		return "forward:/user/toIndex";
-	}
+	}*/
 }

@@ -36,9 +36,8 @@ public class CustomerController {
 		case "Index":
 			result = "index";
 			break;
-		case "CarList":
-			model.addAttribute("cars", userService.selectCars());
-			result = "customer/car";
+		case "MyCargo":
+			result = "user/improveAccount";
 			break;
 		default:
 			result = "errorPage";

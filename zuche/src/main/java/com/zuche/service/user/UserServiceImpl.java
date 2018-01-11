@@ -129,7 +129,20 @@ public class UserServiceImpl implements UserService {
 	public User findUserByPhone(String phone) {
 		UserExample userExample = new UserExample();
 		userExample.createCriteria().andPhoneEqualTo(phone);
-		List<User> users = userMapper.selectByExample(userExample);
+		List<User> existUsers = userMapper.selectByExample(userExample);
+		if (existUsers != null && existUsers.size() > 0)
+			return existUsers.get(0);
+		else 
+			return null;
+	}
+
+	/**
+	 * 根据用户名查询用户
+	 */
+	@Override
+	public User findUserByUsername(String username) {
+		UserExample userExample = new UserExample();
+		userExample.createCriteria().andUsernameEqualTo(username);
 		List<User> existUsers = userMapper.selectByExample(userExample);
 		if (existUsers != null && existUsers.size() > 0)
 			return existUsers.get(0);

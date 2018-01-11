@@ -6,101 +6,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>注册页面</title>
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css" type="text/css">
-<style type="text/css">
-.registBox {
-	width: 450px;
-	min-height: 420px;
-	margin: 0 auto;
-	margin-top: 130px;
-}
-.heading {
-	text-align: center;
-	font-size: 30px;
-	font-weight: bold;
-	margin-bottom: 20px;
-	color: #28a3ff;
-}
-.password, .vCode, .registBtn {
-	width: 350px;
-	height: 40px;
-	margin: 0 auto;
-	display: block;
-}
-.phone {
-	width: 250px;
-	height: 40px;
-	margin-left: 65px;
-	display: inline-block;
-}
-.vCodeBtn {
-	width: 100px;
-	height: 40px;
-	display: inline-block;
-}
-.phoneError, .passwordError, .vCodeError, .registError {
-	display: block;
-	margin-left: 70px;
-	color: red;
-	font-size: 15px;
-}
-.registBtn, .registBtn:hover, .registBtn:visited, .registBtn:active {
-	/* background: #4cd96f; */
-	background: #c9ffb3;
-	border: 0;
-	color: white;
-	border-radius: 5px;
-}
-.loginLink {
-	display: block;
-	margin-top: 10px;
-	color: #2395ff;
-	float: left;
-	margin-left: 65px;
-}
-a:hover {
-	text-decoration: none;
-	color: #2395ff;
-} 
-</style>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.2.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-theme.min.css">
+
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/regist.css" type="text/css">
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
-	<div class="container">
-		<div class="registBox">
-			<form action="${pageContext.request.contextPath }/user/regist" class="form-horizontal" method="post">
-				<div class="heading">用户注册</div>
-				<div>
-				<div class="form-group">
-					<input type="text" class="form-control phone" name="phone" oninput="judgePhone();" placeholder="手机号" maxlength="11">
-					<button class="btn btn-info vCodeBtn" type="button" style="width: 100px;" disabled="disabled" onclick="sendVCode();">发送验证码</button>
-					<span class="phoneError"></span>
-				</div>
-				
-				<div class="form-group help">
-					<input class="form-control vCode" name="vCode" placeholder="验证码" maxlength="6"> 
-					<span class="vCodeError"></span>
-					<span class="registError">${registError }</span>
-				</div>
-				</div>
-				
-				<div class="form-group help">
-					<input type="password" class="form-control password" readonly="readonly" oninput="judgePassword();" name="password" placeholder="3-12位的密码" maxlength="12"> 
-					<span class="passwordError"></span>
-				</div>
-				
-				<div class="form-group">
-					<input type="submit" class="registBtn" disabled="disabled" value="注册" /> 
-					<a class="loginLink" href="<%=basePath%>user/toLogin"><span>已有账号？前往</span>登录</a> 
-				</div>
-			</form>
-		</div>
-	</div>
-	<script type="text/javascript">
+<!--头部-->
+<jsp:include page="../common/public-header.jsp"></jsp:include>
+
+<div class="main-content">
+    <div class="registBox">
+        <form action="${pageContext.request.contextPath }/user/regist" class="form-horizontal" method="post">
+            <div class="heading">用户注册</div>
+            <input type="hidden" name="token" value="${token}" />
+            <div>
+                <div class="form-group">
+                    <input type="text" class="form-control phone" name="phone" oninput="judgePhone();" placeholder="手机号" maxlength="11"><!--
+                     --><button class="btn btn-info vCodeBtn" type="button" disabled="disabled" onclick="sendVCode();">发送验证码</button>
+                    <span class="phoneError"></span>
+                </div>
+
+                <div class="form-group help">
+                    <input class="form-control vCode" name="vCode" placeholder="验证码" maxlength="6">
+                    <span class="vCodeError"></span>
+                    <span class="registError">${registError }</span>
+                </div>
+            </div>
+
+            <div class="form-group help">
+                <input type="password" class="form-control password" readonly="readonly" oninput="judgePassword();" name="password" placeholder="3-12位的密码" maxlength="12">
+                <span class="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="registBtn" disabled="disabled" value="注册" />
+                <a class="loginLink" href="${pageContext.request.contextPath }/user/toLogin"><span>已有账号？前往</span>登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+<!--尾部-->
+<jsp:include page="../common/public-footer.jsp"></jsp:include>
+
+<script type="text/javascript">
 	// 判断是否是电话
 	function judgePhone() {
 		var reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
@@ -116,10 +74,16 @@ a:hover {
 	function judgePassword() {
 		var password = $(".password").val();
 		if (password.length >= 3 && password.length <= 12) {
-			$(".registBtn").css("background", "#4cd96f");
+			$(".registBtn").css("opacity", "1");
 			$(".registBtn").removeAttr("disabled");
+			$(".registBtn").mouseover(function() {
+				$(".registBtn").css("background", "#FF8650");
+			});
+			$(".registBtn").mouseout(function() {
+				$(".registBtn").css("background", "#F9CA34");
+			});
 		} else {
-			$(".registBtn").css("background", "#c9ffb3");
+			$(".registBtn").css("opacity", "0.5");
 			$(".registBtn").attr("disabled","disabled");
 		}
 	}
@@ -138,10 +102,10 @@ a:hover {
 			},
 			success: function(result) {
 				if (result == "1") {
-					$(".registError").text("");
+					$(".phoneError").text("");
 					flag = true;
 				} else {
-					$(".registError").text("手机号已被注册");
+					$(".phoneError").text("手机号已被注册");
 					flag = false;
 				}
 			}
@@ -158,7 +122,7 @@ a:hover {
     				"phone": phone
     			},
     			success: function(result) {
-    				alert(result);
+    				alert("测试用验证码：" + result);
     				var vCode = result;
     				$(".vCode").bind("input", function() {
     					// 如果相同，那么按钮可点击
@@ -193,3 +157,4 @@ a:hover {
 	</script>
 </body>
 </html>
+

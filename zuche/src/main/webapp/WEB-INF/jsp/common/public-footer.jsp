@@ -1,0 +1,22 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公共尾部</title>
+</head>
+<body>
+    <div class="public-footer">
+    <div class="public-container">
+        <div class="copyright-text">Copyright©2008-2018 www.cargo.com All Rights Reserved. Cargo汽车租赁有限公司 粤ICP备10005002号 粤公网安备号 11010502026705</div>
+    </div>
+</div>
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/reset.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/common.css">
+</body>
+</html>

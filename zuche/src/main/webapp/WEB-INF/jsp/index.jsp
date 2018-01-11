@@ -6,34 +6,97 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/css/menu.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/css/zTreeStyle.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css" type="text/css">
-	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.ztree.core.js"></script> --%>
-	<script type="text/javascript">
-	</script>
-	<style type="text/css">
-	</style>
- </head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-theme.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-datetimepicker.min.css">
 
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/index.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/bootstrap-datetimepicker.min.js"></script>
+</head>
 <body>
-	<c:if test="${user == null }">
-		<a href="${pageContext.request.contextPath }/user/toRegist">注册</a> | 
-		<a href="${pageContext.request.contextPath }/user/toLogin">登录</a>
-	</c:if>
-	<c:if test="${user != null }">
-		<span>${user.phone }</span> | 
-		<a href="${pageContext.request.contextPath }/user/toEditInfo">完善信息</a> | 
-		<a href="${pageContext.request.contextPath }/user/toMyCar">我的车辆</a> | 
-		<a href="${pageContext.request.contextPath }/toCarList">我要预定</a> | 
-		<a href="${pageContext.request.contextPath }/user/logout">退出登录</a>
-	</c:if>
+    <!--头部-->
+	<jsp:include page="common/public-header.jsp"></jsp:include>
+
+    <div class="index-carousel">
+        <div class="index-carousel-bg">
+        </div>
+        <div class="index-choice">
+            <div class="choice-nav clearfloat">
+                <div class="nav-common nav-random left-float"><p class="nav-text">上门取送</p></div>
+                <div class="nav-common nav-specify left-float"><p class="nav-text">到店取还</p></div>
+                <div class="nav-common nav-discount left-float"><p class="nav-text">特价优惠</p></div>
+            </div>
+            <div class="choice-address">
+                <div class="choice-address-block"><span class="address-text get-address-text">取车</span><input readonly class="address-choice" placeholder="请输入送车上门地址"></div>
+                <div class="choice-address-block"><span class="address-text return-address-text">还车</span><input readonly class="address-choice" placeholder="请输入上门取车地址"></div>
+            </div>
+            <div class="choice-date">
+                <span class="date-text">租期</span><input readonly placeholder="请选择开始日期" class="date-choice" type="text">
+                <!--<span class="date-to-bg"></span>-->
+                <img src="${pageContext.request.contextPath}/images/dateTo.png" alt="至">
+                <input readonly  placeholder="请选择结束日期" class="date-choice return-date-choice" type="text">
+            </div>
+            <input type="submit" class="choice-btn" value="立即选车">
+        </div>
+    </div>
+
+    <div class="index-tab">
+        <table class="public-container index-tab-box">
+            <tr>
+                <td><div class="index-tab-common"><img class="tab-img-common" src="${pageContext.request.contextPath}/images/tab-model.png"></div></td>
+                <td><div class="index-tab-common"><img class="tab-img-common" src="${pageContext.request.contextPath}/images/tab-store.png"></div></td>
+                <td><div class="index-tab-common"><img class="tab-img-common" src="${pageContext.request.contextPath}/images/tab-insurance.png"></div></td>
+                <td><div class="index-tab-common index-tab-infinite"><img class="tab-img-common" src="${pageContext.request.contextPath}/images/tab-infinite.png"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="index-content">
+        <div class="public-container index-content-box">
+            <div class="choice-common">
+                <p class="choice-title">短租自驾</p>
+                <div class="choice-img-common choice-img-1"></div>
+                <p class="choice-desc">24小时轻松取 / 还车</p>
+                <button class="choice-btn">我要租车</button>
+            </div><!--
+             --><div class="choice-common">
+                <p class="choice-title">短租自驾</p>
+                <div class="choice-img-common choice-img-2"></div>
+                <p class="choice-desc">24小时轻松取 / 还车</p>
+                <button class="choice-btn">我要租车</button>
+            </div><!--
+            --><div class="choice-common">
+                <p class="choice-title">短租自驾</p>
+                <div class="choice-img-common choice-img-3"></div>
+                <p class="choice-desc">24小时轻松取 / 还车</p>
+                <button class="choice-btn">我要租车</button>
+            </div><!--
+            --><div class="choice-common choice-final">
+                <p class="choice-title">短租自驾</p>
+                <div class="choice-img-common choice-img-4"></div>
+                <p class="choice-desc">24小时轻松取 / 还车</p>
+                <button class="choice-btn">我要租车</button>
+            </div><!--
+            -->
+        </div>
+
+    </div>
+
+    <!--尾部-->
+	<jsp:include page="common/public-footer.jsp"></jsp:include>
+
+    <script>
+        $('.date-choice').datetimepicker({
+            autoclose: true,
+            startDate: new Date()
+        });
+    </script>
 </body>
-</html>
+</html>ss
 
