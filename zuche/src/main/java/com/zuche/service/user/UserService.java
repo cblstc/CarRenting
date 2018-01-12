@@ -67,4 +67,19 @@ public interface UserService {
 	 * @return
 	 */
 	User findUserByUsername(String username);
+
+	/**
+	 * 根据字段查询用户
+	 * @param fieldValue 字段值
+	 * @param fieldName 字段名
+	 * @return
+	 */
+	User findUserByField(String fieldValue, String fieldName);
+
+	/**
+	 * 更新用户
+	 * @param user
+	 */
+	void updateUser(User user);
+
 }

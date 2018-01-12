@@ -58,6 +58,18 @@
     margin-left: 10px;
 }
 
+.right-content .content-input-box .content-btn {
+	background: #fabe00;
+    color: #fff;
+    border: 0;
+    padding: 5px 10px;
+    border-radius: 5%;
+}
+
+.right-content .content-input-box .content-btn:hover {
+	background: #FF8650;
+}
+
 /*弹出框*/
 .dialog-content {
     width: 480px;
@@ -104,7 +116,7 @@
     margin-left: 100px;
 }
 
-.dialog-content .vCode-input {
+.dialog-content .phone-input {
     width: 200px;
     height: 38px;
     border: 1px solid #e9ebee;
@@ -123,4 +135,5 @@
     border-radius: 2%;
     margin-left: 10px;
     background: #6ab0ff;
+    opacity: 0.5;
 }

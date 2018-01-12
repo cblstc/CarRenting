@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zuche.entity.UserCar;
+import com.zuche.intercepter.Token;
 import com.zuche.service.user.UserService;
 
 /**
@@ -28,6 +29,7 @@ public class CustomerController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/to{page}")
+	@Token(save=true)
 	public String toPage(@PathVariable String page, Model model) throws Exception {
 		
 		String result = null;

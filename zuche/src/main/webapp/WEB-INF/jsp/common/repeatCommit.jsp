@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>重复提交</title>
+    <title>非法操作</title>
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/bootstrap.min.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/bootstrap-theme.min.css">
 
@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="result-content">
             <div class="title-content">
                 <img class="title-img" src="${pageContext.request.contextPath }/images/common/warn.png">
-                <span class="title-text">请不要重复刷新！</span>
+                <span class="title-text">非法操作！</span>
             </div>
         </div>
     </div>

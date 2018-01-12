@@ -149,5 +149,37 @@ public class UserServiceImpl implements UserService {
 		else 
 			return null;
 	}
+
+	/**
+	 * 根据字段查询用户
+	 */
+	@Override
+	public User findUserByField(String fieldValue, String fieldName) {
+		UserExample userExample = new UserExample();
+		Criteria criteria = userExample.createCriteria();
+		
+		if (fieldName.equals("username")) {
+			criteria.andUsernameEqualTo(fieldValue);
+		} else if (fieldName.equals("phone")) {
+			criteria.andPhoneEqualTo(fieldValue);
+		} else if (fieldName.equals("email")) {
+			criteria.andEmailEqualTo(fieldValue);
+		}
+		
+		List<User> existUsers = userMapper.selectByExample(userExample);
+		if (existUsers != null && existUsers.size() > 0)
+			return existUsers.get(0);
+		else
+			return null;
+	}
+
+	/**
+	 * 更新用户
+	 */
+	@Override
+	public void updateUser(User user) {
+		userMapper.updateByPrimaryKey(user);
+	}
+
 	
 }

@@ -67,7 +67,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		} else {
 			$(".vCodeBtn").attr("disabled","disabled");
 		}
-		
 	}
 	
 	// 判断密码是否合法
@@ -95,17 +94,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	// 手机唯一性校验
 		$.ajax({
 			type: "POST",
-			url: "${pageContext.request.contextPath }/user/phoneValidate",
+			url: "${pageContext.request.contextPath }/user/fieldValidate",
 			async: false,
 			data: {
 				"phone": phone
 			},
 			success: function(result) {
-				if (result == "1") {
+				if (result == null) {
+					// 手机号可以用
 					$(".phoneError").text("");
 					flag = true;
 				} else {
-					$(".phoneError").text("手机号已被注册");
+					// 手机号已经存在
+					$(".phoneError").text("手机号已经存在");
 					flag = false;
 				}
 			}

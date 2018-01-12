@@ -80,7 +80,7 @@ public class UserController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping("/phoneValidate")
+	/*@RequestMapping("/phoneValidate")
 	public void phoneValidate(String phone, HttpServletResponse response) throws Exception {
 		// 电话唯一性判断
 		User existUser = userService.findUserByPhone(phone);
@@ -88,7 +88,7 @@ public class UserController {
 			response.getWriter().print("1");  // 电话可以使用
 		else
 			response.getWriter().print("2");  // 电话已经被注册
-	}
+	}*/
 	
 	/**
 	 * 登录
@@ -115,18 +115,47 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="/saveInfo", method=RequestMethod.POST)
-	public void saveInfo(String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/**
+	 * 字段校验
+	 * @param username 用户名
+	 * @param phone 手机
+	 * @param email 邮箱
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/fieldValidate", method=RequestMethod.POST)
+	public void fieldValidate(String username, String phone, String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json; charset=utf-8");
-		if (username == null || username.trim().equals("")) {
-//			response.getWriter().print();
-		} else {
-			User existUser = userService.findUserByUsername(username);
-			System.out.println(username);
-			response.getWriter().print(JSON.toJSON(existUser));
+		User existUser = null;
+		if (username != null && !username.trim().equals("")) {
+			existUser = userService.findUserByField(username, "username");
+		} else if (phone != null && !phone.trim().equals("")) {
+			existUser = userService.findUserByField(phone, "phone");
+		} else if (email != null && !email.trim().equals("")) {
+			existUser = userService.findUserByField(email, "email");
 		}
+		response.getWriter().print(JSON.toJSON(existUser));
 	}
 	
+	@RequestMapping(value="/saveField", method=RequestMethod.POST)
+	@Token(remove=true)
+	public String saveField(String username, String phone, String email, HttpServletRequest request) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		
+		if (username != null && !username.trim().equals("")) {
+			user.setUsername(username);
+		} else if (phone != null && !phone.trim().equals("")) {
+			user.setPhone(phone);
+		} else if (email != null && !email.trim().equals("")) {
+			user.setEmail(email);
+		}
+		
+		userService.updateUser(user);  // 更新用户
+		
+		request.getSession().setAttribute("user", user);
+		return "redirect:/toMyCargo";
+	}
 	
 	/**
 	 * 完善信息
