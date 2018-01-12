@@ -3,7 +3,9 @@
 <mapper namespace="com.zuche.mapper.GarageMapper" >
   <resultMap id="BaseResultMap" type="com.zuche.entity.Garage" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="configuration_id" property="configurationId" jdbcType="INTEGER" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="configuration" property="configuration" jdbcType="VARCHAR" />
     <result column="year" property="year" jdbcType="TIMESTAMP" />
     <result column="seats" property="seats" jdbcType="INTEGER" />
     <result column="doors" property="doors" jdbcType="INTEGER" />
@@ -78,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, configuration_id, year, seats, doors, displacement, navigator, pdc, drivenMode, 
-    fuelTankage, gearbox, skylight, aircell
+    id, brand, model, configuration, year, seats, doors, displacement, navigator, pdc, 
+    drivenMode, fuelTankage, gearbox, skylight, aircell
   </sql>
   <sql id="Blob_Column_List" >
     carPhoto
@@ -133,16 +135,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.Garage" >
-    insert into garage (id, configuration_id, year, 
-      seats, doors, displacement, 
-      navigator, pdc, drivenMode, 
-      fuelTankage, gearbox, skylight, 
-      aircell, carPhoto)
-    values (#{id,jdbcType=INTEGER}, #{configurationId,jdbcType=INTEGER}, #{year,jdbcType=TIMESTAMP}, 
-      #{seats,jdbcType=INTEGER}, #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, 
-      #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
-      #{fueltankage,jdbcType=INTEGER}, #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, 
-      #{aircell,jdbcType=INTEGER}, #{carphoto,jdbcType=LONGVARCHAR})
+    insert into garage (id, brand, model, 
+      configuration, year, seats, 
+      doors, displacement, navigator, 
+      pdc, drivenMode, fuelTankage, 
+      gearbox, skylight, aircell, 
+      carPhoto)
+    values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{configuration,jdbcType=VARCHAR}, #{year,jdbcType=TIMESTAMP}, #{seats,jdbcType=INTEGER}, 
+      #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, #{navigator,jdbcType=INTEGER}, 
+      #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, #{fueltankage,jdbcType=INTEGER}, 
+      #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, #{aircell,jdbcType=INTEGER}, 
+      #{carphoto,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.Garage" >
     insert into garage
@@ -150,8 +154,14 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="configurationId != null" >
-        configuration_id,
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="configuration != null" >
+        configuration,
       </if>
       <if test="year != null" >
         year,
@@ -194,8 +204,14 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="configurationId != null" >
-        #{configurationId,jdbcType=INTEGER},
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        #{configuration,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
         #{year,jdbcType=TIMESTAMP},
@@ -247,8 +263,14 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.configurationId != null" >
-        configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configuration != null" >
+        configuration = #{record.configuration,jdbcType=VARCHAR},
       </if>
       <if test="record.year != null" >
         year = #{record.year,jdbcType=TIMESTAMP},
@@ -294,7 +316,9 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update garage
     set id = #{record.id,jdbcType=INTEGER},
-      configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      configuration = #{record.configuration,jdbcType=VARCHAR},
       year = #{record.year,jdbcType=TIMESTAMP},
       seats = #{record.seats,jdbcType=INTEGER},
       doors = #{record.doors,jdbcType=INTEGER},
@@ -314,7 +338,9 @@
   <update id="updateByExample" parameterType="map" >
     update garage
     set id = #{record.id,jdbcType=INTEGER},
-      configuration_id = #{record.configurationId,jdbcType=INTEGER},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      configuration = #{record.configuration,jdbcType=VARCHAR},
       year = #{record.year,jdbcType=TIMESTAMP},
       seats = #{record.seats,jdbcType=INTEGER},
       doors = #{record.doors,jdbcType=INTEGER},
@@ -333,8 +359,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zuche.entity.Garage" >
     update garage
     <set >
-      <if test="configurationId != null" >
-        configuration_id = #{configurationId,jdbcType=INTEGER},
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        configuration = #{configuration,jdbcType=VARCHAR},
       </if>
       <if test="year != null" >
         year = #{year,jdbcType=TIMESTAMP},
@@ -377,7 +409,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.Garage" >
     update garage
-    set configuration_id = #{configurationId,jdbcType=INTEGER},
+    set brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      configuration = #{configuration,jdbcType=VARCHAR},
       year = #{year,jdbcType=TIMESTAMP},
       seats = #{seats,jdbcType=INTEGER},
       doors = #{doors,jdbcType=INTEGER},
@@ -394,7 +428,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zuche.entity.Garage" >
     update garage
-    set configuration_id = #{configurationId,jdbcType=INTEGER},
+    set brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      configuration = #{configuration,jdbcType=VARCHAR},
       year = #{year,jdbcType=TIMESTAMP},
       seats = #{seats,jdbcType=INTEGER},
       doors = #{doors,jdbcType=INTEGER},

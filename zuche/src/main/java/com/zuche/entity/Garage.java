@@ -5,7 +5,11 @@ import java.util.Date;
 public class Garage {
     private Integer id;
 
-    private Integer configurationId;
+    private String brand;
+
+    private String model;
+
+    private String configuration;
 
     private Date year;
 
@@ -39,12 +43,28 @@ public class Garage {
         this.id = id;
     }
 
-    public Integer getConfigurationId() {
-        return configurationId;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setConfigurationId(Integer configurationId) {
-        this.configurationId = configurationId;
+    public void setBrand(String brand) {
+        this.brand = brand == null ? null : brand.trim();
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration == null ? null : configuration.trim();
     }
 
     public Date getYear() {

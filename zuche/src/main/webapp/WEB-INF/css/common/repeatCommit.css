@@ -1,0 +1,17 @@
+.main-content {
+    height: 560px;
+    overflow: hidden;
+    text-align: center;
+}
+.result-content {
+    width: 800px;
+    height: 200px;
+    /*border: 1px solid #dadada;*/
+    margin: 0 auto;
+    margin-top: 150px;
+}
+.result-content .title-content {
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+}

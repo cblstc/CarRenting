@@ -2,18 +2,19 @@ package com.zuche.entity;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class UserCar {
     private Integer id;
 
     private Integer userId;
 
-    private Integer configurationId;
-
     private String platenumber;
 
-    @DateTimeFormat(pattern="yyyy")
+    private String brand;
+
+    private String model;
+
+    private String configuration;
+
     private Date year;
 
     private Integer gearbox;
@@ -70,20 +71,36 @@ public class UserCar {
         this.userId = userId;
     }
 
-    public Integer getConfigurationId() {
-        return configurationId;
-    }
-
-    public void setConfigurationId(Integer configurationId) {
-        this.configurationId = configurationId;
-    }
-
     public String getPlatenumber() {
         return platenumber;
     }
 
     public void setPlatenumber(String platenumber) {
         this.platenumber = platenumber == null ? null : platenumber.trim();
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand == null ? null : brand.trim();
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration == null ? null : configuration.trim();
     }
 
     public Date getYear() {
