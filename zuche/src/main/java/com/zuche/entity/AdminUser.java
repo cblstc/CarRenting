@@ -1,7 +1,14 @@
 package com.zuche.entity;
 
-public class AdminUser {
-    private Integer id;
+import java.io.Serializable;
+
+public class AdminUser implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4846378097715226706L;
+
+	private Integer id;
 
     private String username;
 

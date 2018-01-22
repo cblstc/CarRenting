@@ -7,7 +7,7 @@
     width: 922px;
     background: #fff;
     margin: 20px 10px 20px 10px;
-    padding: 25px;
+    padding: 20px;
 }
 
 .right-content .content-title {
@@ -154,4 +154,42 @@
 /*右下图片上传*/
 .right-content-second {
     margin-top: 0;
+}
+
+/*图片上传样式*/
+.right-content .content-input-box .fileinput-button {
+	width: 48px;
+    height: 30px;
+	display: inline-block;
+    background: #fabe00;
+    line-height: 30px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    border: 0;
+    border-radius: 5%;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.right-content .content-input-box .fileinput-button:hover {
+    background: #FF8650;
+}
+.right-content .content-input-box .content-blank {
+	display: inline-block;
+	margin-right: 85px;
+}
+.right-content .content-input-box .preview-box {
+	position: relative; display: inline-block;
+}
+.right-content .content-input-box .preview {
+	width: 200px; 
+	height: 100px; 
+	margin-right: 10px;
+	border: 0;
+}
+.right-content .content-input-box .spinner-loader {
+	position: absolute; 
+	top: 25px; 
+	left: 78px;
+	display: none;
 }

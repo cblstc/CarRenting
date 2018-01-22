@@ -1,10 +1,16 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationExample {
-    protected String orderByClause;
+public class LocationExample implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6875009910935549074L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 

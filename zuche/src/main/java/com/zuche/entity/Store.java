@@ -1,9 +1,15 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Store {
-    private Integer id;
+public class Store implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7165354544675400315L;
+
+	private Integer id;
 
     private String username;
 

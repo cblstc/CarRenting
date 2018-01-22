@@ -14,6 +14,7 @@ import com.zuche.entity.UserInfoExample;
 import com.zuche.mapper.UserCarMapper;
 import com.zuche.mapper.UserInfoMapper;
 import com.zuche.mapper.UserMapper;
+import com.zuche.utils.MD5Utils;
 
 /**
  * 用户Service实现类
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void saveUser(User user) {
 		user.setStatus(1);  // 设置可用
+		user.setPassword(MD5Utils.getMD5Str(user.getPassword()));
 		userMapper.insert(user);
 	}
 
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
 			criteria.andEmailEqualTo(user.getEmail()); // 校验邮箱
 		
 		// 校验密码
-		criteria.andPasswordEqualTo(user.getPassword());
+		criteria.andPasswordEqualTo(MD5Utils.getMD5Str(user.getPassword()));
 		
 		List<User> existUsers = userMapper.selectByExample(userExample);
 		if (existUsers != null && existUsers.size() > 0)
@@ -178,6 +180,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void updateUser(User user) {
+		user.setPassword(MD5Utils.getMD5Str(user.getPassword()));
 		userMapper.updateByPrimaryKey(user);
 	}
 

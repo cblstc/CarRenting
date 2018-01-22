@@ -1,9 +1,15 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Garage {
-    private Integer id;
+public class Garage implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -160267081461511716L;
+
+	private Integer id;
 
     private String brand;
 

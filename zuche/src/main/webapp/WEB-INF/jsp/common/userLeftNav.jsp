@@ -28,11 +28,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text">出租</dd></a>
             <dt class="nav-title">我的车辆</dt>
             <dt class="nav-title">我的账户</dt>
-            <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text improve-text">登录信息完善</dd></a>
-            <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text auth-text">身份认证</dd></a>
-            <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text">修改密码</dd></a>
+            <a href="${pageContext.request.contextPath }/user/toImproveAccount"><dd class="nav-text improve-text">登录信息完善</dd></a>
+            <a href="${pageContext.request.contextPath }/user/toAuthenticationAccount"><dd class="nav-text auth-text">身份认证</dd></a>
+            <dt class="nav-title">我的消息</dt>
+            <dt class="nav-title">我的消息</dt>
+            <dt class="nav-title">我的消息</dt>
+            <dt class="nav-title">我的消息</dt>
+            
             <dt class="nav-title">我的消息</dt>
         </dl>
     </div>
+    
+    <script type="text/javascript">
+    /**
+     * 切换nav
+     * @param link 链接
+     */
+    /* function changeNav(link) {
+        var dd = $(link).find("dd").get(0);
+        $(".nav-text").removeClass("active");
+        $(dd).addClass("active"); // 点击变色
+    } */
+    </script>
 </body>
 </html>

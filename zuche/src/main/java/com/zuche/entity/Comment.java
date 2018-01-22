@@ -1,9 +1,15 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
-    private Integer id;
+public class Comment implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8368292894911218121L;
+
+	private Integer id;
 
     private String ordersId;
 

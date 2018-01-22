@@ -109,6 +109,15 @@
     background: #FF8650;
 }
 
+.dialog-content .commit-btn {
+    background: #fabe00;
+    opacity: 0.5;
+}
+
+.dialog-content .commit-btn:hover {
+    background: #fabe00;
+}
+
 .dialog-content .dialog-error {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -127,13 +136,12 @@
 }
 
 .dialog-content .vCode-btn {
-    width: 90px;
+    width: 100px;
     height: 38px;
     color: #fff;
     font-size: 14px;
     border: 0;
     border-radius: 2%;
-    margin-left: 10px;
     background: #6ab0ff;
     opacity: 0.5;
 }

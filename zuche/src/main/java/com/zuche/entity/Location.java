@@ -1,7 +1,14 @@
 package com.zuche.entity;
 
-public class Location {
-    private Integer id;
+import java.io.Serializable;
+
+public class Location implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6320298079237796801L;
+
+	private Integer id;
 
     private String ordersId;
 

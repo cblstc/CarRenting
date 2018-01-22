@@ -350,6 +350,19 @@
 		    <version>3.2.0.RELEASE</version>
 		</dependency> -->
 		
+		<!-- jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+		<!-- spring-redis实现 -->
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		    <version>1.6.2.RELEASE</version>
+		</dependency>
+		
 		
 	</dependencies>
 	

@@ -1,7 +1,14 @@
 package com.zuche.entity;
 
-public class UserInfo {
-    private Integer id;
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7767533692088569515L;
+
+	private Integer id;
 
     private Integer userId;
 

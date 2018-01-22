@@ -31,13 +31,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<c:when test="${user == null }">
 						<!-- 如果没登陆 -->
 						<li class="item right-float">
-		                    <a class="nav-link regist-link" href="#">注册</a><span class="slash-text">/</span><a class="nav-link login-link" href="#">登录</a>
+		                    <a class="nav-link regist-link" href="${pageContext.request.contextPath }/user/toRegist">注册</a><span class="slash-text">/</span><a class="nav-link login-link" href="${pageContext.request.contextPath }/user/toLogin">登录</a>
 		                </li>
 					</c:when>
 					
 					<c:otherwise>
 						<!-- 如果登陆 -->
-		                <li class="item right-float"><a class="nav-link mycargo-link" href="#">我的Cargo</a></li>
+		                <li class="item right-float"><a class="nav-link mycargo-link" href="${pageContext.request.contextPath }/toMyCargo">我的Cargo</a></li>
 		                <c:choose>
 		                	<c:when test="${user.username != null }">
 		                		<!-- 如果用户名存在 -->

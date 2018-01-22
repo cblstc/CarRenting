@@ -1,9 +1,15 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserCar {
-    private Integer id;
+public class UserCar implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8808146492472651112L;
+
+	private Integer id;
 
     private Integer userId;
 

@@ -99,6 +99,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<jsp:include page="../common/public-footer.jsp"></jsp:include>
 	
 	<script type="text/javascript">
+	$(function () {
+	    $(".nav-text").removeClass("active");
+	    $(".improve-text").addClass("active");
+	});
+	
 	/**
 	 * 校验用户名
 	 */
@@ -108,6 +113,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if (username == "") {
 			$(".usernameError").text("用户名为空");
 			return false;
+		} else {
+			$(".usernameError").text("");
 		}
 		
 		// 格式判断
@@ -115,6 +122,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if (!reg.test(username)) {
 			$(".usernameError").text("用户名格式不正确");
 			return false;
+		} else {
+			$(".usernameError").text("");
 		}
 		
 		var flag = false;
@@ -152,6 +161,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if (email == "") {
 			$(".emailError").text("邮箱为空");
 			return false;
+		} else {
+			$(".emailError").text("");
 		}
 		
 		// 格式判断
@@ -159,6 +170,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if (!reg.test(email)) {
 			$(".emailError").text("邮箱格式不正确");
 			return false;
+		} else {
+			$(".emailError").text("");
 		}
 		
 		var flag = false;
@@ -211,8 +224,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		});
     	
-    	alert(flag);
-    	
     	if (flag) {
     		$(".vCode-btn").text("正在发送...");
     		$(".vCode-btn").attr("disabled","disabled");
@@ -230,15 +241,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$(".vCode").bind("input", function() {
     					// 如果相同，那么按钮可点击
     					if (vCode == $(".vCode").val()) {
-    						$(".vCode").attr("readonly","readonly");
     						$(".phone").attr("readonly","readonly");
     						$(".vCode-btn").attr("disabled","disabled");
     						$(".vCode-btn").css("opacity", "0.5");
+   							$(".commit-btn").css("opacity", "1");
+   							$(".commit-btn").removeAttr("disabled");
+   							$(".commit-btn").mouseover(function() {
+   								$(".commit-btn").css("background", "#FF8650");
+   							});
+   							$(".registBtn").mouseout(function() {
+   								$(".commit-btn").css("background", "#F9CA34");
+   							});
     					} else {
-    						$(".vCode").removeAttr("readonly");
     						$(".phone").removeAttr("readonly");
     						$(".vCode-btn").removeAttr("disabled");
     						$(".vCode-btn").css("opacity", "1.0");
+   							$(".commit-btn").css("opacity", "0.5");
+   							$(".commit-btn").attr("disabled","disabled");
     					}
     				});
     			}
@@ -257,6 +276,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			}
     		},1000);
     	}
+	}
+	
+	/**
+	 * 校验密码
+	 */
+	function validatePassword() {
+		var oldPassword = $.trim($(".oldPassword").val());
+		var password = $.trim($(".password").val());
+		// 是否为空
+		if (oldPassword == "") {
+			$(".oldPasswordError").text("旧密码为空");
+			return false;
+		} else {
+			$(".oldPasswordError").text("");
+		}
+		// 是否为空
+		if (password == "") {
+			$(".passwordError").text("新密码为空");
+			return false;
+		} else {
+			$(".passwordError").text("");
+		}
+		// 长度校验
+		if (password.length < 3) {
+			$(".passwordError").text("新密码长度小于3");
+			return false;
+		} else {
+			$(".passwordError").text("");
+		}
+		
+		var flag = false;
+		// 异步校验旧密码是否相同
+	    $.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath }/user/fieldValidate",
+			async: false,
+			data: {
+				"oldPassword": oldPassword
+			},
+			success: function(result) {
+				if (result == "1") {
+					// 旧密码相同
+					$(".oldPasswordError").text("");
+					flag = true;
+				} else {
+					// 旧密码不相同
+					$(".oldPasswordError").text("旧密码错误");
+					flag = false;
+				}
+			}
+		});
+		
+		return flag;
 	}
 	
 	/**
@@ -291,16 +363,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        type: 1,
 	        closeBtn: 1,  // 调试用
 	        area: ['480px', '280px'], //宽高
-	        content: '<form method="post" onsubmit="return false;" action="${pageContext.request.contextPath }/user/saveField">' + 
+	        content: '<form method="post" action="${pageContext.request.contextPath }/user/saveField">' + 
+	        '<input type="hidden" name="token" value="${token}" />' + 
 	        '<div class="dialog-content">' +
 	        '<span class="dialog-span">新手机号</span>' +
 	        '<input class="dialog-input phone-input phone" name="phone" oninput="judgePhone();" maxlength="11" placeholder="请输入新的手机号">' +
 	        '<button type="button" class="vCode-btn" disabled onclick="sendVCode();">发送验证码</button><br/>' +
-	        '<span class="red-text dialog-error"></span><br/>' +
+	        '<span class="red-text dialog-error phoneError"></span><br/>' +
 	        '<span class="dialog-span">验证码</span>' +
 	        '<input class="dialog-input vCode" name="vCode" placeholder="请输入验证码">' +
 	        '<span class="red-text dialog-error"></span><br/>' +
-	        '<input class="dialog-btn" type="submit" value="修改">' +
+	        '<input class="dialog-btn commit-btn" disabled type="submit" value="修改">' +
 	        '</div>'
 	    });
 	}
@@ -336,6 +409,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        '<input class="dialog-btn" type="submit" value="修改">' +
 	        '</div>' +
 	        '</form>'
+	    });
+	}
+	
+	/**
+	 * 打开修改密码框
+	 */
+	function openEditPassword() {
+	    // 修改密码
+	    layer.open({
+	        title: '修改密码',
+	        type: 1,
+	        closeBtn: 1,  // 调试用
+	        area: ['480px', '280px'], //宽高
+	        content: '<form method="post" onsubmit="return validatePassword();" action="${pageContext.request.contextPath }/user/saveField">' +
+	        '<input type="hidden" name="token" value="${token}" />' + 
+	        '<div class="dialog-content">' +
+	        '<span class="dialog-span">旧密码</span>' +
+	        '<input class="dialog-input oldPassword" type="password" placeholder="请输入旧的密码" name="oldPassword"><br/>' +
+	        '<span class="red-text dialog-error oldPasswordError" ></span><br/>' +
+	        '<span class="dialog-span">新密码</span>' +
+	        '<input class="dialog-input password" type="password" placeholder="3-12位密码"  name="password" maxlength="12"><br/>' +
+	        '<span class="red-text dialog-error passwordError"></span><br/>' +
+	        '<input class="dialog-btn" type="submit" value="修改">' +
+	        '</div>'
 	    });
 	}
 	</script>

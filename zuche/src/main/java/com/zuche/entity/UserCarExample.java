@@ -1,11 +1,17 @@
 package com.zuche.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserCarExample {
-    protected String orderByClause;
+public class UserCarExample implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6425591503040902901L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 
