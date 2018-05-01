@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.zuche.entity.Joins;
 import com.zuche.intercepter.Token;
+import com.zuche.service.customer.JoinsService;
 import com.zuche.service.system.GarageService;
 import com.zuche.service.user.UserService;
 
@@ -24,7 +27,8 @@ public class CustomerController {
 	private UserService userService;
 	
 	@Autowired
-	private GarageService garageService;
+	private JoinsService joinsService;
+	
 	
 	/**
 	 * 页面跳转
@@ -43,14 +47,12 @@ public class CustomerController {
 		case "Index":
 			result = "index";
 			break;
-		case "MyCargo":
-			result = "user/improveAccount";
-			break;	
-		/*case "CarList":
-			List<Garage> garages = garageService.findCarByCondition(null, null, null, 1);
-			model.addAttribute("garages", garages);
+		case "JoinUs":
+			result = "customer/joinUs";
+			break;
+		case "CarList":
 			result = "customer/carList";
-			break;*/
+			break;
 		case "CarDetail":
 			result = "customer/carDetail";
 			break;
@@ -65,4 +67,17 @@ public class CustomerController {
 		return result;
 	}
 	
+	/**
+	 * 加盟
+	 * @param model
+	 * @param joins  加盟类对象
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/joinUs", method=RequestMethod.POST)
+	@Token(remove=true)
+	public String joinUs(Model model, Joins joins) throws Exception {
+		joinsService.saveJoins(joins);
+		return null;
+	}
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +25,18 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
+import com.zuche.entity.Joins;
+import com.zuche.entity.StoreUser;
 import com.zuche.entity.User;
+import com.zuche.entity.UserAndInfo;
 import com.zuche.entity.UserInfo;
 import com.zuche.intercepter.Token;
+import com.zuche.service.customer.JoinsService;
+import com.zuche.service.store.StoreUserService;
 import com.zuche.service.system.GarageService;
 import com.zuche.service.user.UserInfoService;
 import com.zuche.service.user.UserService;
+import com.zuche.utils.MD5Utils;
 import com.zuche.utils.UUIDUtils;
 
 /**
@@ -48,7 +55,10 @@ public class SystemController {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	private GarageService garageService;
+	private JoinsService joinsService;
+	
+	@Autowired
+	private StoreUserService storeUserService;
 	
 	/**
 	 * 页面跳转
@@ -60,40 +70,39 @@ public class SystemController {
 	 * @return
 	 * @throws Exception
 	 */
-	/*@RequestMapping("/to{page}")
+	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, Model model, Integer pageNum, User user, Garage garage, HttpServletRequest request) throws Exception {
+	public String toPage(@PathVariable String page, Model model, Integer pageNum, User user, Joins joins, HttpServletRequest request) throws Exception {
 		if (page.equals("Menu")) {
 			return "system/menu";
 		} else if (page.equals("UserList")) {
 			List<User> users = userService.findUserByCondition(user.getUsername(), user.getPhone(), user.getEmail(), pageNum);
-			List<UserUserInfo> userUserInfo = new ArrayList<>();
+			List<UserAndInfo> userAndInfos = new ArrayList<UserAndInfo>();
 			for (User u : users) {
-				userUserInfo.add(new UserUserInfo(u, userInfoService.findUserInfoByField(u.getId().toString(), "userId")));
+				userAndInfos.add(new UserAndInfo(u, userInfoService.findUserInfoByField(u.getId().toString(), "userId")));
 			}
 			Page<User> usersPage = (Page<User>) users;
 			model.addAttribute("pageNum", pageNum);
 			model.addAttribute("total", usersPage.getPages() * 5);
-			model.addAttribute("userUserInfo", userUserInfo);
+			model.addAttribute("userAndInfos", userAndInfos);
 			model.addAttribute("username", user.getUsername());
 			model.addAttribute("phone", user.getPhone());
 			model.addAttribute("email", user.getEmail());
 			return "system/userList";
-		} else if (page.equals("CarList")) {
-			List<Garage> garages = garageService.findCarByCondition(garage.getBrand(), garage.getModel(), garage.getConfiguration(), pageNum);
-			Page<Garage> garagesPage = (Page<Garage>) garages;
+		} else if (page.equals("JoinsList")) {
+			List<Joins> joinss = joinsService.findJoinsByCondition(joins.getName(), joins.getPhone(), joins.getStatus(), pageNum);
+			Page<Joins> JoinssPage = (Page<Joins>) joinss;
 			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("total", garagesPage.getPages() * 5);
-			model.addAttribute("garages", garages);
-			model.addAttribute("brand", garage.getBrand());
-			model.addAttribute("model", garage.getModel());
-			model.addAttribute("configuration", garage.getConfiguration());
-			System.out.println(garages.size());
-			return "system/carList";
-		} else {
+			model.addAttribute("total", JoinssPage.getPages() * 5);
+			model.addAttribute("joinss", joinss);
+			model.addAttribute("name", joins.getName());
+			model.addAttribute("phone", joins.getPhone());
+			model.addAttribute("status", joins.getStatus());
+			return "system/joinsList";
+		}  else {
 			return "errorPage";
 		}
-	}*/
+	}
 	
 	/**
 	 * 根据userid获取UserInfo
@@ -134,6 +143,62 @@ public class SystemController {
 		existUser.setStatus(1); // 启用
 		userService.updateUser(existUser); 
 		return "redirect: toUserList?pageNum=1";
+	}
+	
+	/**
+	 * 通过申请
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/passJoins")
+	public String passJoins(Integer id) throws Exception {
+		Joins existJoins = joinsService.findJoinsByField(id.toString(), "id");
+		existJoins.setStatus(2); // 申请通过
+		joinsService.updateJoins(existJoins);
+		
+		if (existJoins.getStoreUserId() != null && existJoins.getStoreUserId().intValue() != 0) {
+			// 如果该申请人已经拥有门店账号，那么门店账号开启
+			joinsService.sendPass(existJoins.getEmail());  // 发送邮件给申请人
+			// 开启门店账号
+			StoreUser existStoreUser = storeUserService.findUserByField(
+					existJoins.getStoreUserId().toString(), "id");
+			existStoreUser.setStatus(1);  // 开启门店账号
+			storeUserService.updateStoreUser(existStoreUser);
+		} else {
+			// 创建一个随机账号
+			String username = UUIDUtils.getUUID().substring(0, 8);
+			String password = UUIDUtils.getUUID().substring(0, 8);
+			// 发送账号给申请人
+			joinsService.sendAccount(username, password, existJoins.getEmail());  
+			// 保存账号
+			StoreUser storeUser = new StoreUser();
+			storeUser.setUsername(username);
+			storeUser.setPassword(MD5Utils.getMD5Str(password));
+			storeUserService.saveStoreUser(storeUser);
+			// 绑定账号和加盟申请
+			StoreUser existStoreUser = storeUserService.findUserByField(username, "username");
+			existJoins.setStoreUserId(existStoreUser.getId());
+			joinsService.updateJoins(existJoins);
+		}
+		
+		return "redirect: toJoinsList?pageNum=1";
+	}
+	
+	/**
+	 * 拒绝申请
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/failJoins")
+	public String failJoins(Integer id) throws Exception {
+		Joins existJoins = joinsService.findJoinsByField(id.toString(), "id");
+		existJoins.setStatus(3); // 拒绝申请
+		joinsService.updateJoins(existJoins);
+		// 发送拒绝信
+		joinsService.sendFail(existJoins.getEmail());
+		return "redirect: toJoinsList?pageNum=1";
 	}
 	
 	/*@RequestMapping(value="/saveGarage", method=RequestMethod.POST)

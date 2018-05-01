@@ -4,7 +4,6 @@ package com.zuche.controller.store;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.zuche.entity.StoreCar;
+import com.zuche.entity.StoreUser;
+import com.zuche.entity.User;
 import com.zuche.intercepter.Token;
 import com.zuche.service.store.StoreService;
+import com.zuche.service.store.StoreUserService;
 import com.zuche.utils.UUIDUtils;
 
 /**
@@ -33,6 +35,9 @@ public class StoreController {
 	
 	@Autowired
 	private StoreService storeService;
+	
+	@Autowired
+	private StoreUserService storeUserService;
 	
 	/**
 	 * 页面跳转
@@ -48,6 +53,12 @@ public class StoreController {
 		String result = null;
 		
 		switch (page) {
+		case "Login":  /* 登陆 */
+			result = "store/login";
+			break;
+		case "Index":  /* 首页 */
+			result = "store/index";
+			break;
 		case "AddCar":  /* 添加车辆 */
 			result = "store/article-add";
 			break;
@@ -107,5 +118,30 @@ public class StoreController {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * 登陆
+	 * @param storeUser
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/login")
+	@Token(remove=true)
+	public String login(StoreUser storeUser, HttpServletRequest request, Model model) throws Exception {
+		// 查询是否存在
+		StoreUser existStoreUser = storeUserService.findStoreUser(storeUser);  // 登陆判断
+		if (existStoreUser == null) {
+			model.addAttribute("loginError", "账户或密码错误");
+			return "forward:/store/toLogin";  // 账户或密码错误
+		} else if (existStoreUser.getStatus().intValue() == 2) {
+			model.addAttribute("loginError", "账户被冻结");
+			return "forward:/store/toLogin";  // 账户被冻结
+		} else {
+			request.getSession().setAttribute("storeUser", existStoreUser);
+			return "redirect:/store/toIndex";
+		}
 	}
 }

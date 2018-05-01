@@ -1,27 +1,32 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>选车列表</title>
-    <link rel="stylesheet"type="text/css" href="../../css/common/bootstrap.min.css">
-    <link rel="stylesheet"type="text/css" href="../../css/common/bootstrap-theme.min.css">
-    <link rel="stylesheet"type="text/css" href="../../css/common/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet"type="text/css" href="../../css/common/jquery.raty.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-theme.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/jquery.raty.css">
 
-    <link rel="stylesheet"type="text/css" href="../../css/common/reset.css">
-    <link rel="stylesheet"type="text/css" href="../../css/common/common.css">
-    <link rel="stylesheet"type="text/css" href="../../css/carList.css">
-    <script type="text/javascript" src="../../js/common/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../js/common/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/carList.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=HHNwksT3c9XuGE9iwPrL0LLgSF0KzQsg"></script>
-    <script type="text/javascript" src="../../js/common/jquery.raty.js"></script>
-    <script type="text/javascript" src="../../js/carList.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery.raty.js"></script>
+    <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/carList.js"></script> --%>
 </head>
 <body>
-    <div class="header-box"></div>
-    <script>
-        $(".header-box").load("../common/public-header.html");
-    </script>
+    <!--头部-->
+	<jsp:include page="../common/public-header.jsp"></jsp:include>
 
     <div class="address-date-choice">
         <div class="public-container clearfloat">
@@ -30,23 +35,23 @@
                     <span class="address-text get-address-text">取车</span><!--
                 --><input readonly class="address-choice" placeholder="请输入送车上门地址">
                     <p class="switch-text get-car-text">送车上门</p><!--
-                    --><a href="javascript:void(0)" onclick="switchChange(this);"><img src="../../images/switch-on.png" alt="switch-on"></a>
+                    --><a href="javascript:void(0)" onclick="switchChange(this);"><img src="${pageContext.request.contextPath}/images/switch-on.png" alt="switch-on"></a>
                 </div>
                 <div class="choice-address-block">
                     <span class="address-text return-address-text">还车</span><!--
                 --><input readonly class="address-choice" placeholder="请输入上门取车地址">
                     <p class="switch-text return-car-text">上门取车</p><!--
-                    --><a href="javascript:void(0)" onclick="switchChange(this);"><img class="switch-img" src="../../images/switch-on.png"  alt="switch-on"></a>
+                    --><a href="javascript:void(0)" onclick="switchChange(this);"><img class="switch-img" src="${pageContext.request.contextPath}/images/switch-on.png"  alt="switch-on"></a>
                 </div>
             </div>
-            <img class="left-float car-to-img" src="../../images/car-to.jpg">
+            <img class="left-float car-to-img" src="${pageContext.request.contextPath}/images/car-to.jpg">
             <div class="choice-date left-float">
                 <div class="choice-date-block"><span class="date-text">取车时间</span><!--
                 --><input readonly placeholder="请选择开始日期" class="date-choice" type="text"></div>
                 <div class="choice-date-block"><span class="date-text">还车时间</span><!--
                 --><input readonly placeholder="请选择结束日期" class="date-choice" type="text"></div>
             </div>
-            <img class="date-to-img left-float" src="../../images/dateToV.png" alt="至">
+            <img class="date-to-img left-float" src="${pageContext.request.contextPath}/images/dateToV.png" alt="至">
             <div class="choice-submit clearfloat">
                 <p class="rent-time">租期：<span class="red-text">2天</span>，不限里程</p>
                 <input type="submit" class="choice-btn" value="立即选车">
@@ -64,7 +69,7 @@
                         <a href="javascript:void(0)" onclick="selectPrice(this, '.price-no-filter', '');"><div class="price-line-common price-line-1"></div></a><!--
                         --><a href="javascript:void(0)" onclick="selectPrice(this, '.price-0', '.price-150');"><div class="price-line-common price-line-2"></div></a><!--
                         --><a href="javascript:void(0)" onclick="selectPrice(this, '.price-150', '.price-300');"><div class="price-line-common price-line-3"></div></a><!--
-                        --><a href="javascript:void(0)" onclick="selectPrice(this, '.price-350', '.price-500');"><div class="price-line-common price-line-4"></div></a><!--
+                        --><a href="javascript:void(0)" onclick="selectPrice(this, '.price-300', '.price-500');"><div class="price-line-common price-line-4"></div></a><!--
                         --><a href="javascript:void(0)" onclick="selectPrice(this, '.price-500-plus', '');"><div class="price-line-common price-line-5"></div></a><!--
                         -->
                     </div>
@@ -112,11 +117,12 @@
             </div>
 
             <div class="car-content left-float">
+            	<c:forEach var="garage" items="${garages }">
                 <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
+                    <img class="car-img left-float" src="${pageContext.request.contextPath}/images/car-1.jpg">
                     <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
+                        <dt class="car-name">${garage.model }</dt>
+                        <dd class="car-desc">三厢|${garage.displacement }<c:if test="${garage.gearbox == 1 }">手动</c:if><c:if test="${garage.gearbox == 2 }">自动</c:if>|${garage.seats }人</dd>
                         <dd class="car-gear-auto">自动挡</dd>
                         <dd class="car-gear">手动挡</dd>
                     </dl>
@@ -124,92 +130,16 @@
                         <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
                     </div>
                     <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
+                        <button class="choice-btn" onclick="location.href='${pageContext.request.contextPath}/toCarDetail'">租&nbsp;车</button>
                     </div>
                 </div>
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <dd class="car-gear">手动挡</dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
-                    </div>
-                </div>
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <dd class="car-gear">手动挡</dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
-                    </div>
-                </div>
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <dd class="car-gear">手动挡</dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
-                    </div>
-                </div>
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <dd class="car-gear">手动挡</dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
-                    </div>
-                </div>
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="../../images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <dd class="car-gear">手动挡</dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn">租&nbsp;车</button>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
     </div>
 
-    <div class="footer-box"></div>
-    <script>
-        $(".footer-box").load("../common/public-footer.html");
-    </script>
+    <!--尾部-->
+	<jsp:include page="../common/public-footer.jsp"></jsp:include>
 
     <script>
         $(function() {
@@ -220,8 +150,8 @@
 
             // 星星
             $('.comment-star').raty({
-                starOn:'../../images/star-on.png',
-                starOff:'../../images/star-off.png',
+                starOn:'${pageContext.request.contextPath}/images/star-on.png',
+                starOff:'${pageContext.request.contextPath}/images/star-off.png',
                 halfShow: false,
                 score:3,
                 readOnly: false,
@@ -243,7 +173,53 @@
                 }
             });
         });
+    /**
+     * 价格区间切换
+     * @param link 链接
+     * @param minPrice 最低价
+     * @param maxPrice 最高价
+     */
+    function selectPrice(link, minPrice, maxPrice) {
+        var div = $(link).find("div").get(0);
+        // line初始化灰色
+        $(".price-line-common").css("border-bottom", "5px solid #E9EBEE");
+        // 指定line黄色
+        $(div).css("border-bottom", "5px solid #fabe00");
 
+        // 价格初始化灰色
+        $(".price-text span").css("color", "#93939E");
+        // 指定最低价格和最高价格黄色
+        $(minPrice).css("color", "#fabe00");
+        $(maxPrice).css("color", "#fabe00");
+    }
+
+    /**
+     * 品牌切换
+     * @param link
+     */
+    function selectBrand(link) {
+        var p = $(link).find("p").get(0);
+        // 初始化字体颜色灰色
+        $(".brand-name-common").css("color", "#93939e");
+        // 指定选中字体黄色
+        $(p).css("color", "#fabe00");
+    }
+
+    /**
+     * 开关切换
+     * @param link 链接
+     */
+    function switchChange(link) {
+        var img = $(link).find("img").get(0);
+        if ($(img).attr("alt") == "switch-on") {
+            // 如果初始化是开状态，那么关
+            $(img).attr("src", "${pageContext.request.contextPath}/images/switch-off.png");
+            $(img).attr("alt", "switch-off");
+        } else {
+            $(img).attr("src", "${pageContext.request.contextPath}/images/switch-on.png");
+            $(img).attr("alt", "switch-on");
+        }
+    }
     </script>
 </body>
 </html>

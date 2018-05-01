@@ -39,23 +39,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div title="用户管理">
                 <ul class="easyui-tree">
                     <li><a href="javascript:void(0)" onclick="addTab('用户列表','${pageContext.request.contextPath}/system/toUserList?pageNum=1')">用户列表</a></li>
-                    <li><a href="javascript:void(0)" onclick="addTab('个体出租列表','renterList.html')">个体出租列表</a></li>
                 </ul>
             </div>
             <div title="门店管理">
                 <ul class="easyui-tree">
-                    <li><a href="javascript:void(0)" onclick="addTab('门店列表','#')">门店列表</a></li>
-                </ul>
-            </div>
-            <div title="车库管理">
-                <ul class="easyui-tree">
-                    <li><a href="javascript:void(0)" onclick="addTab('车库列表','${pageContext.request.contextPath}/system/toCarList?pageNum=1')">车库列表</a></li>
+                    <li><a href="javascript:void(0)" onclick="addTab('门店列表','${pageContext.request.contextPath}/system/toStoreList?pageNum=1')">门店列表</a></li>
+                    <li><a href="javascript:void(0)" onclick="addTab('加盟列表','${pageContext.request.contextPath}/system/toJoinsList?pageNum=1')">加盟列表</a></li>
                 </ul>
             </div>
         </div>
         <div id="content" region="center" style="">
             <div id="tt" class="easyui-tabs" style="width:100%;height:100%;">
                 <div title="首页">
+                	<div style="padding: 20px; font-size: 15px;">欢迎使用后台管理平台！</div>
                 </div>
             </div>
         </div>

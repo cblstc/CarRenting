@@ -110,25 +110,12 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@Override
-	public User findUserByField(String fieldValue, String fieldName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * 更新用户
 	 */
 	@Override
 	public void updateUser(User user) {
 		userMapper.updateByPrimaryKey(user);
-	}
-
-	@Override
-	public List<User> findUserByCondition(String username, String phone,
-			String email, Integer pageNum) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -191,7 +178,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 根据字段查询用户
 	 */
-	/*@Override
+	@Override
 	public User findUserByField(String fieldValue, String fieldName) {
 		UserExample userExample = new UserExample();
 		Criteria criteria = userExample.createCriteria();
@@ -211,13 +198,13 @@ public class UserServiceImpl implements UserService {
 			return existUsers.get(0);
 		else
 			return null;
-	}*/
+	}
 
 
 	/**
 	 * 条件查询
 	 */
-	/*@Override
+	@Override
 	public List<User> findUserByCondition(String username, String phone,
 			String email, Integer pageNum) {
 		// 分页
@@ -238,7 +225,7 @@ public class UserServiceImpl implements UserService {
 		
 		List<User> existUsers = userMapper.selectByExample(userExample);
 		return existUsers;
-	}*/
+	}
 
 	
 }

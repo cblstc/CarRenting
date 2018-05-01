@@ -18,6 +18,7 @@
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/images/" mapping="/images/**"/> 
+	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**"/>
 	<mvc:resources location="/WEB-INF/uploads/" mapping="/uploads/**"/>
 	<!-- h-ui的资源放在这里面 -->
 	<mvc:resources location="/WEB-INF/jsp/store/lib/" mapping="/jsp/store/lib/**"/>

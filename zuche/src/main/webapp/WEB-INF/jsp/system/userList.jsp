@@ -43,16 +43,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </tr>
         </thead>
         <tbody>
-        	<c:forEach var="userUserInfo" items="${userUserInfo }">
+        	<c:forEach var="userAndInfo" items="${userAndInfos }">
             <tr>
-                <td>${userUserInfo.user.id }</td>
-                <td><a href="${pageContext.request.contextPath}/uploads/${userUserInfo.userInfo.idcardphoto}" target="_blank"><img src="${pageContext.request.contextPath}/uploads/${userUserInfo.userInfo.idcardphoto}" style="width: 30px; height: 30px;"></a></td>
-                <td>${userUserInfo.user.phone }</td>
-                <td>${userUserInfo.user.username }</td>
-                <td>${userUserInfo.user.email }</td>
+                <td>${userAndInfo.user.id }</td>
+                <td><a href="${pageContext.request.contextPath}/uploads/${userAndInfo.userInfo.idcardphoto}" target="_blank"><img src="${pageContext.request.contextPath}/uploads/${userAndInfo.userInfo.idcardphoto}" style="width: 30px; height: 30px;"></a></td>
+                <td>${userAndInfo.user.phone }</td>
+                <td>${userAndInfo.user.username }</td>
+                <td>${userAndInfo.user.email }</td>
                 <td>
                 	<c:choose>
-                		<c:when test="${userUserInfo.user.status == 1 }">
+                		<c:when test="${userAndInfo.user.status == 1 }">
                 			已启用
                 		</c:when>
                 		<c:otherwise>
@@ -61,13 +61,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	</c:choose>
                 </td>
                 <td>
-                    <a href="javascript:void(0)" onclick="showInfo('${userUserInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-search" plain="true">认证信息</a>
+                    <a href="javascript:void(0)" onclick="showInfo('${userAndInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-search" plain="true">认证信息</a>
                     <c:choose>
-                		<c:when test="${userUserInfo.user.status == 1 }">
-                    		<a href="javascript:void(0)" onclick="stopUser('${userUserInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-no" plain="true">停用</a>
+                		<c:when test="${userAndInfo.user.status == 1 }">
+                    		<a href="javascript:void(0)" onclick="stopUser('${userAndInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-no" plain="true">停用</a>
                 		</c:when>
                 		<c:otherwise>
-                			<a href="javascript:void(0)" onclick="startUser('${userUserInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-ok" plain="true">启用</a>
+                			<a href="javascript:void(0)" onclick="startUser('${userAndInfo.user.id }');" class="easyui-linkbutton" iconCls="icon-ok" plain="true">启用</a>
                 		</c:otherwise>
                 	</c:choose>
                 </td>
@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <img src="${pageContext.request.contextPath}/images/system/username.png"> <input class="username" name="username" value="${username }" placeholder="用户名查询">&nbsp;&nbsp;
 	        <img src="${pageContext.request.contextPath}/images/system/phone.png"> <input class="phone" name="phone" value="${phone }" placeholder="联系电话查询">&nbsp;&nbsp;
 	        <img src="${pageContext.request.contextPath}/images/system/email.png"> <input class="email" name="email" value="${email }" placeholder="邮箱查询">&nbsp;&nbsp;
-	        <input type="submit" value="查询" style="background:#0089dc; color: #fff; border: 0; border-radius: 3%;">
+	        <input type="submit" value="查询" style="width: 40px; background:#0089dc; color: #fff; border: 0; border-radius: 3%;">
 	    </form>
         
         <div class="easyui-pagination" style="position: absolute; top:0; right:0;" data-options="
