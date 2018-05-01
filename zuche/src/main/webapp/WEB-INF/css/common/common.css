@@ -50,7 +50,7 @@
 
 .public-header {
     height: 58px;
-    background-color: #1b2b3b;
+    background-color: #1F1F1F;
 }
 
 .public-header .header-logo {
@@ -68,7 +68,7 @@
 .public-header .header-nav .slash-text,
 .public-header .header-nav .mycargo-link,
 .public-header .header-nav .nav-link:hover {
-    color: #d9a808;
+    color: #FF4049;
 }
 
 .public-header .header-nav .hello-text {
@@ -77,7 +77,7 @@
 
 .public-footer {
     height: 58px;
-    background-color: #1b2b3b;
+    background-color: #1F1F1F;
 }
 
 .public-footer .copyright-text {

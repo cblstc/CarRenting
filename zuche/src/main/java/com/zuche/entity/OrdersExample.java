@@ -1,17 +1,11 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OrdersExample implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -421110922537977836L;
-
-	protected String orderByClause;
+public class OrdersExample {
+    protected String orderByClause;
 
     protected boolean distinct;
 
@@ -241,66 +235,6 @@ public class OrdersExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andUserCarIdIsNull() {
-            addCriterion("user_car_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdIsNotNull() {
-            addCriterion("user_car_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdEqualTo(Integer value) {
-            addCriterion("user_car_id =", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdNotEqualTo(Integer value) {
-            addCriterion("user_car_id <>", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdGreaterThan(Integer value) {
-            addCriterion("user_car_id >", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("user_car_id >=", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdLessThan(Integer value) {
-            addCriterion("user_car_id <", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdLessThanOrEqualTo(Integer value) {
-            addCriterion("user_car_id <=", value, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdIn(List<Integer> values) {
-            addCriterion("user_car_id in", values, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdNotIn(List<Integer> values) {
-            addCriterion("user_car_id not in", values, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdBetween(Integer value1, Integer value2) {
-            addCriterion("user_car_id between", value1, value2, "userCarId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserCarIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("user_car_id not between", value1, value2, "userCarId");
-            return (Criteria) this;
-        }
-
         public Criteria andPriceIsNull() {
             addCriterion("price is null");
             return (Criteria) this;
@@ -481,66 +415,6 @@ public class OrdersExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andPoundageIsNull() {
-            addCriterion("poundage is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageIsNotNull() {
-            addCriterion("poundage is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageEqualTo(Float value) {
-            addCriterion("poundage =", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageNotEqualTo(Float value) {
-            addCriterion("poundage <>", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageGreaterThan(Float value) {
-            addCriterion("poundage >", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageGreaterThanOrEqualTo(Float value) {
-            addCriterion("poundage >=", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageLessThan(Float value) {
-            addCriterion("poundage <", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageLessThanOrEqualTo(Float value) {
-            addCriterion("poundage <=", value, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageIn(List<Float> values) {
-            addCriterion("poundage in", values, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageNotIn(List<Float> values) {
-            addCriterion("poundage not in", values, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageBetween(Float value1, Float value2) {
-            addCriterion("poundage between", value1, value2, "poundage");
-            return (Criteria) this;
-        }
-
-        public Criteria andPoundageNotBetween(Float value1, Float value2) {
-            addCriterion("poundage not between", value1, value2, "poundage");
-            return (Criteria) this;
-        }
-
         public Criteria andTotalmoneyIsNull() {
             addCriterion("totalMoney is null");
             return (Criteria) this;
@@ -598,66 +472,6 @@ public class OrdersExample implements Serializable {
 
         public Criteria andTotalmoneyNotBetween(Float value1, Float value2) {
             addCriterion("totalMoney not between", value1, value2, "totalmoney");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositIsNull() {
-            addCriterion("disposit is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositIsNotNull() {
-            addCriterion("disposit is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositEqualTo(Float value) {
-            addCriterion("disposit =", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositNotEqualTo(Float value) {
-            addCriterion("disposit <>", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositGreaterThan(Float value) {
-            addCriterion("disposit >", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositGreaterThanOrEqualTo(Float value) {
-            addCriterion("disposit >=", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositLessThan(Float value) {
-            addCriterion("disposit <", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositLessThanOrEqualTo(Float value) {
-            addCriterion("disposit <=", value, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositIn(List<Float> values) {
-            addCriterion("disposit in", values, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositNotIn(List<Float> values) {
-            addCriterion("disposit not in", values, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositBetween(Float value1, Float value2) {
-            addCriterion("disposit between", value1, value2, "disposit");
-            return (Criteria) this;
-        }
-
-        public Criteria andDispositNotBetween(Float value1, Float value2) {
-            addCriterion("disposit not between", value1, value2, "disposit");
             return (Criteria) this;
         }
 
@@ -778,6 +592,66 @@ public class OrdersExample implements Serializable {
 
         public Criteria andReturntimeNotBetween(Date value1, Date value2) {
             addCriterion("returnTime not between", value1, value2, "returntime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeIsNull() {
+            addCriterion("time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeIsNotNull() {
+            addCriterion("time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeEqualTo(Date value) {
+            addCriterion("time =", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeNotEqualTo(Date value) {
+            addCriterion("time <>", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeGreaterThan(Date value) {
+            addCriterion("time >", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("time >=", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeLessThan(Date value) {
+            addCriterion("time <", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeLessThanOrEqualTo(Date value) {
+            addCriterion("time <=", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeIn(List<Date> values) {
+            addCriterion("time in", values, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeNotIn(List<Date> values) {
+            addCriterion("time not in", values, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeBetween(Date value1, Date value2) {
+            addCriterion("time between", value1, value2, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeNotBetween(Date value1, Date value2) {
+            addCriterion("time not between", value1, value2, "time");
             return (Criteria) this;
         }
     }

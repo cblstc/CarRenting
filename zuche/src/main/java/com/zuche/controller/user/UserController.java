@@ -51,11 +51,13 @@ public class UserController {
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, Model model, HttpServletRequest request) throws Exception {
+	String toPage(@PathVariable String page, Model model, HttpServletRequest request) throws Exception {
 		if (page.equals("Regist"))
 			return "user/regist";
 		else if (page.equals("Login"))
 			return "user/login";
+		else if (page.equals("Index"))
+			return "user/index";
 		else if (page.equals("ImproveAccount"))
 			return "user/improveAccount";
 		else if (page.equals("AuthenticationAccount")) {
@@ -181,12 +183,12 @@ public class UserController {
 		} else if (email != null && !email.trim().equals("")) {
 			user.setEmail(email);
 		} else if (password != null && !password.trim().equals("")) {
-			user.setPassword(password);
+			user.setPassword(MD5Utils.getMD5Str(password));
 		}
 		userService.updateUser(user);  // 更新用户
 		
 		request.getSession().setAttribute("user", user);
-		return "redirect:/toMyCargo";
+		return "redirect:/user/toImproveAccount";
 	}
 	
 	/**

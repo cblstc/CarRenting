@@ -178,6 +178,7 @@
 	display: inline-block;
 	margin-right: 85px;
 }
+/* 图片预览样式 */
 .right-content .content-input-box .preview-box {
 	position: relative; display: inline-block;
 }

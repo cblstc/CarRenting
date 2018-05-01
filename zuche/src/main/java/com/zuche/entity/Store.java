@@ -1,19 +1,11 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Store implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7165354544675400315L;
+public class Store {
+    private Integer id;
 
-	private Integer id;
-
-    private String username;
-
-    private String password;
+    private Integer storeUserId;
 
     private String storename;
 
@@ -31,6 +23,8 @@ public class Store implements Serializable {
 
     private String description;
 
+    private String traffic;
+
     private Integer totalstar;
 
     private Integer totalcomment;
@@ -38,8 +32,6 @@ public class Store implements Serializable {
     private Float avgstar;
 
     private Integer status;
-
-    private String traffic;
 
     public Integer getId() {
         return id;
@@ -49,20 +41,12 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Integer getStoreUserId() {
+        return storeUserId;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setStoreUserId(Integer storeUserId) {
+        this.storeUserId = storeUserId;
     }
 
     public String getStorename() {
@@ -129,6 +113,14 @@ public class Store implements Serializable {
         this.description = description == null ? null : description.trim();
     }
 
+    public String getTraffic() {
+        return traffic;
+    }
+
+    public void setTraffic(String traffic) {
+        this.traffic = traffic == null ? null : traffic.trim();
+    }
+
     public Integer getTotalstar() {
         return totalstar;
     }
@@ -159,13 +151,5 @@ public class Store implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getTraffic() {
-        return traffic;
-    }
-
-    public void setTraffic(String traffic) {
-        this.traffic = traffic == null ? null : traffic.trim();
     }
 }

@@ -1,14 +1,11 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
+import java.util.Date;
 
-public class User implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 146220445320273824L;
+import org.springframework.format.annotation.DateTimeFormat;
 
-	private Integer id;
+public class User {
+    private Integer id;
 
     private String phone;
 
@@ -17,6 +14,11 @@ public class User implements Serializable {
     private String password;
 
     private String email;
+
+    private Integer role;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh-mm-ss") 
+    private Date registtime;
 
     private Integer status;
 
@@ -58,6 +60,22 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Date getRegisttime() {
+        return registtime;
+    }
+
+    public void setRegisttime(Date registtime) {
+        this.registtime = registtime;
     }
 
     public Integer getStatus() {

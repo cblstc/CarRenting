@@ -1,0 +1,23 @@
+.comment-edit-box {
+    width: 550px;
+    height: 300px;
+    padding: 20px;
+}
+
+.content-box {
+    width: 400px;
+    height: 100px;
+    position: relative;
+}
+
+.content-box .content {
+    width: 400px;
+    height: 100px;
+}
+
+.comment-edit-box .remains {
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}

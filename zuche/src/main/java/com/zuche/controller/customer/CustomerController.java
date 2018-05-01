@@ -1,13 +1,15 @@
 package com.zuche.controller.customer;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zuche.entity.UserCar;
 import com.zuche.intercepter.Token;
+import com.zuche.service.system.GarageService;
 import com.zuche.service.user.UserService;
 
 /**
@@ -20,6 +22,9 @@ public class CustomerController {
 	
 	@Autowired 
 	private UserService userService;
+	
+	@Autowired
+	private GarageService garageService;
 	
 	/**
 	 * 页面跳转
@@ -40,6 +45,17 @@ public class CustomerController {
 			break;
 		case "MyCargo":
 			result = "user/improveAccount";
+			break;	
+		/*case "CarList":
+			List<Garage> garages = garageService.findCarByCondition(null, null, null, 1);
+			model.addAttribute("garages", garages);
+			result = "customer/carList";
+			break;*/
+		case "CarDetail":
+			result = "customer/carDetail";
+			break;
+		case "OrderPreview":
+			result = "customer/orderPreview";
 			break;
 		default:
 			result = "errorPage";
@@ -48,4 +64,5 @@ public class CustomerController {
 		
 		return result;
 	}
+	
 }

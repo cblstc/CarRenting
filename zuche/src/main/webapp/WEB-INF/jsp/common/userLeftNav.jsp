@@ -24,18 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left-nav left-float">
         <dl>
             <dt class="nav-title">我的订单</dt>
-            <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text active">租车</dd></a>
-            <a href="javascript:void(0)" onclick="changeNav(this);"><dd class="nav-text">出租</dd></a>
-            <dt class="nav-title">我的车辆</dt>
+            <a href="${pageContext.request.contextPath }/user/toImproveAccount"><dd class="nav-text active">租车</dd></a>
             <dt class="nav-title">我的账户</dt>
             <a href="${pageContext.request.contextPath }/user/toImproveAccount"><dd class="nav-text improve-text">登录信息完善</dd></a>
             <a href="${pageContext.request.contextPath }/user/toAuthenticationAccount"><dd class="nav-text auth-text">身份认证</dd></a>
-            <dt class="nav-title">我的消息</dt>
-            <dt class="nav-title">我的消息</dt>
-            <dt class="nav-title">我的消息</dt>
-            <dt class="nav-title">我的消息</dt>
-            
-            <dt class="nav-title">我的消息</dt>
         </dl>
     </div>
     

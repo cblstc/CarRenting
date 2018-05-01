@@ -17,7 +17,7 @@
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #fabe00;
+    color: #FF4049;
 }
 .password, .vCode, .registBtn {
     width: 350px;
@@ -44,8 +44,8 @@
 }
 .registBtn, .registBtn:hover, .registBtn:visited, .registBtn:active {
     /* background: #4cd96f; */
-    background: #F9CA34;
-    opacity: 0.5;
+    background: #FF4049;
+    background: #FF5150;
     border: 0;
     color: #fff;
     border-radius: 5px;

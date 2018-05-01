@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/userTopNav.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/authenticationAccount.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/user/authenticationAccount.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/jquery.fileupload.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common/spinners.css" type="text/css">
 
@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<jsp:include page="../common/userLeftNav.jsp"></jsp:include>
 			
             <!-- 右边内容 -->
-            <div class="right-content left-float">
+            <div class="right-content right-float">
                 <dl>
                     <table>
                         <dt class="content-title">实名认证 </dt>
@@ -111,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             
             <!-- 右边内容 -->
-            <div class="right-content right-content-second left-float">
+            <div class="right-content right-content-second right-float">
                 <dl>
                     <table>
                         <dt class="content-title">证件上传<span class="red-text size14">（支持jpg/jpeg/bmp/png/gif格式，不大于2m的图片）</span></dt>

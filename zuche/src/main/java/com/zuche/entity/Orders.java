@@ -1,19 +1,11 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Orders implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7464872789805131176L;
-
-	private String id;
+public class Orders {
+    private String id;
 
     private Integer storeCarId;
-
-    private Integer userCarId;
 
     private Float price;
 
@@ -21,15 +13,13 @@ public class Orders implements Serializable {
 
     private Float nodeductibles;
 
-    private Float poundage;
-
     private Float totalmoney;
-
-    private Float disposit;
 
     private Date gettime;
 
     private Date returntime;
+
+    private Date time;
 
     public String getId() {
         return id;
@@ -45,14 +35,6 @@ public class Orders implements Serializable {
 
     public void setStoreCarId(Integer storeCarId) {
         this.storeCarId = storeCarId;
-    }
-
-    public Integer getUserCarId() {
-        return userCarId;
-    }
-
-    public void setUserCarId(Integer userCarId) {
-        this.userCarId = userCarId;
     }
 
     public Float getPrice() {
@@ -79,28 +61,12 @@ public class Orders implements Serializable {
         this.nodeductibles = nodeductibles;
     }
 
-    public Float getPoundage() {
-        return poundage;
-    }
-
-    public void setPoundage(Float poundage) {
-        this.poundage = poundage;
-    }
-
     public Float getTotalmoney() {
         return totalmoney;
     }
 
     public void setTotalmoney(Float totalmoney) {
         this.totalmoney = totalmoney;
-    }
-
-    public Float getDisposit() {
-        return disposit;
-    }
-
-    public void setDisposit(Float disposit) {
-        this.disposit = disposit;
     }
 
     public Date getGettime() {
@@ -117,5 +83,13 @@ public class Orders implements Serializable {
 
     public void setReturntime(Date returntime) {
         this.returntime = returntime;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

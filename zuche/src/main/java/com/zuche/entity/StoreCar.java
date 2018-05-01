@@ -1,15 +1,7 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-public class StoreCar implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3383699816534211246L;
-
-	private Integer id;
+public class StoreCar {
+    private Integer id;
 
     private Integer storeId;
 
@@ -18,8 +10,6 @@ public class StoreCar implements Serializable {
     private String model;
 
     private String configuration;
-
-    private Date year;
 
     private Integer seats;
 
@@ -40,6 +30,16 @@ public class StoreCar implements Serializable {
     private Integer skylight;
 
     private Integer aircell;
+
+    private Float price;
+
+    private Float insurance;
+
+    private Float nodeductibles;
+
+    private Integer count;
+
+    private Integer status;
 
     private String carphoto;
 
@@ -81,14 +81,6 @@ public class StoreCar implements Serializable {
 
     public void setConfiguration(String configuration) {
         this.configuration = configuration == null ? null : configuration.trim();
-    }
-
-    public Date getYear() {
-        return year;
-    }
-
-    public void setYear(Date year) {
-        this.year = year;
     }
 
     public Integer getSeats() {
@@ -169,6 +161,46 @@ public class StoreCar implements Serializable {
 
     public void setAircell(Integer aircell) {
         this.aircell = aircell;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Float insurance) {
+        this.insurance = insurance;
+    }
+
+    public Float getNodeductibles() {
+        return nodeductibles;
+    }
+
+    public void setNodeductibles(Float nodeductibles) {
+        this.nodeductibles = nodeductibles;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getCarphoto() {

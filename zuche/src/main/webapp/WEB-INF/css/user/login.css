@@ -16,7 +16,7 @@
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #fabe00;
+    color: #FF4049;
 }
 .username, .password, .loginBtn {
     width: 350px;
@@ -31,13 +31,13 @@
     font-size: 15px;
 }
 .loginBtn, .loginBtn:hover, .loginBtn:visited, .loginBtn:active {
-    background: #fabe00;
+    background: #FF4049;
     border: 0;
     color: white;
     border-radius: 5px;
 }
 .loginBtn:hover {
-    background: #FF8650;
+    background: #FF5150;
 }
 .registLink, .forgetLink {
     display: block;

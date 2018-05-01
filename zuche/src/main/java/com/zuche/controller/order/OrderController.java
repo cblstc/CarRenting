@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zuche.entity.UserCar;
 import com.zuche.service.user.UserService;
 
 /**
@@ -37,12 +36,12 @@ public class OrderController {
 		String result = null;
 		
 		switch (page) {
-		case "Reserve":
+		/*case "Reserve":
 			List<UserCar> cars = userService.selectCars();
 			if (cars != null)
 				model.addAttribute("car", cars.get(0));
 			result = "order/reserve";
-			break;
+			break;*/
 		default:
 			result = "errorPage";
 			break;

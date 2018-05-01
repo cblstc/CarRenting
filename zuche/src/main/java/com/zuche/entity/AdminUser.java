@@ -1,18 +1,13 @@
 package com.zuche.entity;
 
-import java.io.Serializable;
-
-public class AdminUser implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4846378097715226706L;
-
-	private Integer id;
+public class AdminUser {
+    private Integer id;
 
     private String username;
 
     private String password;
+
+    private Integer role;
 
     private Integer status;
 
@@ -38,6 +33,14 @@ public class AdminUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public Integer getStatus() {

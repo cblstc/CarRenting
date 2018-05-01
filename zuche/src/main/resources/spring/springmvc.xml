@@ -18,7 +18,11 @@
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/images/" mapping="/images/**"/> 
-	<mvc:resources location="/WEB-INF/uploads/" mapping="/uploads/**"/> 
+	<mvc:resources location="/WEB-INF/uploads/" mapping="/uploads/**"/>
+	<!-- h-ui的资源放在这里面 -->
+	<mvc:resources location="/WEB-INF/jsp/store/lib/" mapping="/jsp/store/lib/**"/>
+	<mvc:resources location="/WEB-INF/jsp/store/static/" mapping="/jsp/store/static/**"/>                                                                                       
+	<mvc:resources location="/WEB-INF/jsp/store/temp/" mapping="/jsp/store/temp/**"/>    
 	
 	<!-- 定义文件上传解析器 -->
 	<bean id="multipartResolver"

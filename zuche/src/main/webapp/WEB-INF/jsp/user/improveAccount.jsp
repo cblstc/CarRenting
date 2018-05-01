@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/reset.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/common.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/improveAccount.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/user/improveAccount.css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>

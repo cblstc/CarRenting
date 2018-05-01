@@ -3,11 +3,12 @@
 		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- <settings>
-        打印查询语句
+	<!-- 全局映射器启用缓存 -->
+    <settings>
+    
+    	<!--  打印sql语句  -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
-    </settings> -->
-    <!-- 全局映射器启用缓存 -->
+        
         <setting name="cacheEnabled" value="true"/>
 
         <!-- 查询时，关闭关联对象即时加载以提高性能 -->
@@ -50,12 +51,16 @@
 
         <!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能 -->
         <setting name="aggressiveLazyLoading" value="true"/>
+    </settings>
     
-    <plugins>
+	<plugins>
   		<!-- com.github.pagehelper为PageHelper类所在包名 -->
 	  <plugin interceptor="com.github.pagehelper.PageHelper">
 	    <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->    
 	    <property name="dialect" value="mysql"/>
 	  </plugin>
 	</plugins>
+	
+    
+    
 </configuration>

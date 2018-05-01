@@ -12,10 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
     <div class="public-footer">
-    <div class="public-container">
-        <div class="copyright-text">Copyright©2008-2018 www.cargo.com All Rights Reserved. Cargo汽车租赁有限公司 粤ICP备10005002号 粤公网安备号 11010502026705</div>
+        <div class="public-container">
+            <div class="copyright-text">广东海洋大学软件学院所有</div>
+        </div>
     </div>
-</div>
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/reset.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/common.css">
 </body>

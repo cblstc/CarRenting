@@ -4,15 +4,13 @@
   <resultMap id="BaseResultMap" type="com.zuche.entity.Orders" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="store_car_id" property="storeCarId" jdbcType="INTEGER" />
-    <result column="user_car_id" property="userCarId" jdbcType="INTEGER" />
     <result column="price" property="price" jdbcType="REAL" />
     <result column="insurance" property="insurance" jdbcType="REAL" />
     <result column="nodeductibles" property="nodeductibles" jdbcType="REAL" />
-    <result column="poundage" property="poundage" jdbcType="REAL" />
     <result column="totalMoney" property="totalmoney" jdbcType="REAL" />
-    <result column="disposit" property="disposit" jdbcType="REAL" />
     <result column="getTime" property="gettime" jdbcType="TIMESTAMP" />
     <result column="returnTime" property="returntime" jdbcType="TIMESTAMP" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, store_car_id, user_car_id, price, insurance, nodeductibles, poundage, totalMoney, 
-    disposit, getTime, returnTime
+    id, store_car_id, price, insurance, nodeductibles, totalMoney, getTime, returnTime, 
+    time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.OrdersExample" >
     select
@@ -107,14 +105,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.Orders" >
-    insert into orders (id, store_car_id, user_car_id, 
-      price, insurance, nodeductibles, 
-      poundage, totalMoney, disposit, 
-      getTime, returnTime)
-    values (#{id,jdbcType=VARCHAR}, #{storeCarId,jdbcType=INTEGER}, #{userCarId,jdbcType=INTEGER}, 
-      #{price,jdbcType=REAL}, #{insurance,jdbcType=REAL}, #{nodeductibles,jdbcType=REAL}, 
-      #{poundage,jdbcType=REAL}, #{totalmoney,jdbcType=REAL}, #{disposit,jdbcType=REAL}, 
-      #{gettime,jdbcType=TIMESTAMP}, #{returntime,jdbcType=TIMESTAMP})
+    insert into orders (id, store_car_id, price, 
+      insurance, nodeductibles, totalMoney, 
+      getTime, returnTime, time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{storeCarId,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
+      #{insurance,jdbcType=REAL}, #{nodeductibles,jdbcType=REAL}, #{totalmoney,jdbcType=REAL}, 
+      #{gettime,jdbcType=TIMESTAMP}, #{returntime,jdbcType=TIMESTAMP}, #{time,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.Orders" >
     insert into orders
@@ -125,9 +123,6 @@
       <if test="storeCarId != null" >
         store_car_id,
       </if>
-      <if test="userCarId != null" >
-        user_car_id,
-      </if>
       <if test="price != null" >
         price,
       </if>
@@ -137,20 +132,17 @@
       <if test="nodeductibles != null" >
         nodeductibles,
       </if>
-      <if test="poundage != null" >
-        poundage,
-      </if>
       <if test="totalmoney != null" >
         totalMoney,
-      </if>
-      <if test="disposit != null" >
-        disposit,
       </if>
       <if test="gettime != null" >
         getTime,
       </if>
       <if test="returntime != null" >
         returnTime,
+      </if>
+      <if test="time != null" >
+        time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -159,9 +151,6 @@
       </if>
       <if test="storeCarId != null" >
         #{storeCarId,jdbcType=INTEGER},
-      </if>
-      <if test="userCarId != null" >
-        #{userCarId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
         #{price,jdbcType=REAL},
@@ -172,20 +161,17 @@
       <if test="nodeductibles != null" >
         #{nodeductibles,jdbcType=REAL},
       </if>
-      <if test="poundage != null" >
-        #{poundage,jdbcType=REAL},
-      </if>
       <if test="totalmoney != null" >
         #{totalmoney,jdbcType=REAL},
-      </if>
-      <if test="disposit != null" >
-        #{disposit,jdbcType=REAL},
       </if>
       <if test="gettime != null" >
         #{gettime,jdbcType=TIMESTAMP},
       </if>
       <if test="returntime != null" >
         #{returntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -204,9 +190,6 @@
       <if test="record.storeCarId != null" >
         store_car_id = #{record.storeCarId,jdbcType=INTEGER},
       </if>
-      <if test="record.userCarId != null" >
-        user_car_id = #{record.userCarId,jdbcType=INTEGER},
-      </if>
       <if test="record.price != null" >
         price = #{record.price,jdbcType=REAL},
       </if>
@@ -216,20 +199,17 @@
       <if test="record.nodeductibles != null" >
         nodeductibles = #{record.nodeductibles,jdbcType=REAL},
       </if>
-      <if test="record.poundage != null" >
-        poundage = #{record.poundage,jdbcType=REAL},
-      </if>
       <if test="record.totalmoney != null" >
         totalMoney = #{record.totalmoney,jdbcType=REAL},
-      </if>
-      <if test="record.disposit != null" >
-        disposit = #{record.disposit,jdbcType=REAL},
       </if>
       <if test="record.gettime != null" >
         getTime = #{record.gettime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.returntime != null" >
         returnTime = #{record.returntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -240,15 +220,13 @@
     update orders
     set id = #{record.id,jdbcType=VARCHAR},
       store_car_id = #{record.storeCarId,jdbcType=INTEGER},
-      user_car_id = #{record.userCarId,jdbcType=INTEGER},
       price = #{record.price,jdbcType=REAL},
       insurance = #{record.insurance,jdbcType=REAL},
       nodeductibles = #{record.nodeductibles,jdbcType=REAL},
-      poundage = #{record.poundage,jdbcType=REAL},
       totalMoney = #{record.totalmoney,jdbcType=REAL},
-      disposit = #{record.disposit,jdbcType=REAL},
       getTime = #{record.gettime,jdbcType=TIMESTAMP},
-      returnTime = #{record.returntime,jdbcType=TIMESTAMP}
+      returnTime = #{record.returntime,jdbcType=TIMESTAMP},
+      time = #{record.time,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -259,9 +237,6 @@
       <if test="storeCarId != null" >
         store_car_id = #{storeCarId,jdbcType=INTEGER},
       </if>
-      <if test="userCarId != null" >
-        user_car_id = #{userCarId,jdbcType=INTEGER},
-      </if>
       <if test="price != null" >
         price = #{price,jdbcType=REAL},
       </if>
@@ -271,14 +246,8 @@
       <if test="nodeductibles != null" >
         nodeductibles = #{nodeductibles,jdbcType=REAL},
       </if>
-      <if test="poundage != null" >
-        poundage = #{poundage,jdbcType=REAL},
-      </if>
       <if test="totalmoney != null" >
         totalMoney = #{totalmoney,jdbcType=REAL},
-      </if>
-      <if test="disposit != null" >
-        disposit = #{disposit,jdbcType=REAL},
       </if>
       <if test="gettime != null" >
         getTime = #{gettime,jdbcType=TIMESTAMP},
@@ -286,21 +255,22 @@
       <if test="returntime != null" >
         returnTime = #{returntime,jdbcType=TIMESTAMP},
       </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zuche.entity.Orders" >
     update orders
     set store_car_id = #{storeCarId,jdbcType=INTEGER},
-      user_car_id = #{userCarId,jdbcType=INTEGER},
       price = #{price,jdbcType=REAL},
       insurance = #{insurance,jdbcType=REAL},
       nodeductibles = #{nodeductibles,jdbcType=REAL},
-      poundage = #{poundage,jdbcType=REAL},
       totalMoney = #{totalmoney,jdbcType=REAL},
-      disposit = #{disposit,jdbcType=REAL},
       getTime = #{gettime,jdbcType=TIMESTAMP},
-      returnTime = #{returntime,jdbcType=TIMESTAMP}
+      returnTime = #{returntime,jdbcType=TIMESTAMP},
+      time = #{time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
