@@ -36,5 +36,13 @@ public interface StoreUserService {
 	 * @return
 	 */
 	StoreUser findStoreUser(StoreUser storeUser);
+
+	/**
+	 * 根据字段查询
+	 * @param fieldValue
+	 * @param fieldName
+	 * @return
+	 */
+	StoreUser findStoreByField(String fieldValue, String fieldName);
 	
 }

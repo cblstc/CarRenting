@@ -58,6 +58,8 @@ public class UserController {
 			return "user/login";
 		else if (page.equals("Index"))
 			return "user/index";
+		else if (page.equals("OrdersList"))
+			return "user/ordersList";
 		else if (page.equals("ImproveAccount"))
 			return "user/improveAccount";
 		else if (page.equals("AuthenticationAccount")) {

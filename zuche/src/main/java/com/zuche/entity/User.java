@@ -17,7 +17,7 @@ public class User {
 
     private Integer role;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh-mm-ss") 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss") 
     private Date registtime;
 
     private Integer status;

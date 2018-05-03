@@ -4,21 +4,14 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!--_meta 作为公共模版分离出去-->
-<div class="meta-box"></div>
-<!--/meta 作为公共模版分离出去-->
-
+<jsp:include page="_meta.jsp"></jsp:include>
 
 <title>首页</title>
 </head>
 <body>
-<!--_header 作为公共模版分离出去-->
-<div class="header-box"></div>
-<!--/_header 作为公共模版分离出去-->
+<jsp:include page="_header.jsp"></jsp:include>
 
-<!--_menu 作为公共模版分离出去-->
-<div class="menu-box"></div>
-<!--/_menu 作为公共模版分离出去-->
+<jsp:include page="_menu.jsp"></jsp:include>
 
 <section class="Hui-article-box">
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -31,51 +24,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </section>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.page.js"></script>
+<jsp:include page="_footer.jsp"></jsp:include>
 <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
-    /* 加载尾部 */
-    /*$.ajax({
-        url : "_footer.html",
-        cache : true,
-        async : false,
-        success : function(html) {
-            $(".footer-box").html(html);
-        }
-    });*/
-    /* 加载meta */
-    $.ajax({
-        url : "_meta.html",
-        cache : true,
-        async : false,
-        success : function(html) {
-            $(".meta-box").html(html);
-        }
-    });
-
-    /* 加载头部 */
-    $.ajax({
-        url : "_header.html",
-        cache : true,
-        async : false,
-        success : function(html) {
-            $(".header-box").html(html);
-        }
-    });
-    /* 加载菜单 */
-    $.ajax({
-        url : "_menu.html",
-        cache : true,
-        async : false,
-        success : function(html) {
-            $(".menu-box").html(html);
-        }
-    });
+$(function() {
+	// 判断门店信息是否存在
+	var isNew = ("${isNew }" == "isNew") ? true : false;
+	if (isNew) {
+		// 打开门店信息编辑框
+		var index = layer.open({
+	        type: 2,
+	        title: "门店信息",
+	        content: "${pageContext.request.contextPath }/store/toStoreInfo?operate=add",
+	        cancel: function(index, layero) {
+	       		// 关闭时返回登录页面
+	            window.location.href = "${pageContext.request.contextPath }/store/toLogin";
+	        }
+	    });
+	    layer.full(index);
+	}
+});
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 

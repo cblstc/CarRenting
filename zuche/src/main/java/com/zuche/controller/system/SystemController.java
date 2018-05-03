@@ -3,37 +3,32 @@ package com.zuche.controller.system;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.zuche.entity.Joins;
+import com.zuche.entity.Store;
 import com.zuche.entity.StoreUser;
+import com.zuche.entity.StoreUserAndStore;
 import com.zuche.entity.User;
 import com.zuche.entity.UserAndInfo;
 import com.zuche.entity.UserInfo;
 import com.zuche.intercepter.Token;
 import com.zuche.service.customer.JoinsService;
+import com.zuche.service.store.StoreService;
 import com.zuche.service.store.StoreUserService;
-import com.zuche.service.system.GarageService;
 import com.zuche.service.user.UserInfoService;
 import com.zuche.service.user.UserService;
 import com.zuche.utils.MD5Utils;
@@ -58,6 +53,9 @@ public class SystemController {
 	private JoinsService joinsService;
 	
 	@Autowired
+	private StoreService storeService;
+	
+	@Autowired
 	private StoreUserService storeUserService;
 	
 	/**
@@ -72,7 +70,7 @@ public class SystemController {
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, Model model, Integer pageNum, User user, Joins joins, HttpServletRequest request) throws Exception {
+	public String toPage(@PathVariable String page, Model model, Integer pageNum, User user, Store store, Joins joins, HttpServletRequest request) throws Exception {
 		if (page.equals("Menu")) {
 			return "system/menu";
 		} else if (page.equals("UserList")) {
@@ -89,6 +87,20 @@ public class SystemController {
 			model.addAttribute("phone", user.getPhone());
 			model.addAttribute("email", user.getEmail());
 			return "system/userList";
+		} else if (page.equals("StoreList")) {
+			List<Store> stores = storeService.findStoreByCondition(store.getStorename(), store.getAddress(), store.getPhone(), pageNum);
+			List<StoreUserAndStore> storeUserAndStores = new ArrayList<StoreUserAndStore>();
+			for (Store s: stores) {
+				storeUserAndStores.add(new StoreUserAndStore(storeUserService.findStoreByField(s.getId().toString(), "id"), s));
+			}
+			Page<Store> storesPage = (Page<Store>) stores;
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("total", storesPage.getPages() * 5);
+			model.addAttribute("storeUserAndStores", storeUserAndStores);
+			model.addAttribute("storename", store.getStorename());
+			model.addAttribute("address", store.getAddress());
+			model.addAttribute("phone", store.getPhone());
+			return "system/storeList";
 		} else if (page.equals("JoinsList")) {
 			List<Joins> joinss = joinsService.findJoinsByCondition(joins.getName(), joins.getPhone(), joins.getStatus(), pageNum);
 			Page<Joins> JoinssPage = (Page<Joins>) joinss;
@@ -199,6 +211,39 @@ public class SystemController {
 		// 发送拒绝信
 		joinsService.sendFail(existJoins.getEmail());
 		return "redirect: toJoinsList?pageNum=1";
+	}
+	
+	
+	/**
+	 * 更新状态
+	 * @param id 待更新数据的id
+	 * @param table 更新的表
+	 * @param operate  更新的操作：如start/stop
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/changeStatus")
+	public String changeStatus(Integer id, String table, String operate) throws Exception {
+
+		if (table != null && table.equals("store")) {  // 如果操作门店
+			Store existStore = storeService.findStoreByField(id.toString(), "id");
+			if (operate != null && operate.equals("start")) {
+				existStore.setStatus(1); // 启用
+			} else {
+				existStore.setStatus(2); // 冻结
+			}
+			storeService.updateStore(existStore); 
+		} else if (table != null && table.equals("storeUser")) {  // 如果操作门店账号
+			StoreUser existStoreUser = storeUserService.findUserByField(id.toString(), "id");
+			if (operate != null && operate.equals("start")) {
+				existStoreUser.setStatus(1); // 启用
+			} else {
+				existStoreUser.setStatus(2); // 冻结
+			}
+			storeUserService.updateStoreUser(existStoreUser);
+		}
+		
+		return "redirect: toStoreList?pageNum=1";
 	}
 	
 	/*@RequestMapping(value="/saveGarage", method=RequestMethod.POST)

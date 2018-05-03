@@ -4,6 +4,7 @@ package com.zuche.controller.store;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.zuche.entity.Store;
 import com.zuche.entity.StoreCar;
 import com.zuche.entity.StoreUser;
-import com.zuche.entity.User;
 import com.zuche.intercepter.Token;
 import com.zuche.service.store.StoreService;
 import com.zuche.service.store.StoreUserService;
@@ -42,13 +43,17 @@ public class StoreController {
 	/**
 	 * 页面跳转
 	 * @param page 跳转的页面
+	 * @param request
 	 * @param model
+	 * @param operate 方法：如edit
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, Model model) throws Exception {
+	public String toPage(@PathVariable String page, HttpServletRequest request, Model model, String operate) throws Exception {
+		
+		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
 		
 		String result = null;
 		
@@ -58,6 +63,38 @@ public class StoreController {
 			break;
 		case "Index":  /* 首页 */
 			result = "store/index";
+			
+			/* 判断门店用户是否已经填写门店信息 */
+			if (storeUser != null) {
+				Store existStore = storeService.findStoreByField(storeUser.getId().toString(), "storeUserId");
+				if (existStore == null) {  // 门店不存在
+					model.addAttribute("isNew", "isNew");
+				}
+			}
+			
+			break;
+		case "StoreInfo":  /* 门店信息 */
+			result = "store/storeInfo";
+			
+			if (operate != null && operate.equals("edit")) {  // 如果是编辑页面，那么保存request域
+				if (storeUser != null) {
+					Store existStore = storeService.findStoreByField(storeUser.getId().toString(), "storeUserId");
+					model.addAttribute("store", existStore);
+				}
+			}
+			
+			break;
+		case "CarList":  /* 汽车列表 */
+			result = "store/carList";
+			break;
+		case "EditCar":  /* 编辑车辆 */
+			result = "store/editCar";
+			break;
+		case "OrdersList":  /* 订单列表 */
+			result = "store/ordersList";
+			break;
+		case "OrdersCommentList":  /* 订单评论列表 */
+			result = "store/ordersCommentList";
 			break;
 		case "AddCar":  /* 添加车辆 */
 			result = "store/article-add";
@@ -118,6 +155,32 @@ public class StoreController {
 		}
 		
 		return null;
+	}
+	
+	
+	@RequestMapping(value="/saveStoreInfo", method=RequestMethod.POST)
+	public String saveStoreInfo(Store store, String startTime, String endTime, HttpServletRequest request) throws Exception {
+		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
+
+		store.setStarttime(new SimpleDateFormat("HH:mm").parse(startTime));
+		store.setEndtime(new SimpleDateFormat("HH:mm").parse(endTime));
+		store.setStoreUserId(storeUser.getId());
+		
+		if (store.getId() != null && store.getId().intValue() != 0) {  // 更新
+			Store existStore = storeService.findStoreByField(store.getId().toString(), "id");
+			store.setAvgstar(existStore.getAvgstar()); // 评分
+			store.setTotalstar(existStore.getTotalstar());  // 总星星
+			store.setTotalcomment(existStore.getTotalcomment());  // 总评论数
+			store.setStatus(existStore.getStatus());   // 设置开启门店
+			storeService.updateStoreInfo(store);  // 更新门店信息
+		} else {  // 保存
+			store.setAvgstar(0.0f); // 评分
+			store.setTotalstar(0);  // 总星星
+			store.setTotalcomment(0);  // 总评论数
+			store.setStatus(1);   // 设置开启门店
+			storeService.saveStoreInfo(store);  // 保存门店信息
+		}
+		return "redirect:/store/toIndex";
 	}
 	
 	/**

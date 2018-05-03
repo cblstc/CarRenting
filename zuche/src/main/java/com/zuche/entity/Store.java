@@ -2,6 +2,8 @@ package com.zuche.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Store {
     private Integer id;
 
@@ -11,8 +13,10 @@ public class Store {
 
     private String phone;
 
+    @DateTimeFormat(pattern="HH:mm")
     private Date starttime;
-
+    
+    @DateTimeFormat(pattern="HH:mm")
     private Date endtime;
 
     private String address;

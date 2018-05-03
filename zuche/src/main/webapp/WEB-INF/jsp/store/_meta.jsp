@@ -27,3 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script><![endif]-->
+
+</head>
+<body>
+</body>
+
+</html>
