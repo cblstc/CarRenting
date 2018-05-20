@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<dt><i class="Hui-iconfont">&#xe669;</i> 车辆管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a href="${pageContext.request.contextPath }/store/toCarList" title="车辆管理">车辆管理</a></li>
+					<li><a href="${pageContext.request.contextPath }/store/toCarList?pageNum=1" title="车辆管理">车辆管理</a></li>
 				</ul>
 			</dd>
 		</dl>

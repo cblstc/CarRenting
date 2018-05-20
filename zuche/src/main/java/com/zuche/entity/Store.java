@@ -156,4 +156,18 @@ public class Store {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", storeUserId=" + storeUserId
+				+ ", storename=" + storename + ", phone=" + phone
+				+ ", starttime=" + starttime + ", endtime=" + endtime
+				+ ", address=" + address + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", description=" + description
+				+ ", traffic=" + traffic + ", totalstar=" + totalstar
+				+ ", totalcomment=" + totalcomment + ", avgstar=" + avgstar
+				+ ", status=" + status + "]";
+	}
+    
+    
 }

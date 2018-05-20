@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -34,8 +36,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" id="form-car-add"
+	<form class="form form-horizontal" id="form-car-add" target="_parent"
 		  method="post" action="${pageContext.request.contextPath }/store/saveCar">
+		  <input type="hidden" name="id" value="${storeCar.id }">
+		  <input type="hidden" class="carphoto" name="carphoto" value="${storeCar.carphoto }">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>车辆品牌：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -69,19 +73,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>座位数：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text seats" value="" required name="seats" maxlength="2" placeholder="请输入座位数">
+				<input type="text" class="input-text seats" value="${storeCar.seats }" required name="seats" maxlength="2" placeholder="请输入座位数">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>门数：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text doors" value="" required name="doors" maxlength="2" placeholder="请输入门数">
+				<input type="text" class="input-text doors" value="${storeCar.doors }" required name="doors" maxlength="2" placeholder="请输入门数">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text displacement" value="" required name="displacement" maxlength="10"  placeholder="请输入排量，如：2.4L">
+				<input type="text" class="input-text displacement" value="${storeCar.displacement }" required name="displacement" maxlength="10"  placeholder="请输入排量，如：2.4L">
 			</div>
 		</div>
 		<div class="row cl">
@@ -90,8 +94,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="select-box">
 				<select name="navigator" class="navigator select">
 					<option value="0">请选择</option>
-					<option value="1">有</option>
-					<option value="2">无</option>
+					<option value="1" <c:if test="${storeCar.navigator == 1 }">selected</c:if>>有</option>
+					<option value="2"  <c:if test="${storeCar.navigator == 2 }">selected</c:if>>无</option>
 				</select>
 				</span>
 			</div>
@@ -102,8 +106,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="select-box">
 				<select name="pdc" class="pdc select">
 					<option value="0">请选择</option>
-					<option value="1">有</option>
-					<option value="2">无</option>
+					<option value="1" <c:if test="${storeCar.pdc == 1 }">selected</c:if>>有</option>
+					<option value="2" <c:if test="${storeCar.pdc == 2 }">selected</c:if>>无</option>
 				</select>
 				</span>
 			</div>
@@ -114,9 +118,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="select-box">
 				<select name="drivenmode" class="drivenmode select">
 					<option value="0">请选择</option>
-					<option value="1">前驱</option>
-					<option value="2">后驱</option>
-					<option value="3">四驱</option>
+					<option value="1" <c:if test="${storeCar.drivenmode == 1 }">selected</c:if>>前驱</option>
+					<option value="2" <c:if test="${storeCar.drivenmode == 2 }">selected</c:if>>后驱</option>
+					<option value="3" <c:if test="${storeCar.drivenmode == 3 }">selected</c:if>>四驱</option>
 				</select>
 				</span>
 			</div>
@@ -124,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>油箱：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text fueltankage" value="" required name="fueltankage" maxlength="4"  placeholder="请输入油箱大小">
+				<input type="text" class="input-text fueltankage" name="fueltankage" value="${storeCar.fueltankage }" maxlength="4"  placeholder="请输入油箱大小">
 			</div>
 		</div>
 		<div class="row cl">
@@ -133,8 +137,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="select-box">
 				<select name="gearbox" class="gearbox select">
 					<option value="0">请选择</option>
-					<option value="1">自动</option>
-					<option value="2">手动</option>
+					<option value="1" <c:if test="${storeCar.gearbox == 1 }">selected</c:if>>自动</option>
+					<option value="2" <c:if test="${storeCar.gearbox == 2 }">selected</c:if>>手动</option>
 				</select>
 				</span>
 			</div>
@@ -145,8 +149,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="select-box">
 				<select name="skylight" class="skylight select">
 					<option value="0">请选择</option>
-					<option value="1">有</option>
-					<option value="2">无</option>
+					<option value="1" <c:if test="${storeCar.skylight == 1 }">selected</c:if>>有</option>
+					<option value="2" <c:if test="${storeCar.skylight == 2 }">selected</c:if>>无</option>
 				</select>
 				</span>
 			</div>
@@ -154,31 +158,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>安全气囊：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text aircell" value="" required name="aircell" maxlength="2"  placeholder="请输入安全气囊个数">
+				<input type="text" class="input-text aircell" value="${storeCar.aircell }" required name="aircell" maxlength="2"  placeholder="请输入安全气囊个数">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>日均价：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text price" value="" required name="price" maxlength="10"  placeholder="请输入租赁一天的价格(元)">
+				<input type="text" class="input-text price" value="${storeCar.price }" required name="price" maxlength="10"  placeholder="请输入租赁一天的价格(元)">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>基本保险：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text insurance" value="" required name="insurance" maxlength="10"  placeholder="请输入租赁一天的基本保险(元)">
+				<input type="text" class="input-text insurance" value="${storeCar.insurance }" required name="insurance" maxlength="10"  placeholder="请输入租赁一天的基本保险(元)">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>不计免赔险：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text nodeductibles" value="" required name="nodeductibles" maxlength="10"  placeholder="请租赁一天的不计免赔险(元)">
+				<input type="text" class="input-text nodeductibles" value="${storeCar.nodeductibles }" required name="nodeductibles" maxlength="10"  placeholder="请租赁一天的不计免赔险(元)">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>数量：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text count" value="" required name="count" maxlength="10"  placeholder="请输入车辆的数量">
+				<input type="text" class="input-text count" value="${storeCar.count }" required name="count" maxlength="10"  placeholder="请输入车辆的数量">
 			</div>
 		</div>
 		<!-- <div class="row cl">
@@ -188,17 +192,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			</div>
 		</div> -->
-
-		<!--<div class="row cl">
+		
+		<c:if test="${storeCar.id == null }">
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">图片：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="photoCommand">单个文件大小<2m，最多5张图片</span>
 				<div class="uploader-thum-container">
 					<div id="filePicker">选择图片</div>
-					<div id="fileList" class="uploader-list"></div>
+					<div id="fileList" class="uploader-list">
+						<%-- <c:forEach var="carphoto" items="${fn:split(storeCar.carphoto, ';') }">
+							<div id=""  class="file-item thumbnail">
+								<img width="100" height="100" src="${pageContext.request.contextPath }/uploads/${carphoto }">
+							</div>
+						</c:forEach> --%>
+					</div>
 				</div>
 			</div>
-		</div>-->
+		</div>
+		</c:if>
 
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
@@ -226,32 +238,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript">
 $(function(){
-    /* 自定义验证：判断下拉框是否选中 */
-    jQuery.validator.addMethod("isSelect", function (value, element) {
-		return value != "0";
-    }, "请选择一个选项");
-    /* 自定义验证：判断数字是否是合法的正数 */
-    jQuery.validator.addMethod("isPositive", function (value, element) {
-        var regx = /^\d+(\.\d{1,2})?$/;
-        return regx.test(value);
-    }, "只能输入正整数或两位以内的小数");
-
-    /* 表单校验 */
-    $("#form-car-add").validate({
-		rules: {
-			brand: "isSelect",
-            model: "isSelect",
-            navigator: "isSelect",
-            pdc: "isSelect",
-            drivenmode: "isSelect",
-            gearbox: "isSelect",
-            skylight: "isSelect",
-            price: "isPositive",
-            insurance: "isPositive",
-            nodeductibles: "isPositive"
-        }
-	});
-
     // 设置只能输入数字
     $(".aircell, .fueltankage, .seats, .doors, .count").bind("keyup", function onlyNumber() {
         this.value=this.value.replace(/\D/g,'');
@@ -272,7 +258,7 @@ $(function(){
 
     // 初始化Web Uploader
     var uploader = WebUploader.create({
-        auto: true,  /* 开启自动上传 */
+        auto: false,  /* 开启自动上传 */
         swf: '${pageContext.request.contextPath }/jsp/store/lib/ueditor/1.4.3/third-party/webuploader/Uploader.swf', /* swf文件路径 */
         server: '${pageContext.request.contextPath }/store/uploads',  /* 服务器处理路径 */
 
@@ -291,7 +277,7 @@ $(function(){
         fileSingleSizeLimit: 2 * 1024 * 1024,  /* 每张图片大小不超过2m */
         fileVal: 'file' /* 设置上传图片的name属性：默认file  */
     });
-
+    
     // 当有文件添加进来的时候
     uploader.on( 'fileQueued', function( file ) {
         var $list = $("#fileList");
@@ -335,10 +321,23 @@ $(function(){
 
         $percent.css( 'width', percentage * 100 + '%' );
     });
+    
+ 	// 完成上传完了，成功或者失败，先删除进度条。x
+    uploader.on( 'uploadComplete', function( file ) {
+    	$( '#'+file.id ).find('.progress').remove();
+    });
 
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-    uploader.on( 'uploadSuccess', function( file ) {
-        $( '#'+file.id ).addClass('upload-state-done');
+    uploader.on( 'uploadSuccess', function( file, response ) {
+        // $( '#'+file.id ).addClass('upload-state-done');
+        var carphoto = $(".carphoto").val();
+        var filename = response.fileName;  // 上传的文件名
+        if (carphoto == "") {
+        	carphoto = filename;
+        } else {
+        	carphoto = carphoto + ";" + filename;
+        }
+        $(".carphoto").val(carphoto);
     });
 
     // 文件上传失败，显示上传出错。
@@ -353,14 +352,42 @@ $(function(){
 
         $error.text('上传失败');
     });
+	
+    
+	/* var ue = UE.getEditor('editor'); */
+	
+    /* 自定义验证：判断下拉框是否选中 */
+    jQuery.validator.addMethod("isSelect", function (value, element) {
+		return value != "0";
+    }, "请选择一个选项");
+    /* 自定义验证：判断数字是否是合法的正数 */
+    jQuery.validator.addMethod("isPositive", function (value, element) {
+        var regx = /^\d+(\.\d{1,2})?$/;
+        return regx.test(value);
+    }, "只能输入正整数或两位以内的小数");
 
-    // 完成上传完了，成功或者失败，先删除进度条。
-    uploader.on( 'uploadComplete', function( file ) {
-        $( '#'+file.id ).find('.progress').remove();
-    });
-	
-	var ue = UE.getEditor('editor');
-	
+    /* 表单校验 */
+    $("#form-car-add").validate({
+		rules: {
+			brand: "isSelect",
+            model: "isSelect",
+            navigator: "isSelect",
+            pdc: "isSelect",
+            drivenmode: "isSelect",
+            gearbox: "isSelect",
+            skylight: "isSelect",
+            price: "isPositive",
+            insurance: "isPositive",
+            nodeductibles: "isPositive"
+        }, 
+        submitHandler: function(form) {
+        	layer.msg("正在上传图片，请稍等...");
+        	uploader.upload();  // 开始上传
+        	uploader.on("uploadFinished", function() {
+        		form.submit(); // 所有文件上传成功后提交
+        	});
+        }
+	});
 });
 
 /* 加载meta */

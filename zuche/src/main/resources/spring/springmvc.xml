@@ -25,7 +25,9 @@
 	<mvc:resources location="/WEB-INF/jsp/store/static/" mapping="/jsp/store/static/**"/>                                                                                       
 	<mvc:resources location="/WEB-INF/jsp/store/temp/" mapping="/jsp/store/temp/**"/>    
 	<mvc:resources location="/WEB-INF/jsp/store/css/" mapping="/jsp/store/css/**"/>
-	<mvc:resources location="/WEB-INF/jsp/store/js/" mapping="/jsp/store/js/**"/>                                                                                       
+	<mvc:resources location="/WEB-INF/jsp/store/js/" mapping="/jsp/store/js/**"/>
+	<mvc:resources location="/WEB-INF/jsp/store/images/" mapping="/jsp/store/images/**"/>     
+	<mvc:resources location="/WEB-INF/jsp/store/fonts/" mapping="/jsp/store/fonts/**"/>                                                                                   
 	
 	<!-- 定义文件上传解析器 -->
 	<bean id="multipartResolver"

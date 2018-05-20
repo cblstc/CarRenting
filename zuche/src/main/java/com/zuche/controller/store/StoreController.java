@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.zuche.entity.Store;
 import com.zuche.entity.StoreCar;
 import com.zuche.entity.StoreUser;
+import com.zuche.entity.StoreUserAndStore;
 import com.zuche.intercepter.Token;
+import com.zuche.service.store.StoreCarService;
 import com.zuche.service.store.StoreService;
 import com.zuche.service.store.StoreUserService;
 import com.zuche.utils.UUIDUtils;
@@ -40,6 +48,9 @@ public class StoreController {
 	@Autowired
 	private StoreUserService storeUserService;
 	
+	@Autowired
+	private StoreCarService storeCarService;
+	
 	/**
 	 * 页面跳转
 	 * @param page 跳转的页面
@@ -51,7 +62,7 @@ public class StoreController {
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, HttpServletRequest request, Model model, String operate) throws Exception {
+	public String toPage(@PathVariable String page, HttpServletRequest request, Model model, String operate, StoreCar storeCar, Integer pageNum) throws Exception {
 		
 		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
 		
@@ -85,10 +96,30 @@ public class StoreController {
 			
 			break;
 		case "CarList":  /* 汽车列表 */
+			List<StoreCar> storeCars = storeCarService.findCarByCondition(storeCar.getBrand(), storeCar.getModel(), 
+					storeCar.getConfiguration(), pageNum);
+			Page<StoreCar> storeCarsPage = (Page<StoreCar>) storeCars;
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("total", storeCarsPage.getPages() * 5);
+			model.addAttribute("storeCars", storeCars);
+			model.addAttribute("brand", storeCar.getBrand());
+			model.addAttribute("model", storeCar.getModel());
+			model.addAttribute("configuration", storeCar.getConfiguration());
+			
 			result = "store/carList";
 			break;
 		case "EditCar":  /* 编辑车辆 */
 			result = "store/editCar";
+			
+			if (operate != null && operate.equals("edit")) {  // 如果是编辑页面，那么保存request域
+				List<StoreCar> existStoreCars = storeCarService.findCarByField(
+						storeCar.getId().toString(),"id");
+				if (existStoreCars != null && existStoreCars.size() > 0) {
+					StoreCar existStoreCar = existStoreCars.get(0);
+					model.addAttribute("storeCar", existStoreCar);
+				}
+			}
+			
 			break;
 		case "OrdersList":  /* 订单列表 */
 			result = "store/ordersList";
@@ -109,9 +140,15 @@ public class StoreController {
 	
 	
 	@RequestMapping(value="/uploads", method=RequestMethod.POST)
-	public void uploads(HttpServletRequest request, @RequestParam("file") CommonsMultipartFile file) throws Exception {
+	public void uploads(HttpServletRequest request, HttpServletResponse response, @RequestParam("file") CommonsMultipartFile file) throws Exception {
 		if (file != null) {
 			String fileName = saveImage(request, file.getInputStream()); // 保存图片
+			
+			response.setCharacterEncoding("UTF-8");  
+			response.setContentType("application/json; charset=utf-8");  
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("fileName", fileName);
+			response.getWriter().print(jsonObject);
 		}
 	}
 	
@@ -141,20 +178,28 @@ public class StoreController {
 	}
 	
 	@RequestMapping(value="/saveCar", method=RequestMethod.POST)
-	public String saveCar(StoreCar storeCar) throws Exception {
+	public String saveCar(StoreCar storeCar, HttpServletRequest request) throws Exception {
+		
+		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
+		Store existStore = storeService.findStoreByField(storeUser.getId().toString(), "storeUserId"); 
+		
 		if (storeCar != null) {
-			if (storeCar.getConfiguration() == "0") {  // 如果车辆配置为"0"，说明用户未选择配置，或该车型下没有配置可选
-				storeCar.setConfiguration("");
-			} else {  // 根据车辆配置可以知道车辆的出厂年份，如2016款 Sportback
-				String year = storeCar.getConfiguration().substring(0, 4);
-				/*storeCar.setYear(new SimpleDateFormat("yyyy").parse(year));  // 设置出厂年份
-*/			}
-			storeCar.setStoreId(1);  // 设置门店id
+			storeCar.setStoreId(existStore.getId());  // 设置门店id
 			storeCar.setStatus(1);   // 设置上架
-			storeService.saveCar(storeCar);  // 保存车辆信息
+			
+			if (storeCar.getId() == null) {  // 保存
+				storeCarService.saveCar(storeCar);  // 保存车辆信息
+			} else {  // 更新
+				List<StoreCar> existStoreCars = storeCarService.findCarByField(
+						storeCar.getId().toString(),"id");
+				if (existStoreCars != null && existStoreCars.size() > 0) {
+					StoreCar existStoreCar = existStoreCars.get(0);
+					storeCarService.updateCar(storeCar); // 更新车辆信息
+				}
+			}
 		}
 		
-		return null;
+		return "redirect:/store/toCarList?pageNum=1";
 	}
 	
 	
@@ -206,5 +251,32 @@ public class StoreController {
 			request.getSession().setAttribute("storeUser", existStoreUser);
 			return "redirect:/store/toIndex";
 		}
+	}
+	
+	@RequestMapping("/changeStatus")
+	public String changeStatus(Integer id, String operate) throws Exception {
+		if (operate != null && operate.equals("carUp")) { // 上架
+			if (id != null) {
+				List<StoreCar> existStoreCars = storeCarService.findCarByField(
+						id.toString(),"id");
+				if (existStoreCars != null && existStoreCars.size() > 0) {
+					StoreCar existCar = existStoreCars.get(0);
+					existCar.setStatus(1);
+					storeCarService.updateCar(existCar);
+				}
+			}
+		} else if (operate != null && operate.equals("carDown")) { // 下架
+			if (id != null) {
+				List<StoreCar> existStoreCars = storeCarService.findCarByField(
+						id.toString(),"id");
+				if (existStoreCars != null && existStoreCars.size() > 0) {
+					StoreCar existCar = existStoreCars.get(0);
+					existCar.setStatus(2);
+					storeCarService.updateCar(existCar);
+				}
+			}
+		}
+		
+		return "redirect:/store/toCarList?pageNum=1";
 	}
 }

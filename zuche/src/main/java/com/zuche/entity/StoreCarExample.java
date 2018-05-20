@@ -434,6 +434,76 @@ public class StoreCarExample {
             return (Criteria) this;
         }
 
+        public Criteria andCarphotoIsNull() {
+            addCriterion("carPhoto is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoIsNotNull() {
+            addCriterion("carPhoto is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoEqualTo(String value) {
+            addCriterion("carPhoto =", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoNotEqualTo(String value) {
+            addCriterion("carPhoto <>", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoGreaterThan(String value) {
+            addCriterion("carPhoto >", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoGreaterThanOrEqualTo(String value) {
+            addCriterion("carPhoto >=", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoLessThan(String value) {
+            addCriterion("carPhoto <", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoLessThanOrEqualTo(String value) {
+            addCriterion("carPhoto <=", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoLike(String value) {
+            addCriterion("carPhoto like", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoNotLike(String value) {
+            addCriterion("carPhoto not like", value, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoIn(List<String> values) {
+            addCriterion("carPhoto in", values, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoNotIn(List<String> values) {
+            addCriterion("carPhoto not in", values, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoBetween(String value1, String value2) {
+            addCriterion("carPhoto between", value1, value2, "carphoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarphotoNotBetween(String value1, String value2) {
+            addCriterion("carPhoto not between", value1, value2, "carphoto");
+            return (Criteria) this;
+        }
+
         public Criteria andSeatsIsNull() {
             addCriterion("seats is null");
             return (Criteria) this;

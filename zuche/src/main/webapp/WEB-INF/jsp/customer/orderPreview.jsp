@@ -10,50 +10,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
     <meta charset="UTF-8">
     <title>订单预览</title>
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap.min.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/bootstrap-theme.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/bootstrap.min.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/bootstrap-theme.min.css">
 
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/orderPreview.css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/orderPreview.js"></script>
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/reset.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/common.css">
+    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/customer/orderPreview.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/customer/orderPreview.js"></script>
 </head>
 <body>
-    <!--头部-->
-	<jsp:include page="../common/public-header.jsp"></jsp:include>
+    <div class="header-box"></div>
+     <!--头部-->
+     <jsp:include page="../common/public-header.jsp"></jsp:include>
 
     <div class="main-content">
         <div class="public-container car-container">
             <div class="car-content clearfloat">
-                <img class="car-img left-float" src="${pageContext.request.contextPath}/images/car-1.jpg">
+                <img class="car-img left-float" src="${pageContext.request.contextPath }/images/car-1.jpg">
                 <div class="car-desc-box left-float">
                     <dl>
-                        <dt class="car-name">大众朗逸</dt>
-                        <dd class="car-desc">三厢|1.6自动|乘坐5人</dd>
-                        <dd><button class="conf-btn">查看配置信息</button></dd>
+                        <dt class="car-name">${storeCar.model }</dt>
+                        <dd class="car-desc">${storeCar.displacement }|${storeCar.seats }人|${storeCar.brand }人</dd>
+                        <dd><button class="conf-btn" onclick="javascript: window.open('carDetail.html');">查看配置信息</button></dd>
                     </dl>
                 </div>
                 <div class="date-address-box left-float">
                     <div class="date-address-title date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/get-car.png"> <p class="text-common title-text left-float">取车</p><br>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/get-car.png"> <p class="text-common title-text left-float">取车</p><br>
                     </div>
                     <div class="date-text date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/date.png"> <p class="text-common left-float">2018-01-08 10:00</p><br>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/date.png"> <p class="text-common left-float">${getDate }</p><br>
                     </div>
                     <div class="address-text date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/address.png"> <p class="text-common left-float">武汉 天河机场店12333333333333333</p>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/address.png"> <p class="text-common left-float">${store.storename }</p>
                     </div>
                 </div>
                 <div class="date-address-box left-float">
                     <div class="date-address-title date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/return-car.png"> <p class="text-common title-text left-float">还车</p><br>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/return-car.png"> <p class="text-common title-text left-float">还车</p><br>
                     </div>
                     <div class="date-text date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/date.png"> <p class="text-common left-float">2018-01-08 10:00</p><br>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/date.png"> <p class="text-common left-float">${returnDate }</p><br>
                     </div>
                     <div class="address-text date-address-common clearfloat">
-                        <img class="icon-common left-float" src="${pageContext.request.contextPath}/images/date-address/address.png"> <p class="text-common left-float">武汉 天河机场店12333333333333333</p>
+                        <img class="icon-common left-float" src="${pageContext.request.contextPath }/images/date-address/address.png"> <p class="text-common left-float">${store.storename }</p>
                     </div>
                 </div>
             </div>
@@ -61,12 +62,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="price-content">
                 <dl>
                     <dt class="price-title">费用明细</dt>
-                    <dd class="price-text clearfloat"><p class="left-float">车辆租赁费</p><p class="sub-price right-float">&yen;98</p><p class="calc-price right-float">98x2</p></dd>
-                    <dd class="price-text clearfloat"><p class="left-float">基本保险费</p><p class="sub-price right-float">&yen;110</p><p class="calc-price right-float">110x2</p></dd>
-                    <dd class="price-text clearfloat"><p class="left-float"><label for="nodebuct" class="nodebuct-label">不计免赔险（非强制性）</label><input id="nodebuct" type="checkbox"></p><p class="sub-price right-float">&yen;40</p><p class="calc-price right-float">40x2</p></dd>
-                    <dd class="price-text clearfloat"><p class="left-float">手续费</p><p class="sub-price right-float">&yen;20</p></dd>
-                    <dd class="price-text clearfloat"><p class="left-float">合计</p><p class="sub-price right-float">&yen;450</p></dd>
-                    <dd class="total-text clearfloat"><p class="left-float">预付款<span class="real-money">&yen;30</span></p> <button class="submit-btn right-float">提交订单</button></dd>
+                    <dd class="price-text clearfloat"><p class="left-float">车辆租赁费</p><p id="sub-price" class="sub-price right-float">&yen;${storeCar.price * rentdays }</p><p class="calc-price right-float">${storeCar.price }x${rentdays }</p></dd>
+                    <dd class="price-text clearfloat"><p class="left-float">基本保险费</p><p id="sub-insurance" class="sub-price right-float">&yen;${storeCar.insurance * rentdays }</p><p class="calc-price right-float">${storeCar.insurance }x${rentdays }</p></dd>
+                    <dd class="price-text clearfloat"><p class="left-float"><label for="nodebuct" class="nodebuct-label">不计免赔险（非强制性）</label><input id="nodebuct" type="checkbox" onclick="calcTotal();"></p><p id="sub-nodebuct" class="sub-price right-float">&yen;${storeCar.nodeductibles * rentdays }</p><p class="calc-price right-float">${storeCar.nodeductibles }x${rentdays }</p></dd>
+                    <form id="orderForm" action="${pageContext.request.contextPath }/order/generateOrder" method="post">
+                    	<input type="hidden" class="storeCarId" name="storeCarId" value="${storeCar.id }">
+	                	<input type="hidden" class="price" name="price" value="">
+	                	<input type="hidden" class="insurance" name="insurance" value="">
+	                	<input type="hidden" class="nodeductibles" name="nodeductibles" value="">
+	                	<input type="hidden" class="totalmoney" name="totalmoney" value="">
+                    	<dd class="total-text clearfloat"><p class="left-float">合计<span id="total-money" class="real-money">&yen;${storeCar.price * rentdays + storeCar.insurance * rentdays }</span></p> <button class="submit-btn right-float" onclick="submitOrder();">提交订单</button></dd>
+                	</form>
                 </dl>
             </div>
 
@@ -87,17 +93,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         你自己不会花一分钱的，如果没有这个不计免赔的话，
                         保险公司只会给你拿一部分，剩下的就只有你自己拿了
                         ，总之，有这个不计免赔，对客户自身是有好处的。为了您的利益，还是非常建议购买的。</dd><br/>
-                    <dt>预付款是什么？预付款怎么退？</dt>
-                    <dd>由于不确定对方是否能够有效接单或是客户是否突然退单，为了双方的利益着想。顾客只需支付低额的
-                    预付款。预付款的退额是有条件的。这些条件都是可以退单的：支付4小时内退单、对方拒单、订单完成。其他
-                    条件原则上是无法退额的，这一点需要注意。
-                    </dd>
                 </dl>
             </div>
         </div>
     </div>
 
-	<!--尾部-->
-	<jsp:include page="../common/public-footer.jsp"></jsp:include>
+
+    <!--尾部-->
+     <jsp:include page="../common/public-footer.jsp"></jsp:include>
+
+
+    <script>
+        $(function() {
+           calcTotal();
+        });
+
+        /* 计算合计 */
+        function calcTotal() {
+            var subPrice = parseInt($("#sub-price").text().replace(/¥/, "")); // 车辆租赁费/天
+            var subInsurant = parseInt($("#sub-insurance").text().replace(/¥/, ""));  // 基本保险费/天
+            var subNodebuct = 0;  // 不计免赔险
+
+            var isChecked = $("#nodebuct").prop("checked");  // 不计免赔是否选中
+            if (isChecked) {
+                subNodebuct = parseInt($("#sub-nodebuct").text().replace(/¥/, ""));  // 不计免赔险
+            }
+            
+
+            var total = subPrice + subInsurant + subNodebuct;  // 合计
+            // 给表单赋值
+            $(".price").val(subPrice);
+        	$(".insurance").val(subInsurant);
+        	$(".nodeductibles").val(subNodebuct);
+        	$(".totalmoney").val(total);
+        	
+            $("#total-money").text("¥" + total);
+        }
+    </script>
 </body>
 </html>

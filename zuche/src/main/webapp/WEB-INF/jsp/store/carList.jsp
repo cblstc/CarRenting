@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -22,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="text-c">
+				<form action="${pageContext.request.contextPath }/store/toCarList?pageNum=1" method="post">
 				品牌
 				<span class="select-box inline">
 					<select name="brand" class="brand select" onchange="loadModel(options[this.options.selectedIndex].getAttribute('brandId'))">
@@ -42,10 +44,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</select>
 				</span>
 				<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜车辆</button>
+				</form>
 			</div>
 			<div class="cl pd-5 bg-1 bk-gray mt-20">
 				<span class="l">
-				<a class="btn btn-primary radius" data-title="添加车辆" _href="car-add.html" onclick="car_add('添加车辆','${pageContext.request.contextPath }/store/toEditCar')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加车辆</a>
+				<a class="btn btn-primary radius" data-title="添加车辆" _href="" onclick="car_add('添加车辆','${pageContext.request.contextPath }/store/toEditCar')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加车辆</a>
 				</span>
 				<span class="r">共有数据：<strong>54</strong> 条</span>
 			</div>
@@ -76,32 +79,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="storeCar" items="${storeCars }">
 						<tr class="text-c">
-							<td>1</td>
-							<td>保时捷</td>
-							<td>911 GT</td>
-							<td>2015年基本版</td>
-							<td>2</td>
-							<td>2</td>
-							<td>2.4L</td>
-							<td>有</td>
-							<td>有</td>
-							<td>前驱</td>
-							<td>70</td>
-							<td>手动</td>
-							<td>有</td>
-							<td>4</td>
-							<td>120</td>
-							<td>40</td>
-							<td>20</td>
-							<td>10</td>
-							<td class="td-status"><span class="label label-success radius">已上架</span><span class="label label-danger radius">已下架</span></td>
+							<td>${storeCar.id }</td>
+							<td>${storeCar.brand }</td>
+							<td>${storeCar.model }</td>
+							<td>${storeCar.configuration }</td>
+							<td>${storeCar.seats }</td>
+							<td>${storeCar.doors }</td>
+							<td>${storeCar.displacement }</td>
+							<td>
+								<c:if test="${storeCar.navigator == 1 }">有</c:if>
+								<c:if test="${storeCar.navigator == 2 }">无</c:if>
+							</td>
+							<td>${storeCar.pdc }</td>
+							<td>
+								<c:if test="${storeCar.drivenmode == 1 }">前驱</c:if>
+								<c:if test="${storeCar.drivenmode == 2 }">后驱</c:if>
+								<c:if test="${storeCar.drivenmode == 3 }">四驱</c:if>
+							</td>
+							<td>${storeCar.fueltankage }</td>
+							<td>
+								<c:if test="${storeCar.gearbox == 1 }">自动</c:if>
+								<c:if test="${storeCar.gearbox == 2 }">手动</c:if>
+							</td>
+							<td>
+								<c:if test="${storeCar.skylight == 1 }">有</c:if>
+								<c:if test="${storeCar.skylight == 2 }">无</c:if>
+							</td>
+							<td>${storeCar.aircell }</td>
+							<td>${storeCar.price }</td>
+							<td>${storeCar.insurance }</td>
+							<td>${storeCar.nodeductibles }</td>
+							<td>${storeCar.count }</td>
+							<td class="td-status">
+								<c:if test="${storeCar.status == 1 }"><span class="label label-success radius">已上架</span></c:if>
+								<c:if test="${storeCar.status == 2 }"><span class="label label-danger radius">已下架</span></c:if>
+							</td>
 							<td class="f-14 td-manage">
-								<a style="text-decoration:none" onClick="car_start(this,'10001')" href="javascript:;" title="上架"><i class="Hui-iconfont">&#xe6dc;</i></a>
-								<a style="text-decoration:none" onClick="car_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
-								<a style="text-decoration:none" class="ml-5" onClick="car_edit('车辆编辑','car-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<c:if test="${storeCar.status == 1 }">
+								<a style="text-decoration:none" onClick="car_stop(this,this.parentNode.parentNode.children[0].innerHTML)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
+							</c:if>
+							<c:if test="${storeCar.status == 2 }">
+								<a style="text-decoration:none" onClick="car_start(this,this.parentNode.parentNode.children[0].innerHTML)" href="javascript:;" title="上架"><i class="Hui-iconfont">&#xe6dc;</i></a>
+							</c:if>
+								<a style="text-decoration:none" class="ml-5" onClick="car_edit('车辆编辑','${pageContext.request.contextPath }/store/toEditCar', this.parentNode.parentNode.children[0].innerHTML)" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 							</td>
 						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -144,7 +169,7 @@ function car_edit(title,url,id,w,h){
 	var index = layer.open({
 		type: 2,
 		title: title,
-		content: url
+		content: url + "?id=" + id + "&operate=edit"
 	});
 	layer.full(index);
 }
@@ -152,20 +177,14 @@ function car_edit(title,url,id,w,h){
 /*车辆-下架*/
 function car_stop(obj,id){
 	layer.confirm('确认要下架吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="car_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-		$(obj).remove();
-		layer.msg('已下架!',{icon: 5,time:1000});
+		window.location.href = "${pageContext.request.contextPath }/store/changeStatus?operate=carDown&id=" + id;
 	});
 }
 
 /*车辆-上架*/
 function car_start(obj,id){
 	layer.confirm('确认要上架吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="car_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已上架!',{icon: 6,time:1000});
+		window.location.href = "${pageContext.request.contextPath }/store/changeStatus?operate=carUp&id=" + id;
 	});
 }
 

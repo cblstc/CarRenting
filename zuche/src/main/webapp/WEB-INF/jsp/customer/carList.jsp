@@ -1,4 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -76,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 --><input readonly required class="address-choice storename" placeholder="请选择一个门店" onclick="openMap($('.storename').val())">
                 </div>
                 <div class="choice-address-block">
-                    <span class="address-text return-address-text">当前门店：&nbsp;<span class="red-text">武汉天河门店</span></span>
+                    <span class="address-text return-address-text">当前门店：&nbsp;<span class="red-text">${store.storename }</span></span>
                 </div>
             </div>
             <div class="choice-submit clearfloat">
@@ -133,89 +136,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
                 <div class="car-store">
-                    <p class="store-name">武汉天河机场店</p>
-                    <div id="store-map" class="store-map"></div>
-                    <div class="store-desc">
-                        <dl>
-                            <dt class="store-title">门店地址：</dt>
-                            <dd class="store-content">T3航站楼国内到达二楼7号出口左面柜台</dd>
-                            <dt class="store-title">门店详情：</dt>
-                            <dd class="store-content">武汉天河机场店欢迎您</dd>
-                            <dt class="store-title">交通指引：</dt>
-                            <dd class="store-content">地铁3号线</dd>
-                            <dt class="store-title">营业时间：</dt>
-                            <dd class="store-content">09:00-21:00</dd>
-                            <dt class="store-title">门店电话：</dt>
-                            <dd class="store-content">13432825705</dd>
-                            <dt class="store-title">客户评价：</dt>
-                            <dd class="store-content clearfloat"><div class="comment-star left-float"></div>&nbsp;<span class="orange-text">3.0</span><a href="javascript:void(0)" onclick="showComment('store');" class="total-comment right-float">3000000条评论&gt;</a></dd>
-                        </dl>
-                    </div>
+                    <!--门店地图-->
+					<jsp:include page="../common/storeMap.jsp"></jsp:include>
                 </div>
             </div>
 
             <div class="car-content left-float">
+            	<c:forEach var="storeCar" items="${storeCars }">
                 <!-- 车辆一条记录: start -->
                 <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="${pageContext.request.contextPath }/images/car-1.jpg">
+                	<c:if test="${storeCar.carphoto != null }">
+                    	<img class="car-img left-float" src="${pageContext.request.contextPath }/uploads/${fn:split(storeCar.carphoto, ';')[0]}">
+                    </c:if>
+                    <c:if test="${storeCar.carphoto == null }">
+                    	<img class="car-img left-float" src="${pageContext.request.contextPath }/images/non-car.png">
+                    </c:if>
                     <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <!--<dd class="car-gear">手动挡</dd>-->
+                        <dt class="car-name">${storeCar.model }</dt>
+                        <dd class="car-desc">${storeCar.displacement }|${storeCar.seats }人|${storeCar.brand }</dd>
+                        <c:if test="${storeCar.gearbox == 1 }"><dd class="car-gear-auto">自动挡</dd></c:if>
+                        <c:if test="${storeCar.gearbox == 2 }"><dd class="car-gear">手动挡</dd></c:if>
                         <dd  class="car-comment"><a href="javascript:void(0)" onclick="showComment('car');">1000条评论</a></dd>
                     </dl>
                     <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
+                        <span class="car-price-text">&yen;${storeCar.price }</span><span class="day-avg">/日均</span>
 
                     </div>
                     <div class="choice-btn-box left-float">
-                        <button class="choice-btn" onclick="javascript:window.open('carDetail.html')">租&nbsp;车</button>
-                        <p class="remains">剩余100辆</p>
+                    	<c:if test="${storeCar.count != 0}">
+                    		<button class="choice-btn" onclick="rentCar('${storeCar.id }');">租&nbsp;车</button>
+                    	</c:if>
+                    	<c:if test="${storeCar.count == 0 }">
+                        	<button class="choice-btn" disabled="disabled" style="background: #c0c0c0;">暂无车</button>
+                        </c:if>
+                        <p class="remains">剩余${storeCar.count }辆</p>
                     </div>
                 </div>
                 <!-- 车辆一条记录: end -->
-                <!-- 车辆一条记录: start -->
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="${pageContext.request.contextPath }/images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <!--<dd class="car-gear">手动挡</dd>-->
-                        <dd  class="car-comment"><a href="javascript:void(0)" onclick="showComment();">1000条评论</a></dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn" onclick="javascript:window.open('carDetail.html')">租&nbsp;车</button>
-                        <p class="remains">剩余100辆</p>
-                    </div>
-                </div>
-                <!-- 车辆一条记录: end -->
-                <!-- 车辆一条记录: start -->
-                <div class="single-car clearfloat">
-                    <img class="car-img left-float" src="${pageContext.request.contextPath }/images/car-1.jpg">
-                    <dl class="car-desc-box left-float">
-                        <dt class="car-name">别克英朗</dt>
-                        <dd class="car-desc">三厢|1.5自动|5人</dd>
-                        <dd class="car-gear-auto">自动挡</dd>
-                        <!--<dd class="car-gear">手动挡</dd>-->
-                        <dd  class="car-comment"><a href="javascript:void(0)" onclick="showComment();">1000条评论</a></dd>
-                    </dl>
-                    <div class="car-price-box left-float">
-                        <span class="car-price-text">&yen;83</span><span class="day-avg">/日均</span>
-
-                    </div>
-                    <div class="choice-btn-box left-float">
-                        <button class="choice-btn" onclick="javascript:window.open('carDetail.html')">租&nbsp;车</button>
-                        <p class="remains">剩余100辆</p>
-                    </div>
-                </div>
-                <!-- 车辆一条记录: end -->
-                <!-- 车辆分页 start -->
+				</c:forEach>
+				
+				<!-- 车辆分页 start -->
                 <div class="clearfloat"><div class="m-style car-pagenator right-float"></div></div>
                 <div class="clearfloat">
                     <p class="car-tips right-float">
@@ -226,7 +186,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </p>
                 </div>
                 <!-- 车辆分页 end -->
-
             </div>
         </div>
     </div>
@@ -277,7 +236,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 var getDate = new Date($('.get-date-choice').val());
                 var returnDate = new Date($('.return-date-choice').val());
                 var totalHours = (returnDate - getDate) / 1000 / 3600;  // 计算时间间隔：小时
-                alert("TotalHours:"+ totalHours);
                 if (totalHours % 24 >= 4)
                     var totalDays = Math.floor(totalHours / 24) + 1;  // 向下取整
                 else
@@ -285,14 +243,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $(".rentdays").text(totalDays);
             });
 
-            /* 显示评分的星星 */
-            $('.comment-star').raty({
-                starOn:'${pageContext.request.contextPath }/images/star-on.png',
-                starOff:'${pageContext.request.contextPath }/images/star-off.png',
-                halfShow: false,
-                score:3,
-                readOnly: false
-            });
+            
 
             /* 自定义校验 */
             /* 租车时间限制：不低于4个小时 */
@@ -435,6 +386,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             layer.closeAll();  // 关闭所有窗口
         }
 
+        // 租车
+        function rentCar(id) {
+        	var getDate = $(".get-date-choice").val();
+        	var returnDate = $(".return-date-choice").val();
+        	var rentdays = $(".rentdays").text();
+        	if (getDate == "") {
+        		layer.msg("取车日期为空");
+        		return;
+        	}
+        	if (returnDate == "") {
+        		layer.msg("还车日期为空");
+        		return;
+        	}
+        	if (rentdays == "??" || rentdays <= 0) {
+        		layer.msg("取车还车间隔不小于4小时");
+        		return;
+        	}
+        	window.open("${pageContext.request.contextPath }/toCarDetail?id=" + id + 
+        			"&getDate=" + getDate + "&returnDate=" + returnDate + "&rentdays=" + rentdays);
+        }
     </script>
 
     <!-- 评论弹框 -->

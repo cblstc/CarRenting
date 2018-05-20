@@ -139,7 +139,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <script>
-
     /* 自定义验证：判断是否手机格式是否正确 */
     jQuery.validator.addMethod("phone", function (value, element) {
         var regx = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;

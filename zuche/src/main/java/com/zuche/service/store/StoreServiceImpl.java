@@ -30,15 +30,6 @@ public class StoreServiceImpl implements StoreService {
 	@Autowired
 	private StoreMapper storeMapper;
 
-	/**
-	 * 保存车辆信息
-	 * @param storeCar 车辆信息
-	 */
-	@Override
-	public void saveCar(StoreCar storeCar) {
-		storeCarMapper.insert(storeCar);  // 插入一条记录
-	}
-
 	@Override
 	public List<Store> findStoreByCondition(String storename, String address,
 			String phone, Integer pageNum) {

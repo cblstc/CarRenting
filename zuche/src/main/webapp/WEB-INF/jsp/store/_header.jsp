@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
 					<!--<li>超级管理员</li>-->
-					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">张三 <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">${storeUser.username } <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="javascript:;" onClick="store_info('门店信息','${pageContext.request.contextPath }/store/toStoreInfo?operate=edit')">门店信息</a></li>
 							<li><a href="#">退出</a></li>

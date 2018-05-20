@@ -21,6 +21,8 @@ public class Orders {
 
     private Date time;
 
+    private Integer status;
+
     public String getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class Orders {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

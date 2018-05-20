@@ -7,6 +7,7 @@
     <result column="brand" property="brand" jdbcType="VARCHAR" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="configuration" property="configuration" jdbcType="VARCHAR" />
+    <result column="carPhoto" property="carphoto" jdbcType="VARCHAR" />
     <result column="seats" property="seats" jdbcType="INTEGER" />
     <result column="doors" property="doors" jdbcType="INTEGER" />
     <result column="displacement" property="displacement" jdbcType="VARCHAR" />
@@ -22,9 +23,6 @@
     <result column="nodeductibles" property="nodeductibles" jdbcType="REAL" />
     <result column="count" property="count" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zuche.entity.StoreCar" extends="BaseResultMap" >
-    <result column="carPhoto" property="carphoto" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -85,29 +83,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, store_id, brand, model, configuration, seats, doors, displacement, navigator, 
-    pdc, drivenMode, fuelTankage, gearbox, skylight, aircell, price, insurance, nodeductibles, 
-    count, status
+    id, store_id, brand, model, configuration, carPhoto, seats, doors, displacement, 
+    navigator, pdc, drivenMode, fuelTankage, gearbox, skylight, aircell, price, insurance, 
+    nodeductibles, count, status
   </sql>
-  <sql id="Blob_Column_List" >
-    carPhoto
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zuche.entity.StoreCarExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from store_car
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.StoreCarExample" >
     select
     <if test="distinct" >
@@ -122,11 +101,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from store_car
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -142,20 +119,20 @@
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.StoreCar" >
     insert into store_car (id, store_id, brand, 
-      model, configuration, seats, 
-      doors, displacement, navigator, 
-      pdc, drivenMode, fuelTankage, 
-      gearbox, skylight, aircell, 
-      price, insurance, nodeductibles, 
-      count, status, carPhoto
+      model, configuration, carPhoto, 
+      seats, doors, displacement, 
+      navigator, pdc, drivenMode, 
+      fuelTankage, gearbox, skylight, 
+      aircell, price, insurance, 
+      nodeductibles, count, status
       )
     values (#{id,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, 
-      #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, #{seats,jdbcType=INTEGER}, 
-      #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, #{navigator,jdbcType=INTEGER}, 
-      #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, #{fueltankage,jdbcType=INTEGER}, 
-      #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, #{aircell,jdbcType=INTEGER}, 
-      #{price,jdbcType=REAL}, #{insurance,jdbcType=REAL}, #{nodeductibles,jdbcType=REAL}, 
-      #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{carphoto,jdbcType=LONGVARCHAR}
+      #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, #{carphoto,jdbcType=VARCHAR}, 
+      #{seats,jdbcType=INTEGER}, #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, 
+      #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
+      #{fueltankage,jdbcType=INTEGER}, #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, 
+      #{aircell,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{insurance,jdbcType=REAL}, 
+      #{nodeductibles,jdbcType=REAL}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.StoreCar" >
@@ -175,6 +152,9 @@
       </if>
       <if test="configuration != null" >
         configuration,
+      </if>
+      <if test="carphoto != null" >
+        carPhoto,
       </if>
       <if test="seats != null" >
         seats,
@@ -221,9 +201,6 @@
       <if test="status != null" >
         status,
       </if>
-      <if test="carphoto != null" >
-        carPhoto,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -240,6 +217,9 @@
       </if>
       <if test="configuration != null" >
         #{configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="carphoto != null" >
+        #{carphoto,jdbcType=VARCHAR},
       </if>
       <if test="seats != null" >
         #{seats,jdbcType=INTEGER},
@@ -286,9 +266,6 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="carphoto != null" >
-        #{carphoto,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zuche.entity.StoreCarExample" resultType="java.lang.Integer" >
@@ -314,6 +291,9 @@
       </if>
       <if test="record.configuration != null" >
         configuration = #{record.configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carphoto != null" >
+        carPhoto = #{record.carphoto,jdbcType=VARCHAR},
       </if>
       <if test="record.seats != null" >
         seats = #{record.seats,jdbcType=INTEGER},
@@ -360,37 +340,7 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.carphoto != null" >
-        carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update store_car
-    set id = #{record.id,jdbcType=INTEGER},
-      store_id = #{record.storeId,jdbcType=INTEGER},
-      brand = #{record.brand,jdbcType=VARCHAR},
-      model = #{record.model,jdbcType=VARCHAR},
-      configuration = #{record.configuration,jdbcType=VARCHAR},
-      seats = #{record.seats,jdbcType=INTEGER},
-      doors = #{record.doors,jdbcType=INTEGER},
-      displacement = #{record.displacement,jdbcType=VARCHAR},
-      navigator = #{record.navigator,jdbcType=INTEGER},
-      pdc = #{record.pdc,jdbcType=INTEGER},
-      drivenMode = #{record.drivenmode,jdbcType=INTEGER},
-      fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
-      gearbox = #{record.gearbox,jdbcType=INTEGER},
-      skylight = #{record.skylight,jdbcType=INTEGER},
-      aircell = #{record.aircell,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=REAL},
-      insurance = #{record.insurance,jdbcType=REAL},
-      nodeductibles = #{record.nodeductibles,jdbcType=REAL},
-      count = #{record.count,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -402,6 +352,7 @@
       brand = #{record.brand,jdbcType=VARCHAR},
       model = #{record.model,jdbcType=VARCHAR},
       configuration = #{record.configuration,jdbcType=VARCHAR},
+      carPhoto = #{record.carphoto,jdbcType=VARCHAR},
       seats = #{record.seats,jdbcType=INTEGER},
       doors = #{record.doors,jdbcType=INTEGER},
       displacement = #{record.displacement,jdbcType=VARCHAR},
@@ -435,6 +386,9 @@
       </if>
       <if test="configuration != null" >
         configuration = #{configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="carphoto != null" >
+        carPhoto = #{carphoto,jdbcType=VARCHAR},
       </if>
       <if test="seats != null" >
         seats = #{seats,jdbcType=INTEGER},
@@ -481,34 +435,7 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="carphoto != null" >
-        carPhoto = #{carphoto,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.StoreCar" >
-    update store_car
-    set store_id = #{storeId,jdbcType=INTEGER},
-      brand = #{brand,jdbcType=VARCHAR},
-      model = #{model,jdbcType=VARCHAR},
-      configuration = #{configuration,jdbcType=VARCHAR},
-      seats = #{seats,jdbcType=INTEGER},
-      doors = #{doors,jdbcType=INTEGER},
-      displacement = #{displacement,jdbcType=VARCHAR},
-      navigator = #{navigator,jdbcType=INTEGER},
-      pdc = #{pdc,jdbcType=INTEGER},
-      drivenMode = #{drivenmode,jdbcType=INTEGER},
-      fuelTankage = #{fueltankage,jdbcType=INTEGER},
-      gearbox = #{gearbox,jdbcType=INTEGER},
-      skylight = #{skylight,jdbcType=INTEGER},
-      aircell = #{aircell,jdbcType=INTEGER},
-      price = #{price,jdbcType=REAL},
-      insurance = #{insurance,jdbcType=REAL},
-      nodeductibles = #{nodeductibles,jdbcType=REAL},
-      count = #{count,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      carPhoto = #{carphoto,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zuche.entity.StoreCar" >
@@ -517,6 +444,7 @@
       brand = #{brand,jdbcType=VARCHAR},
       model = #{model,jdbcType=VARCHAR},
       configuration = #{configuration,jdbcType=VARCHAR},
+      carPhoto = #{carphoto,jdbcType=VARCHAR},
       seats = #{seats,jdbcType=INTEGER},
       doors = #{doors,jdbcType=INTEGER},
       displacement = #{displacement,jdbcType=VARCHAR},

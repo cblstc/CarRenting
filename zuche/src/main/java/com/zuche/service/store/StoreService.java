@@ -14,12 +14,6 @@ import com.zuche.entity.StoreUser;
 public interface StoreService {
 
 	/**
-	 * 保存车辆信息
-	 * @param storeCar 车辆信息
-	 */
-	void saveCar(StoreCar storeCar);
-
-	/**
 	 * 条件查询
 	 * @param storename 门店名称
 	 * @param address 门店地址

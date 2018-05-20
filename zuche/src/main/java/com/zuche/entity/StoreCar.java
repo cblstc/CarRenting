@@ -11,6 +11,8 @@ public class StoreCar {
 
     private String configuration;
 
+    private String carphoto;
+
     private Integer seats;
 
     private Integer doors;
@@ -40,8 +42,6 @@ public class StoreCar {
     private Integer count;
 
     private Integer status;
-
-    private String carphoto;
 
     public Integer getId() {
         return id;
@@ -81,6 +81,14 @@ public class StoreCar {
 
     public void setConfiguration(String configuration) {
         this.configuration = configuration == null ? null : configuration.trim();
+    }
+
+    public String getCarphoto() {
+        return carphoto;
+    }
+
+    public void setCarphoto(String carphoto) {
+        this.carphoto = carphoto == null ? null : carphoto.trim();
     }
 
     public Integer getSeats() {
@@ -201,13 +209,5 @@ public class StoreCar {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getCarphoto() {
-        return carphoto;
-    }
-
-    public void setCarphoto(String carphoto) {
-        this.carphoto = carphoto == null ? null : carphoto.trim();
     }
 }
