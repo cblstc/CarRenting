@@ -2,8 +2,11 @@ package com.zuche.controller.order;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +18,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zuche.entity.Orders;
+import com.zuche.entity.OrdersDetail;
+import com.zuche.entity.Store;
+import com.zuche.entity.StoreCar;
+import com.zuche.entity.User;
 import com.zuche.service.order.OrdersService;
+import com.zuche.service.store.StoreCarService;
+import com.zuche.service.store.StoreService;
 import com.zuche.service.user.UserService;
 import com.zuche.utils.CookieUtils;
 import com.zuche.utils.PaymentUtil;
@@ -37,6 +48,12 @@ public class OrderController {
 	
 	@Autowired
 	private OrdersService ordersService;
+	
+	@Autowired
+	private StoreService storeService;
+	
+	@Autowired
+	private StoreCarService storeCarService;
 	
 	/**
 	 * 页面跳转
@@ -65,8 +82,16 @@ public class OrderController {
 		return result;
 	}
 	
+	/**
+	 * 生成订单
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/generateOrder")
 	public String generateOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
 		// 生成订单
 		String storeCarId = request.getParameter("storeCarId");
 		String price = request.getParameter("price");
@@ -86,11 +111,10 @@ public class OrderController {
 		orders.setTime(new Date());
 		orders.setId(UUIDUtils.getUUID());
 		orders.setStatus(1);  // 未付款
+		orders.setUserId(user.getId());  // 设置用户id
 		// 保存订单
 		ordersService.saveOrders(orders);
-		// 支付
-		request.getSession().setAttribute("orderId", orders.getId());
-		return "redirect:/order/pay";
+		return "redirect:/order/pay?ordersId=" + orders.getId();
 	}
 	
 	/**
@@ -100,15 +124,15 @@ public class OrderController {
 	 * @return
 	 * @throws IOException
 	 */
-	
 	@RequestMapping(value="/pay")
-	public String pay(HttpServletRequest request,HttpSession session,HttpServletResponse response) throws IOException {
+	public String pay(HttpServletRequest request,HttpSession session,HttpServletResponse response, String ordersId) throws IOException {
+			session.setAttribute("ordersId", ordersId);
 			String domain = CookieUtils.getDomainName(request);
 			System.out.println(domain);
 			System.out.println("http://" + domain + ":8081/zuche/order/backpay");
 			String 	p0_Cmd="Buy",
 					p1_MerId="10001126856",  //商家编号  商户易宝支付唯一身份标识
-					p2_Order=(String) session.getAttribute("orderId"),
+					p2_Order=ordersId,
 					p3_Amt="0.01",
 					p4_Cur="CNY",
 					p5_Pid="",
@@ -164,11 +188,19 @@ public class OrderController {
 					+"商户订单号"+r6_Order+"<br/>"
 					+"֧支付成功时间"+rp_PayDate+"<br/>"+"交易流水号"+ r2_TrxId;
 			// 设置订单状态为2
-			List<Orders> orderss = ordersService.findOrdersByField((String) session.getAttribute("orderId"), "id");
+			List<Orders> orderss = ordersService.findOrdersByField((String)session.getAttribute("ordersId"), "id");
 			if (orderss != null && orderss.size() > 0) {
 				Orders orders = orderss.get(0);
 				orders.setStatus(2);  // 订单状态：已经支付
 				ordersService.updateOrders(orders);  // 更新订单
+				
+				// 减少库存
+				List<StoreCar> storeCars = storeCarService.findCarByField(orders.getStoreCarId().toString(), "id");
+				if (storeCars != null && storeCars.size() > 0) {
+					StoreCar storeCar = storeCars.get(0);
+					storeCar.setCount(storeCar.getCount() - 1);
+					storeCarService.updateCar(storeCar);  // 更新数据库
+				}
 			}
 			// 设置信息
 			model.addAttribute("resultCode", 1);  // 1为成功，2为失败
@@ -186,5 +218,69 @@ public class OrderController {
 			model.addAttribute("redirectUrl", "toIndex");  // 跳转链接
 			return "common/result";
 		}
+	}
+	
+	/**
+	 * 查询订单
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param status
+	 * @param pageNum
+	 * @throws Exception
+	 */
+	@RequestMapping("/queryOrders")
+	public void queryOrders(HttpServletRequest request, HttpServletResponse response, Model model, Integer status, Integer pageNum) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Map<String, String> conds = new HashMap<String, String>();
+		/*if (pageNum != null) {
+			conds.put("pageNum", pageNum.toString());
+		}*/
+		if (user.getId() != null) {
+			conds.put("userId", user.getId().toString());
+		}
+		if (status != null && status.intValue() != 0) {
+			conds.put("status", status.toString());
+		}
+		List<Orders> orderss = ordersService.findOrdersByCondition(conds);  
+		List<OrdersDetail> ordersDetails = new ArrayList<OrdersDetail>();
+		if (orderss != null) {
+			for (Orders orders: orderss) {
+				OrdersDetail ordersDetail = new OrdersDetail();
+				List<StoreCar> storeCars = storeCarService.findCarByField(orders.getStoreCarId().toString(), "id");
+				if (storeCars !=null && storeCars.size() > 0) {
+					StoreCar storeCar = storeCars.get(0);  // 车辆
+					Store store = storeService.findStoreByField(storeCar.getStoreId().toString(), "id"); // 门店
+					ordersDetail.setOrders(orders);
+					ordersDetail.setStore(store);
+					ordersDetail.setStoreCar(storeCar);
+					ordersDetails.add(ordersDetail);
+				}
+			}
+			
+		}
+//		model.addAttribute("ordersDetails", ordersDetails);
+		response.setCharacterEncoding("UTF-8");  
+		response.setContentType("application/json; charset=utf-8");  
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("data", ordersDetails);
+		response.getWriter().print(jsonObject);
+	}
+	
+	/**
+	 * 退款申请
+	 * @param ordersId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/applyRefund")
+	public String applyRefund(String ordersId) throws Exception {
+		List<Orders> orderss = ordersService.findOrdersByField(ordersId, "id");
+		if (orderss != null && orderss.size() > 0) {
+			Orders orders = orderss.get(0);
+			orders.setStatus(3);  // 订单状态：申请退款
+			ordersService.updateOrders(orders);  // 更新订单
+		}
+		return "redirect:/user/toOrdersList";
 	}
 }

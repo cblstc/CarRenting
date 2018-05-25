@@ -20,9 +20,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="header-logo left-float"><a href="${pageContext.request.contextPath }/toIndex"><img src="${pageContext.request.contextPath }/images/logo.png"></a></div>
             <ul class="header-nav clearfloat">
                 <!--导航栏-->
-                <li class="item left-float"><a class="nav-link first-link" href="${pageContext.request.contextPath }/toIndex">首页</a></li>
-                <li class="item left-float"><a class="nav-link" href="${pageContext.request.contextPath }/toCarList">租车</a></li>
-                <li class="item left-float"><a class="nav-link" href="${pageContext.request.contextPath }/toJoinUs">加盟</a></li>
+                <li class="item left-float"><a class="nav-link nav-index active" href="${pageContext.request.contextPath }/toIndex">首页</a></li>
+                <li class="item left-float"><a class="nav-link nav-carlist" href="${pageContext.request.contextPath }/toCarList">租车</a></li>
+                <li class="item left-float"><a class="nav-link nav-joinus" href="${pageContext.request.contextPath }/toJoinUs">加盟</a></li>
                 
                 <c:choose>
 					<c:when test="${user == null }">
@@ -34,7 +34,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					<c:otherwise>
 						<!-- 如果登陆 -->
-		                <li class="item right-float"><a class="nav-link mycargo-link" href="${pageContext.request.contextPath }/user/toIndex">个人中心</a></li>
+		                <li class="item right-float"><a class="nav-link mycargo-link" href="${pageContext.request.contextPath }/user/logout">退出</a></li>
+						<li class="item right-float"><a class="nav-link mycargo-link" href="${pageContext.request.contextPath }/user/toIndex">个人中心</a></li>
 		                <c:choose>
 			                
 		                	<c:when test="${user.username != null }">

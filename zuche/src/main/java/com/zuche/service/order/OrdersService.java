@@ -1,9 +1,14 @@
 package com.zuche.service.order;
 
 import java.util.List;
+import java.util.Map;
 
+import com.github.pagehelper.PageHelper;
 import com.zuche.entity.Orders;
 import com.zuche.entity.StoreCar;
+import com.zuche.entity.User;
+import com.zuche.entity.UserExample;
+import com.zuche.entity.UserExample.Criteria;
 
 /**
  * 订单service接口
@@ -31,4 +36,9 @@ public interface OrdersService {
 	 * @param orders
 	 */
 	public void updateOrders(Orders orders);
+	
+	/**
+	 * 条件查询订单
+	 */
+	public List<Orders> findOrdersByCondition(Map<String, String> conds);
 }

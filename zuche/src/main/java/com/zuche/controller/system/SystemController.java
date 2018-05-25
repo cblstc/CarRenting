@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
+import com.zuche.entity.AdminUser;
 import com.zuche.entity.Joins;
 import com.zuche.entity.Store;
 import com.zuche.entity.StoreUser;
@@ -29,6 +29,7 @@ import com.zuche.intercepter.Token;
 import com.zuche.service.customer.JoinsService;
 import com.zuche.service.store.StoreService;
 import com.zuche.service.store.StoreUserService;
+import com.zuche.service.system.AdminUserService;
 import com.zuche.service.user.UserInfoService;
 import com.zuche.service.user.UserService;
 import com.zuche.utils.MD5Utils;
@@ -57,6 +58,9 @@ public class SystemController {
 	
 	@Autowired
 	private StoreUserService storeUserService;
+	
+	@Autowired
+	private AdminUserService adminUserService;
 	
 	/**
 	 * 页面跳转
@@ -91,7 +95,7 @@ public class SystemController {
 			List<Store> stores = storeService.findStoreByCondition(store.getStorename(), store.getAddress(), store.getPhone(), pageNum);
 			List<StoreUserAndStore> storeUserAndStores = new ArrayList<StoreUserAndStore>();
 			for (Store s: stores) {
-				storeUserAndStores.add(new StoreUserAndStore(storeUserService.findStoreByField(s.getId().toString(), "id"), s));
+				storeUserAndStores.add(new StoreUserAndStore(storeUserService.findStoreByField(s.getStoreUserId().toString(), "id"), s));
 			}
 			Page<Store> storesPage = (Page<Store>) stores;
 			model.addAttribute("pageNum", pageNum);
@@ -111,7 +115,9 @@ public class SystemController {
 			model.addAttribute("phone", joins.getPhone());
 			model.addAttribute("status", joins.getStatus());
 			return "system/joinsList";
-		}  else {
+		} else if (page.equals("Login")) {
+			return "system/login";
+		}else {
 			return "errorPage";
 		}
 	}
@@ -357,5 +363,41 @@ public class SystemController {
 	public String removeCar(Integer id) throws Exception {
 		/*garageService.removeCar(id);*/
 		return "redirect: toCarList?pageNum=1";
+	}
+	
+	/**
+	 * 登陆
+	 * @param storeUser
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/login")
+	public String login(AdminUser adminUser, HttpServletRequest request, Model model) throws Exception {
+		// 查询是否存在
+		AdminUser existAdminUser = adminUserService.findAdminUser(adminUser);  // 登陆判断
+		if (existAdminUser == null) {
+			model.addAttribute("loginError", "账户或密码错误");
+			return "forward:/system/toLogin";  // 账户或密码错误
+		} else if (existAdminUser.getStatus().intValue() == 2) {
+			model.addAttribute("loginError", "账户被冻结");
+			return "forward:/system/toLogin";  // 账户被冻结
+		} else {
+			request.getSession().setAttribute("adminUser", existAdminUser);
+			return "redirect:/system/toMenu";
+		}
+	}
+	
+	/**
+	 * 退登
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) throws Exception {
+		request.getSession().removeAttribute("adminUser");  // 销毁user
+		return "redirect:/system/toLogin";
 	}
 }

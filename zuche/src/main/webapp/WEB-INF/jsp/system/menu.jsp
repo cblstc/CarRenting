@@ -31,8 +31,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
     <div class="easyui-layout" style="width:100%;height:675px;margin:0 auto;">
-        <div region="north" style="width:100%; height: 70px; background: #0089dc; border-bottom: 1px solid white;">
+        <div region="north" style="width:100%; height: 70px; background: #0089dc; border-bottom: 1px solid white; position: relative;">
             <a href="#"><img style="margin: 15px 10px 0 25px;" src="${pageContext.request.contextPath}/images/system/admin-logo.png"></a>
+            <span style="color: #ffffff; font-size: 15px; position:absolute; right: 70px; top: 25px;">管理员：${adminUser.username }</span>
+            <a href="${pageContext.request.contextPath}/system/logout"><span style="color: #ffffff; font-size: 15px; position:absolute; right: 25px; top: 25px;">退出</span></a>
         </div>
         <div region="south" style="width:100%; height: 50px; line-height: 50px; background: #0089dc; border-top: 1px solid white; color: white; text-align: center; font-size: 15px;">所有权：Cargo租车有限公司</div>
         <div class="easyui-accordion" region="west" split="true" title="功能" style="width:15%;">

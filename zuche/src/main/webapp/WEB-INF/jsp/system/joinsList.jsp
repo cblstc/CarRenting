@@ -81,20 +81,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </tbody>
     </table>
     <div class="toolbar" style="padding: 20px; position: relative;">
-    <form action="${pageContext.request.contextPath }/system/toJoinsList" method="post">
-    	<input type="hidden" name="pageNum" value="1"/>
-        <img src="${pageContext.request.contextPath }/images/system/username.png"> <input class="name" name="name" value="${name }" placeholder="姓名查询">&nbsp;&nbsp;
-        <img src="${pageContext.request.contextPath }/images/system/phone.png"> <input class="phone" name="phone" value="${phone }" placeholder="联系电话查询">&nbsp;&nbsp;
-        <img src="${pageContext.request.contextPath }/images/system/status.png">
-        <select style="height: 22px;" name="status">
-            <option value="0">请选择</option>
-            <option <c:if test="${status == 1 }">selected</c:if> value="1">正在申请</option>
-            <option <c:if test="${status == 2 }">selected</c:if> value="2">通过申请</option>
-            <option <c:if test="${status == 3 }">selected</c:if> value="3">拒绝申请</option>
-        </select>&nbsp;&nbsp;
-        <input type="submit" value="查询" style="width: 40px; background:#0089dc; color: #fff; border: 0; border-radius: 3%;">
-    </form>
-    </div>
+	    <form action="${pageContext.request.contextPath }/system/toJoinsList" method="post">
+	    	<input type="hidden" name="pageNum" value="1"/>
+	        <img src="${pageContext.request.contextPath }/images/system/username.png"> <input class="name" name="name" value="${name }" placeholder="姓名查询">&nbsp;&nbsp;
+	        <img src="${pageContext.request.contextPath }/images/system/phone.png"> <input class="phone" name="phone" value="${phone }" placeholder="联系电话查询">&nbsp;&nbsp;
+	        <img src="${pageContext.request.contextPath }/images/system/status.png">
+	        <select style="height: 22px;" name="status">
+	            <option value="0">请选择</option>
+	            <option <c:if test="${status == 1 }">selected</c:if> value="1">正在申请</option>
+	            <option <c:if test="${status == 2 }">selected</c:if> value="2">通过申请</option>
+	            <option <c:if test="${status == 3 }">selected</c:if> value="3">拒绝申请</option>
+	        </select>&nbsp;&nbsp;
+	        <input type="submit" value="查询" style="width: 40px; background:#0089dc; color: #fff; border: 0; border-radius: 3%;">
+	    </form>
+	</div>
+    
+    <div class="easyui-pagination" style="position: absolute; top:0; right:0;" data-options="
+						total: ${total },
+						pageSize: 5,  // 每页记录
+						pageNumber: ${pageNum },  // 当前页码
+						showPageList: false,
+						showRefresh: false,
+						displayMsg: '',
+						onSelectPage: function(pageNumber, pageSize) {
+							window.location.href='${pageContext.request.contextPath}/system/toJoinsList?pageNum=' + pageNumber + 
+							'&name=${name }&phone=${phone }&status=${status }';
+						}
+					"></div>
 
     <div class="easyui-dialog dlg" style="width:500px;height:260px;padding:10px 20px;"
          closed="true" buttons="#dlg-buttons" pagination="true">

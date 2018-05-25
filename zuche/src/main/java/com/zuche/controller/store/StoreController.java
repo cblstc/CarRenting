@@ -279,4 +279,16 @@ public class StoreController {
 		
 		return "redirect:/store/toCarList?pageNum=1";
 	}
+	
+	/**
+	 * 退登
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) throws Exception {
+		request.getSession().removeAttribute("storeUser");  // 销毁user
+		return "redirect:/store/toLogin";
+	}
 }

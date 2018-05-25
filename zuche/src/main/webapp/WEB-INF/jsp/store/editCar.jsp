@@ -256,7 +256,7 @@ $(function(){
 		increaseArea: '20%'
 	});
 
-    // 初始化Web Uploader
+    // 使用web uploader插件，初始化Web Uploader
     var uploader = WebUploader.create({
         auto: false,  /* 开启自动上传 */
         swf: '${pageContext.request.contextPath }/jsp/store/lib/ueditor/1.4.3/third-party/webuploader/Uploader.swf', /* swf文件路径 */

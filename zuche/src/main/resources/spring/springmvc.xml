@@ -55,5 +55,25 @@
             <mvc:mapping path="/**"/><!--这个地方时你要拦截得路径 我这个意思是拦截所有得URL-->
             <bean class="com.zuche.intercepter.TokenIntercepter"/>
         </mvc:interceptor>
+        
+        <!-- 用户登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/user/**"/>
+            <mvc:mapping path="/order/**"/>
+            <!-- <mvc:exclude-mapping path="/admin/**"/> -->
+            <bean class="com.zuche.intercepter.UserLoginInterceptor"/>
+        </mvc:interceptor>
+        
+        <!-- 门店登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/store/**"/>
+            <bean class="com.zuche.intercepter.StoreUserLoginInterceptor"/>
+        </mvc:interceptor>
+        
+        <!-- 管理员登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/system/**"/>
+            <bean class="com.zuche.intercepter.AdminUserLoginInterceptor"/>
+        </mvc:interceptor>
 	</mvc:interceptors>
 </beans>

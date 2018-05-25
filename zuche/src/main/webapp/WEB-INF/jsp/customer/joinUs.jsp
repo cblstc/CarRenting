@@ -41,7 +41,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <!--头部-->
 <jsp:include page="../common/public-header.jsp"></jsp:include>
-
+<script>
+ $(".nav-link").removeClass("active");
+ $(".nav-joinus").addClass("active");
+</script>
 
 <!-- welcome -->
 <div class="welcome">

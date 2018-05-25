@@ -1,4 +1,4 @@
-.comment-edit-box {
+.comment-edit-box, .comment-show-box {
     width: 550px;
     height: 300px;
     padding: 20px;
@@ -15,7 +15,7 @@
     height: 100px;
 }
 
-.comment-edit-box .remains {
+.remains {
     font-size: 12px;
     position: absolute;
     right: 10px;

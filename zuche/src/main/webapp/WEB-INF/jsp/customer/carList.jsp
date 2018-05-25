@@ -53,14 +53,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/jquery.validate.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/validate-methods.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/messages_zh.js"></script>
-    <script>
-
-    </script>
 </head>
 <body>
     <!--头部-->
     <jsp:include page="../common/public-header.jsp"></jsp:include>
-
+	<script>
+	    $(".nav-link").removeClass("active");
+	    $(".nav-carlist").addClass("active");
+    </script>
 
     <div class="address-date-choice">
         <form action="#" id="date-choice-form" method="post">

@@ -23,6 +23,8 @@ public class Orders {
 
     private Integer status;
 
+    private Integer userId;
+
     public String getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Orders {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

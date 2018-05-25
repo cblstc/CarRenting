@@ -73,13 +73,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<td>12343232323</td>
 							<td class="td-status">
 								<!-- 未付款，状态1，@Todo 顾客4小时未付款自动取消订单，并删除订单 -->
-								<span class="label label-danger radius">未付款</span>
-								<!-- 已付款，状态2 -->
+								<!-- <span class="label label-danger radius">未付款</span>
+								已付款，状态2
 								<span class="label label-primary radius">已付款</span>
-								<!-- 租赁开始中，状态3 -->
+								租赁开始中，状态3
 								<span class="label label-warning radius">租赁开始中</span>
-								<!-- 已结束，状态4 -->
-								<span class="label label-success radius">已结束</span>
+								已结束，状态4
+								<span class="label label-success radius">已结束</span> -->
 								<!-- 退单申请中，状态5，
 									租赁开始，4小时前可以全额退款；
 									租赁开始，4小时内只能半价退款，超过时间无法退款
@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								-->
 								<span class="label label-danger radius">退单申请中</span>
 								<!-- 已退单，状态6 -->
-								<span class="label label-success radius">已退单</span>
+								<!-- <span class="label label-success radius">已退单</span> -->
 							</td>
 							<td class="f-14 td-manage">
 								<a style="text-decoration:none" onClick="refund_approve(this,'10001')" href="javascript:;" title="批准退款"><i class="Hui-iconfont">&#xe66d;</i></a>
