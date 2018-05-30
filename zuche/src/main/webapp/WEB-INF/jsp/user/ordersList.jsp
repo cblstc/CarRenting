@@ -20,7 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/userLeftNav.css">
     <!--<link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/userRightContent.css">-->
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/userTopNav.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/user/improveAccount.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/user/userCenter.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/jquery.dataTables.min.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/jquery.raty.css">
@@ -213,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 		var ordersId = row.orders.id;
                 		btns = "<button class='btn btn-info btn-xs' onclick='ev_comment_edit(\"" + ordersId + "\");'>评论</button><br/>";
                 	} else if (data == "7") {
-                		btns = "<button class='btn btn-info btn-xs' onclick='ev_comment_show(\"" + ordersId + "\");'>查看评论</button><br/>";
+                		btns = "<button class='btn btn-info btn-xs' onclick='ev_comment_show(\"" + ordersId + "\");'>查看评论</button>";
                 	}
                     return btns;
                 },

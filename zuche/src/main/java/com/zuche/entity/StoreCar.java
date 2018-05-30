@@ -43,6 +43,12 @@ public class StoreCar {
 
     private Integer status;
 
+    private Integer totalstar;
+
+    private Integer totalcomment;
+
+    private Float avgstar;
+
     public Integer getId() {
         return id;
     }
@@ -209,5 +215,29 @@ public class StoreCar {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getTotalstar() {
+        return totalstar;
+    }
+
+    public void setTotalstar(Integer totalstar) {
+        this.totalstar = totalstar;
+    }
+
+    public Integer getTotalcomment() {
+        return totalcomment;
+    }
+
+    public void setTotalcomment(Integer totalcomment) {
+        this.totalcomment = totalcomment;
+    }
+
+    public Float getAvgstar() {
+        return avgstar;
+    }
+
+    public void setAvgstar(Float avgstar) {
+        this.avgstar = avgstar;
     }
 }

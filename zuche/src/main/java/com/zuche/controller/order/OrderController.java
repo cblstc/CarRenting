@@ -112,6 +112,11 @@ public class OrderController {
 		orders.setId(UUIDUtils.getUUID());
 		orders.setStatus(1);  // 未付款
 		orders.setUserId(user.getId());  // 设置用户id
+		List<StoreCar> storeCars = storeCarService.findCarByField(storeCarId.toString(), "id");
+		if (storeCars != null && storeCars.size() > 0) {
+			Store store = storeService.findStoreByField(storeCars.get(0).getStoreId().toString(), "id");
+			orders.setStoreId(store.getId());  // 设置门店id
+		}
 		// 保存订单
 		ordersService.saveOrders(orders);
 		return "redirect:/order/pay?ordersId=" + orders.getId();

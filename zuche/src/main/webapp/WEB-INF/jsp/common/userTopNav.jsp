@@ -19,6 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/userTopNav.css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/userTopNav.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=HHNwksT3c9XuGE9iwPrL0LLgSF0KzQsg"></script>
 </head>
 <body>
@@ -27,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="my-cargo-logo-content left-float">
                 <img class="my-cargo-logo" src="${pageContext.request.contextPath }/images/my-cargo-logo.png"><br/>
                 <div class="weacher-content">
-                    <span class="address-text">北京</span>
+                    <span class="address-text">广州</span>
                     <span class="weather-text">晴</span>
                     <span class="temp-text">20°</span>
                 </div>
@@ -62,20 +64,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <script type="text/javascript">
     $(function() {
-    	weatherReport();
+    	setTimeout(weatherReport(), 1000);
     });
     
     function weatherReport() {
     	
-    	if (window.navigator.geolocation) {
+    	var geolocation = new BMap.Geolocation();
+    	if (geolocation) {
+	    	geolocation.getCurrentPosition(function(r){
+	    		var lat = r.latitude;
+	    		var lng = r.longitude;
+	    		weatherReportByLocation(lat + "," + lng);
+	    	});
+    	} else {
+    		layer.msg("您的浏览器暂时无法获取地理位置,将为您显示广州天气");
+    		weatherReportByLocation(lat + "," + lng);
+    	}
+    	/* if (window.navigator.geolocation) {
     		// 如果浏览器支持html5定位，就定位
     		window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
     	} else {
-    		weatherReportByLocation("39.915,116.404");  // 北京天气
+    		weatherReportByLocation("23.13,113.27");  // 广州天气
     	}
     	// 定位成功
     	function handleSuccess(position){
             // 获取到当前位置经纬度 
+            alert(lng + "-" + lat);
             var lng = position.coords.longitude;
             var lat = position.coords.latitude;
             var location = lat + "," + lng;
@@ -83,8 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
     	// 定位失败
         function handleError(error){
-        	weatherReportByLocation("39.915,116.404");  // 北京天气
-        }
+    		layer.msg("定位失败,为您显示广州天气");
+        	weatherReportByLocation("23.13,113.27");  // 广州天气
+        } */
     }
     
     // 根据经纬度查询天气

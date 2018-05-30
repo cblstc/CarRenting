@@ -74,10 +74,10 @@ public class StoreInsert {
 		Map<Store, Double> storeDistances = new HashMap<Store, Double>();  // 单位：m
 		List<Store> stores = storeMapper.selectByExample(null);
 		for (Store store : stores) {
-			double distance = LocationUtils.getDistance(22.7782, 113.631, store.getLatitude(), store.getLongitude());
-			distance = new BigDecimal(distance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();;
+			double distance = LocationUtils.getDistance(24.0416, 116.436, store.getLatitude(), store.getLongitude());
+			distance = new BigDecimal(distance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			storeDistances.put(store, distance);
-//			System.out.println(store.getStorename() + "距离广州中心：" + distance + "km");
+			System.out.println(store.getStorename() + "距离梅州：" + distance + "m");
 		}
 	}
 

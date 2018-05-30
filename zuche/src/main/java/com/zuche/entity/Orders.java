@@ -24,6 +24,8 @@ public class Orders {
     private Integer status;
 
     private Integer userId;
+    
+    private Integer storeId;
 
     public String getId() {
         return id;
@@ -112,4 +114,13 @@ public class Orders {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+    
 }

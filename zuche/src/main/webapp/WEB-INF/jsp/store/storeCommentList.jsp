@@ -35,21 +35,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<th width="80">内容</th>
 						<th width="80">评分</th>
 						<th width="100">时间</th>
-						<th width="50">订单ID</th>
 						<th width="50">用户ID</th>
-						<th width="50">车辆ID</th>
 					</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="ordersComment" items="${ordersComments }">
+					<c:forEach var="storeComment" items="${storeComments }">
 					<tr class="text-c">
-						<td>${ordersComment.id }</td>
-						<td>${ordersComment.content }</td>
-						<td>${ordersComment.star }</td>
-						<td><fmt:formatDate value="${ordersComment.time }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td>${ordersComment.ordersId }</td>
-						<td>${ordersComment.userId }</td>
-						<td>${ordersComment.storeCarId }</td>
+						<td>${storeComment.id }</td>
+						<td>${storeComment.content }</td>
+						<td>${storeComment.star }</td>
+						<td><fmt:formatDate value="${storeComment.time }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td>${storeComment.userId }</td>
 					</tr>
 					</c:forEach>
 					</tbody>
@@ -76,7 +72,7 @@ $('.table-sort').dataTable({
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 		//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		{"orderable":false,"aTargets":[0,5]}// 不参与排序的列
+		{"orderable":false,"aTargets":[0,4]}// 不参与排序的列
 	]
 });
 

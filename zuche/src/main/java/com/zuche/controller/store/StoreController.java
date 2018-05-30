@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,14 +21,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
+import com.zuche.entity.Orders;
+import com.zuche.entity.OrdersComment;
 import com.zuche.entity.Store;
 import com.zuche.entity.StoreCar;
+import com.zuche.entity.StoreComment;
 import com.zuche.entity.StoreUser;
-import com.zuche.entity.StoreUserAndStore;
 import com.zuche.intercepter.Token;
+import com.zuche.service.comment.OrdersCommentService;
+import com.zuche.service.comment.StoreCommentService;
+import com.zuche.service.order.OrdersService;
 import com.zuche.service.store.StoreCarService;
 import com.zuche.service.store.StoreService;
 import com.zuche.service.store.StoreUserService;
@@ -51,6 +56,15 @@ public class StoreController {
 	@Autowired
 	private StoreCarService storeCarService;
 	
+	@Autowired
+	private OrdersService ordersService;
+	
+	@Autowired
+	private OrdersCommentService ordersCommentService;
+	
+	@Autowired
+	private StoreCommentService storeCommentService;
+	
 	/**
 	 * 页面跳转
 	 * @param page 跳转的页面
@@ -62,9 +76,10 @@ public class StoreController {
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, HttpServletRequest request, Model model, String operate, StoreCar storeCar, Integer pageNum) throws Exception {
+	public String toPage(@PathVariable String page, HttpServletRequest request, Model model, String operate, StoreCar storeCar, Integer pageNum, Orders orders) throws Exception {
 		
 		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
+		Store store = (Store) request.getSession().getAttribute("store");
 		
 		String result = null;
 		
@@ -122,10 +137,47 @@ public class StoreController {
 			
 			break;
 		case "OrdersList":  /* 订单列表 */
+			Map<String, String> conds = new HashMap<String, String>();
+			pageNum = pageNum == null ? 1 : pageNum;
+			Integer status = orders.getStatus() == null ? 0 : orders.getStatus();
+			
+			conds.put("pageNum", pageNum.toString());
+			conds.put("status", status.toString());
+			conds.put("storeId", store.getId().toString());
+			List<Orders> orderss = ordersService.findOrdersByCondition(conds);
+			Page<Orders> orderssPage = (Page<Orders>) orderss;
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("total", orderssPage.getPages() * 5);
+			model.addAttribute("orderss", orderss);
+			model.addAttribute("status", orders.getStatus());
+			
 			result = "store/ordersList";
 			break;
 		case "OrdersCommentList":  /* 订单评论列表 */
+			Map<String, String> ocConds = new HashMap<String, String>();
+			pageNum = pageNum == null ? 1 : pageNum;
+			ocConds.put("pageNum", pageNum.toString());
+			ocConds.put("storeId", store.getId().toString());
+			
+			List<OrdersComment> ordersComments = ordersCommentService.findOrdersCommentByCondition(ocConds);
+			Page<OrdersComment> ordersCommentsPage = (Page<OrdersComment>) ordersComments;
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("total", ordersCommentsPage.getPages() * 5);
+			model.addAttribute("ordersComments", ordersComments);
 			result = "store/ordersCommentList";
+			break;
+		case "StoreCommentList":  /* 门店评论列表 */
+			Map<String, String> scConds = new HashMap<String, String>();
+			pageNum = pageNum == null ? 1 : pageNum;
+			scConds.put("pageNum", pageNum.toString());
+			scConds.put("storeId", store.getId().toString());
+			
+			List<StoreComment> storeComments = storeCommentService.findStoreCommentByCondition(scConds);
+			Page<StoreComment> storeCommentsPage = (Page<StoreComment>) storeComments;
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("total", storeCommentsPage.getPages() * 5);
+			model.addAttribute("storeComments", storeComments);
+			result = "store/storeCommentList";
 			break;
 		case "AddCar":  /* 添加车辆 */
 			result = "store/article-add";
@@ -186,6 +238,9 @@ public class StoreController {
 		if (storeCar != null) {
 			storeCar.setStoreId(existStore.getId());  // 设置门店id
 			storeCar.setStatus(1);   // 设置上架
+			storeCar.setTotalstar(0);  // 设置总评分数
+			storeCar.setTotalcomment(0);  // 设置总评论数
+			storeCar.setAvgstar(0.0f);  // 设置平均评分
 			
 			if (storeCar.getId() == null) {  // 保存
 				storeCarService.saveCar(storeCar);  // 保存车辆信息
@@ -249,6 +304,8 @@ public class StoreController {
 			return "forward:/store/toLogin";  // 账户被冻结
 		} else {
 			request.getSession().setAttribute("storeUser", existStoreUser);
+			Store store = storeService.findStoreByField(existStoreUser.getId().toString(), "storeUserId");
+			request.getSession().setAttribute("store", store);
 			return "redirect:/store/toIndex";
 		}
 	}
@@ -290,5 +347,33 @@ public class StoreController {
 	public String logout(HttpServletRequest request) throws Exception {
 		request.getSession().removeAttribute("storeUser");  // 销毁user
 		return "redirect:/store/toLogin";
+	}
+	
+	/**
+	 * 改变订单状态
+	 * @param orders
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/changeOrdersStatus")
+	public String changeOrdersStatus(Orders orders) throws Exception {
+		Integer status = orders.getStatus();
+		List<Orders> orderss = ordersService.findOrdersByField(orders.getId().toString(), "id");
+		Orders existOrders = null;
+		if (orderss != null && orderss.size() > 0) {
+			existOrders = orderss.get(0);
+		}
+		if (status != null) {
+			if (status.intValue() == 2) {
+				existOrders.setStatus(5);
+			} else if (status.intValue() == 3) {
+				existOrders.setStatus(4);
+			} else if (status.intValue() == 5) {
+				existOrders.setStatus(6);
+			}
+ 		}
+		
+		ordersService.updateOrders(existOrders);
+		return "redirect:/store/toOrdersList";
 	}
 }

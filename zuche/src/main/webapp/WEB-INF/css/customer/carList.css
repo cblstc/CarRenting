@@ -352,4 +352,10 @@ body {
     margin: 18px 0 0 10px;
 }
 
+/* 发布评论弹框 */
+.comment-edit-box, .comment-show-box {
+    width: 550px;
+    height: 300px;
+    padding: 20px;
+}
 

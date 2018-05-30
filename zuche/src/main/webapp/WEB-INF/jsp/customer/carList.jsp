@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             font-size: 12px;
         }
         /* 处理评分星星空格宽度太大 */
-        .comment-pl-block img {
+        .comment-pl-block img,.comment-star img,.store-comment-star img  {
             margin-right: -8px;
         }
     </style>
@@ -76,10 +76,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="choice-address left-float">
                 <div class="choice-address-block">
                     <span class="address-text get-address-text">门店选择</span><!--
-                --><input readonly required class="address-choice storename" placeholder="请选择一个门店" onclick="openMap($('.storename').val())">
+                --><input readonly required class="address-choice storename" placeholder="请选择一个门店" value="${store.storename }" onclick="openMap($('.storename').val())">
                 </div>
                 <div class="choice-address-block">
-                    <span class="address-text return-address-text">当前门店：&nbsp;<span class="red-text">${store.storename }</span></span>
+                    <span class="address-text return-address-text">当前门店：&nbsp;<span class="red-text">${store.storename }</span>
+                    <a style="color: #428bca;"href="javascript:void(0)" onclick="ev_comment_edit(${store.id });" >点击评论</a></span>
                 </div>
             </div>
             <div class="choice-submit clearfloat">
@@ -89,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         2. 租车时长不低于4个小时<br/>
                         租期的计算方式：<br/>
                         超过4个小时算一天，例：1天4小时的租期为两天，1天3小时的租期为一天"></i></p>
-                <input type="submit" class="choice-btn" value="立即选车">
+                <input type="submit" class="choice-btn" value="进入门店">
                 <!--@Todo 根据门店名称查询门店的信息，然后跳转到carList页面-->
             </div>
         </div>
@@ -156,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <dd class="car-desc">${storeCar.displacement }|${storeCar.seats }人|${storeCar.brand }</dd>
                         <c:if test="${storeCar.gearbox == 1 }"><dd class="car-gear-auto">自动挡</dd></c:if>
                         <c:if test="${storeCar.gearbox == 2 }"><dd class="car-gear">手动挡</dd></c:if>
-                        <dd  class="car-comment"><a href="javascript:void(0)" onclick="showComment('car');">1000条评论</a></dd>
+                        <dd  class="car-comment"><a href="javascript:void(0)" onclick="showComment('car');">${storeCar.totalcomment }条评论</a></dd>
                     </dl>
                     <div class="car-price-box left-float">
                         <span class="car-price-text">&yen;${storeCar.price }</span><span class="day-avg">/日均</span>
@@ -269,23 +270,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         // 打开百度地图
         function openMap(address) {
-            var longitude = null; // 经度
-            var latitude = null;  // 纬度
             // 弹出地图框
             layer.open({
                 title: '地址选择',
                 type: 1,
                 closeBtn: 1,  // 调试用
                 area: ['650px', '550px'], //宽高
-                content: '<div id="r-result"><input id="suggestId"  class="form-control searchInput" type="text" placeholder="地址搜索框" /></div> ' +
-                '<button class="btn btn-primary confirmBtn">搜索门店</button>' +
-                '<div class="searchTip">请选择地址并搜索门店，只显示十个最近的门店</div>' +
-                '<div class="storeNameBox">' +
-                '<a href="javascript:void(0)" onclick="selectStore(this);" class="storeName">天河区门店</a>' +
-                '</div>' +
-                '<div id="searchResultPanel"></div>' +
-                '<div id="allmap"></div>'
+                content: $('#map-box'),
+                cancel: function(index, layero) {
+                    $("#map-box").css("display", "none"); 
+                }
             });
+            
             // 初始化地图：中心位置北京天安门
             var map = new BMap.Map("allmap");  // 创建一个地图对象
             var point = new BMap.Point(116.404, 39.915);  // 根据经纬度设置中心点:天安门
@@ -380,10 +376,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
         
         // 选择门店
-        function selectStore(storeNameLink) {
-            // alert($(storeNameLink).text());
-            $(".storename").val($(storeNameLink).text());
-            layer.closeAll();  // 关闭所有窗口
+        function selectStore(id) {
+        	window.location.href = "${pageContext.request.contextPath }/toCarList?id=" + id;
         }
 
         // 租车
@@ -407,7 +401,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			"&getDate=" + getDate + "&returnDate=" + returnDate + "&rentdays=" + rentdays);
         }
     </script>
-
+    
+    <!-- 地图弹框 -->
+    <div id="map-box" style="display: none;">
+		<div id="r-result">
+			<input id="suggestId"  class="form-control searchInput" type="text" placeholder="地址搜索框" />
+		</div>
+        <button class="btn btn-primary confirmBtn">搜索附近门店</button>
+        <div class="searchTip">请选择地址并搜索门店<br/>以下显示10个与<span style="color: blue;">${store.storename }</span>最近的门店</div>
+        <div class="storeNameBox">
+        <c:forEach var="storeDistance" items="${storeDistances }" begin="1">
+        	<a href="javascript:void(0)" onclick="selectStore(${storeDistance.id });" class="storeName">${storeDistance.storename }</a>
+        </c:forEach>
+        </div>
+        <div id="searchResultPanel"></div>
+    	<div id="allmap"></div>
+    </div>
+    
+    <!-- 发布评论 - 隐藏 -->
+    <form role="form" class="comment-edit-box" method="post" action="${pageContext.request.contextPath }/comment/saveStoreComment" style="display: none;">
+    	<input type="hidden" name="storeId" class="storeId">
+    	<input type="hidden" name="userId" class="userId" value="${user.id }">
+        <div class="form-group">
+            <label for="content">评分</label>
+            <div class="store-comment-star"></div>
+            <input type="hidden" name="star" class="star" value="3" />
+        </div>
+        <div class="form-group">
+            <label for="content">评论内容</label>
+            <div class="content-box"><textarea id="content" name="content" class="form-control content" maxlength="200" placeholder="填写评论，不超过200个字符" dragonfly="true" onKeyUp="showCurrentLength(this)"></textarea>
+                <p class="remains"><span>0</span>/200</p></div>
+            </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">提交</button>
+        </div>
+    </form>
+    
     <!-- 评论弹框 -->
     <div class="comment-box" style="display: none;">
         <div class="commentAll">
@@ -457,6 +486,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             click: function (score, evt) {
             }
         });
+        
+        /* 显示评分的星星 */
+        $('.store-comment-star').raty({
+            starOn:'${pageContext.request.contextPath }/images/star-on.png',
+            starOff:'${pageContext.request.contextPath }/images/star-off.png',
+            hints: ['差', '一般', '好', '非常好', '全五星'],
+            halfShow: false,
+            score:3,
+            readOnly: false,
+            click: function (score, evt) {
+                $(".star").val(score);  // 把评分赋值给表单
+            }
+        });
 
         /* 显示分页 */
         $('.comment-pagenator').pagination({
@@ -483,6 +525,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     $(".comment-box").css("display", "none");  // 隐藏评论表单
                 }
             });
+        }
+        
+     	// 打开评论编辑窗口
+        function ev_comment_edit(storeId) {
+        	$(".storeId").val(storeId);
+            layer.open({
+                title: "发布评论",
+                type: 1,
+                closeBtn: 1,
+                area: ['550px', '350px'], //宽高
+                content: $('.comment-edit-box'),  // 加载评论表单
+                cancel: function(index, layero) {
+                    $(".comment-edit-box").css("display", "none");  // 隐藏评论表单
+                }
+            });
+        }
+     	
+        /* 显示当前字符长度 */
+        function showCurrentLength(item) {
+            var currentLength = $(item).val().length;
+            var next = $(item).next();
+            $($(next).find("span").get(0)).text(currentLength);
         }
     </script>
 </body>

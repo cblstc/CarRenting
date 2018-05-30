@@ -8,6 +8,8 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="star" property="star" jdbcType="INTEGER" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="store_car_id" property="storeCarId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, orders_id, user_id, content, star, time
+    id, orders_id, user_id, content, star, time, store_id, store_car_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.OrdersCommentExample" >
     select
@@ -102,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.OrdersComment" >
     insert into orders_comment (id, orders_id, user_id, 
-      content, star, time
-      )
+      content, star, time, 
+      store_id, store_car_id)
     values (#{id,jdbcType=INTEGER}, #{ordersId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{star,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}
-      )
+      #{content,jdbcType=VARCHAR}, #{star,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+      #{storeId,jdbcType=INTEGER}, #{storeCarId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.OrdersComment" >
     insert into orders_comment
@@ -129,6 +131,12 @@
       <if test="time != null" >
         time,
       </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="storeCarId != null" >
+        store_car_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -148,6 +156,12 @@
       </if>
       <if test="time != null" >
         #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeCarId != null" >
+        #{storeCarId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -178,6 +192,12 @@
       <if test="record.time != null" >
         time = #{record.time,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeCarId != null" >
+        store_car_id = #{record.storeCarId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +210,9 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
       star = #{record.star,jdbcType=INTEGER},
-      time = #{record.time,jdbcType=TIMESTAMP}
+      time = #{record.time,jdbcType=TIMESTAMP},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      store_car_id = #{record.storeCarId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +235,12 @@
       <if test="time != null" >
         time = #{time,jdbcType=TIMESTAMP},
       </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeCarId != null" >
+        store_car_id = #{storeCarId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -222,7 +250,9 @@
       user_id = #{userId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       star = #{star,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP}
+      time = #{time,jdbcType=TIMESTAMP},
+      store_id = #{storeId,jdbcType=INTEGER},
+      store_car_id = #{storeCarId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -367,4 +367,12 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 查询最近的门店 -->
+  <select id="findNearbyStore" parameterType="com.zuche.entity.Distance" resultType="com.zuche.entity.StoreDistance" >
+    SELECT *, 
+    (POWER(MOD(ABS(longitude - #{1}),360),2) + POWER(ABS(latitude - #{0}),2)) AS distance
+        FROM store
+        ORDER BY distance LIMIT #{2}
+  </select>
 </mapper>

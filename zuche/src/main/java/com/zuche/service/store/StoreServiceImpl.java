@@ -1,18 +1,16 @@
 package com.zuche.service.store;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.zuche.entity.Store;
-import com.zuche.entity.StoreCar;
+import com.zuche.entity.StoreDistance;
 import com.zuche.entity.StoreExample;
-import com.zuche.entity.User;
-import com.zuche.entity.UserExample;
 import com.zuche.entity.StoreExample.Criteria;
-import com.zuche.entity.StoreUser;
 import com.zuche.mapper.StoreCarMapper;
 import com.zuche.mapper.StoreMapper;
 
@@ -100,6 +98,42 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public void updateStoreInfo(Store store) {
 		storeMapper.updateByPrimaryKey(store);
+	}
+
+	@Override
+	public List<Store> findStoresByCondition(Map<String, String> conds) {
+		StoreExample storeExample = new StoreExample();
+		Criteria criteria = storeExample.createCriteria();
+		
+		if (conds != null) {
+			for (String fieldName : conds.keySet()) {  // 遍历字段名
+				String fieldValue = conds.get(fieldName);  // 获得字段对应的值
+				if (fieldName != null) {
+					if (fieldName.equals("storename")) {
+						criteria.andStorenameEqualTo(fieldValue);
+					}
+					if (fieldName.equals("phone")) {
+						criteria.andPhoneEqualTo(fieldValue);
+					} 
+					if (fieldName.equals("id")) {
+						criteria.andIdEqualTo(new Integer(fieldValue));
+					} 
+					if (fieldName.equals("storeUserId")) {
+						criteria.andStoreUserIdEqualTo(new Integer(fieldValue));
+					}
+				}
+			}
+		}
+		
+		List<Store> existStores = storeMapper.selectByExample(storeExample);
+		return existStores;
+	}
+
+	@Override
+	public List<StoreDistance> findNearbyStore(Double latitude, Double longitude,
+			int count) {
+		List<StoreDistance> storeDistances = storeMapper.findNearbyStore(latitude, longitude, count);
+		return storeDistances;
 	}
 
 }

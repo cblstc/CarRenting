@@ -1,8 +1,11 @@
 package com.zuche.mapper;
 
 import com.zuche.entity.Store;
+import com.zuche.entity.StoreDistance;
 import com.zuche.entity.StoreExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface StoreMapper {
@@ -27,4 +30,13 @@ public interface StoreMapper {
     int updateByPrimaryKeySelective(Store record);
 
     int updateByPrimaryKey(Store record);
+    
+    /**
+     * 查询最近的门店
+     * @param latitude
+     * @param longtitude
+     * @param count
+     * @return
+     */
+    List<StoreDistance> findNearbyStore(Double latitude, Double longitude, int count);
 }

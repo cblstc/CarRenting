@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<dd>
 				<ul>
 					<li><a href="${pageContext.request.contextPath }/store/toOrdersCommentList" title="订单评论管理">订单评论管理</a></li>
-					<li><a href="#" title="门店评论管理">门店评论管理</a></li>
+					<li><a href="${pageContext.request.contextPath }/store/toStoreCommentList" title="门店评论管理">门店评论管理</a></li>
 				</ul>
 			</dd>
 		</dl>

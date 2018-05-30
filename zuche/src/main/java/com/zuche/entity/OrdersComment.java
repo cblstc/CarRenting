@@ -15,6 +15,10 @@ public class OrdersComment {
 
     private Date time;
 
+    private Integer storeId;
+
+    private Integer storeCarId;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +65,21 @@ public class OrdersComment {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    public Integer getStoreCarId() {
+        return storeCarId;
+    }
+
+    public void setStoreCarId(Integer storeCarId) {
+        this.storeCarId = storeCarId;
     }
 }

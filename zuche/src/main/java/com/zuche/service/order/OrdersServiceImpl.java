@@ -71,20 +71,25 @@ public class OrdersServiceImpl implements OrdersService {
 		if (conds != null) {
 			for (String fieldName : conds.keySet()) {  // 遍历字段名
 				String fieldValue = conds.get(fieldName);  // 获得字段对应的值
-				/*if (fieldName != null && fieldName.equals("pageNum")) {
-					PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
-				}*/
-				if (fieldName != null && fieldName.equals("id")) {
-					criteria.andIdEqualTo(fieldValue);  // 状态
-				}
-				if (fieldName != null && fieldName.equals("status")) {
-					criteria.andStatusEqualTo(Integer.parseInt(fieldValue));  // 状态
-				}
-				if (fieldName != null && fieldName.equals("userId")) {
-					criteria.andUserIdEqualTo(Integer.parseInt(fieldValue));  // id
-				}
-				if (fieldName != null && fieldName.equals("storeCarId")) {
-					criteria.andStoreCarIdEqualTo(Integer.parseInt(fieldValue));  // 车辆id
+				if (fieldName != null) {
+					if (fieldName.equals("pageNum")) {
+						PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
+					}
+					if (fieldName.equals("id")) {
+						criteria.andIdEqualTo(fieldValue);  // 状态
+					}
+					if (fieldName.equals("status") && !fieldValue.equals("0")) {
+						criteria.andStatusEqualTo(Integer.parseInt(fieldValue));  // 状态
+					}
+					if (fieldName.equals("userId")) {
+						criteria.andUserIdEqualTo(Integer.parseInt(fieldValue));  // id
+					}
+					if (fieldName.equals("storeCarId")) {
+						criteria.andStoreCarIdEqualTo(Integer.parseInt(fieldValue));  // 车辆id
+					}
+					if (fieldName.equals("storeId")) {
+						criteria.andStoreIdEqualTo(Integer.parseInt(fieldValue));  // 门店id
+					}
 				}
 			}
 		}

@@ -1,6 +1,13 @@
 package com.zuche.controller.customer;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,15 +19,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zuche.entity.Joins;
 import com.zuche.entity.Store;
 import com.zuche.entity.StoreCar;
+import com.zuche.entity.StoreDistance;
 import com.zuche.entity.StoreUser;
 import com.zuche.intercepter.Token;
 import com.zuche.service.customer.JoinsService;
 import com.zuche.service.store.StoreCarService;
 import com.zuche.service.store.StoreService;
 import com.zuche.service.user.UserService;
+import com.zuche.utils.LocationUtils;
+import com.zuche.utils.MapValueCompartor;
 
 /**
  * 顾客界面Controller类
@@ -67,10 +78,40 @@ public class CustomerController {
 			break;
 		case "CarList":
 			result = "customer/carList";
-			Store store = storeService.findStoreByField(new Integer(19).toString(), "id");
+			
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
+			if (latitude == null || latitude.equals("")) {
+				latitude = "23.13";  // 广州的纬度
+			}
+			if (longitude == null || longitude.equals("")) {
+				longitude = "113.27"; // 广州的经度
+			}
+			
+			Store store = null;  // 当前门店
+			List<StoreCar> storeCars = null;  // 当前门店下的车辆
+			List<StoreDistance> storeDistances = null;  // 当前门店附近的门店
+			
+			if (id != null && id.intValue() != 0) {  // 如果门店id不为空，说明用户点击进入了一个门店，那么根据id查询门店
+				store = storeService.findStoreByField(id.toString(), "id");
+				storeCars = storeCarService.findCarByField(id.toString(), "storeId");
+			} else {  // 如果门店id为空，那么查找最近的一个门店
+				storeDistances = storeService.findNearbyStore(Double.parseDouble(latitude), Double.parseDouble(longitude), 11);
+				if (storeDistances != null && storeDistances.size() > 0) {
+					StoreDistance storeDistance = storeDistances.get(0);
+					store = storeService.findStoreByField(storeDistance.getId().toString(), "id");
+					storeCars = storeCarService.findCarByField(storeDistance.getId().toString(), "storeId");
+				}
+			}
+			
+			latitude = store.getLatitude().toString();
+			longitude = store.getLongitude().toString();
+			// 为什么查找11个？因为第一个门店就是自己
+			storeDistances = storeService.findNearbyStore(Double.parseDouble(latitude), Double.parseDouble(longitude), 11);
+			
 			request.getSession().setAttribute("store", store);
-			List<StoreCar> storeCars = storeCarService.findCarByField(store.getId().toString(), "storeId");
 			model.addAttribute("storeCars", storeCars);
+			model.addAttribute("storeDistances", storeDistances);
 			break;
 		case "CarDetail":
 			result = "customer/carDetail";
@@ -123,5 +164,28 @@ public class CustomerController {
 		model.addAttribute("redirectText", "首页");  // 跳转到首页
 		model.addAttribute("redirectUrl", "/toIndex");  // 跳转链接
 		return "common/result";
+	}
+	
+	@RequestMapping(value="/queryNearbyStore")
+	public void queryNearbyStore(HttpServletResponse response, Model model, Double latitude, Double longitude) throws Exception {
+		System.out.println(latitude + "-" + longitude);
+		// Map<Store, Double> storeDistances = new HashMap<Store, Double>();  // 单位：m
+//		List<Store> stores = storeService.findStoresByCondition(null);  // 查询所有门店
+		List<StoreDistance> storeDistances = storeService.findNearbyStore(latitude, longitude, 10);
+		// model.addAttribute("storeDistances", storeDistances);
+		/*for (StoreDistance storeDistance : storeDistances) {
+			System.out.println(storeDistance.getStorename() + "-" + storeDistance.getDistance() + "m");
+		}*/
+		/*for (Store store : stores) {
+			double distance = LocationUtils.getDistance(21.25746310,110.36506726, store.getLatitude(), store.getLongitude());
+			distance = new BigDecimal(distance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+			storeDistances.put(store, distance);
+			System.out.println(store.getStorename() + "距离：" + distance + "m");
+		}*/
+		/*response.setCharacterEncoding("UTF-8"); 
+        response.setContentType("application/json; charset=utf-8"); 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", storeDistances);
+        response.getWriter().print(jsonObject);*/
 	}
 }

@@ -1413,6 +1413,186 @@ public class StoreCarExample {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andTotalstarIsNull() {
+            addCriterion("totalStar is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarIsNotNull() {
+            addCriterion("totalStar is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarEqualTo(Integer value) {
+            addCriterion("totalStar =", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarNotEqualTo(Integer value) {
+            addCriterion("totalStar <>", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarGreaterThan(Integer value) {
+            addCriterion("totalStar >", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarGreaterThanOrEqualTo(Integer value) {
+            addCriterion("totalStar >=", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarLessThan(Integer value) {
+            addCriterion("totalStar <", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarLessThanOrEqualTo(Integer value) {
+            addCriterion("totalStar <=", value, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarIn(List<Integer> values) {
+            addCriterion("totalStar in", values, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarNotIn(List<Integer> values) {
+            addCriterion("totalStar not in", values, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarBetween(Integer value1, Integer value2) {
+            addCriterion("totalStar between", value1, value2, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalstarNotBetween(Integer value1, Integer value2) {
+            addCriterion("totalStar not between", value1, value2, "totalstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentIsNull() {
+            addCriterion("totalComment is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentIsNotNull() {
+            addCriterion("totalComment is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentEqualTo(Integer value) {
+            addCriterion("totalComment =", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentNotEqualTo(Integer value) {
+            addCriterion("totalComment <>", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentGreaterThan(Integer value) {
+            addCriterion("totalComment >", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentGreaterThanOrEqualTo(Integer value) {
+            addCriterion("totalComment >=", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentLessThan(Integer value) {
+            addCriterion("totalComment <", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentLessThanOrEqualTo(Integer value) {
+            addCriterion("totalComment <=", value, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentIn(List<Integer> values) {
+            addCriterion("totalComment in", values, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentNotIn(List<Integer> values) {
+            addCriterion("totalComment not in", values, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentBetween(Integer value1, Integer value2) {
+            addCriterion("totalComment between", value1, value2, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalcommentNotBetween(Integer value1, Integer value2) {
+            addCriterion("totalComment not between", value1, value2, "totalcomment");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarIsNull() {
+            addCriterion("avgStar is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarIsNotNull() {
+            addCriterion("avgStar is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarEqualTo(Float value) {
+            addCriterion("avgStar =", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarNotEqualTo(Float value) {
+            addCriterion("avgStar <>", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarGreaterThan(Float value) {
+            addCriterion("avgStar >", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarGreaterThanOrEqualTo(Float value) {
+            addCriterion("avgStar >=", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarLessThan(Float value) {
+            addCriterion("avgStar <", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarLessThanOrEqualTo(Float value) {
+            addCriterion("avgStar <=", value, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarIn(List<Float> values) {
+            addCriterion("avgStar in", values, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarNotIn(List<Float> values) {
+            addCriterion("avgStar not in", values, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarBetween(Float value1, Float value2) {
+            addCriterion("avgStar between", value1, value2, "avgstar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvgstarNotBetween(Float value1, Float value2) {
+            addCriterion("avgStar not between", value1, value2, "avgstar");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

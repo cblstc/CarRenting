@@ -23,6 +23,9 @@
     <result column="nodeductibles" property="nodeductibles" jdbcType="REAL" />
     <result column="count" property="count" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="totalStar" property="totalstar" jdbcType="INTEGER" />
+    <result column="totalComment" property="totalcomment" jdbcType="INTEGER" />
+    <result column="avgStar" property="avgstar" jdbcType="REAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -85,7 +88,7 @@
   <sql id="Base_Column_List" >
     id, store_id, brand, model, configuration, carPhoto, seats, doors, displacement, 
     navigator, pdc, drivenMode, fuelTankage, gearbox, skylight, aircell, price, insurance, 
-    nodeductibles, count, status
+    nodeductibles, count, status, totalStar, totalComment, avgStar
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.StoreCarExample" >
     select
@@ -124,7 +127,8 @@
       navigator, pdc, drivenMode, 
       fuelTankage, gearbox, skylight, 
       aircell, price, insurance, 
-      nodeductibles, count, status
+      nodeductibles, count, status, 
+      totalStar, totalComment, avgStar
       )
     values (#{id,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, 
       #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, #{carphoto,jdbcType=VARCHAR}, 
@@ -132,7 +136,8 @@
       #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
       #{fueltankage,jdbcType=INTEGER}, #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, 
       #{aircell,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{insurance,jdbcType=REAL}, 
-      #{nodeductibles,jdbcType=REAL}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      #{nodeductibles,jdbcType=REAL}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{totalstar,jdbcType=INTEGER}, #{totalcomment,jdbcType=INTEGER}, #{avgstar,jdbcType=REAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.StoreCar" >
@@ -201,6 +206,15 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="totalstar != null" >
+        totalStar,
+      </if>
+      <if test="totalcomment != null" >
+        totalComment,
+      </if>
+      <if test="avgstar != null" >
+        avgStar,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -265,6 +279,15 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="totalstar != null" >
+        #{totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="totalcomment != null" >
+        #{totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="avgstar != null" >
+        #{avgstar,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -340,6 +363,15 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.totalstar != null" >
+        totalStar = #{record.totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalcomment != null" >
+        totalComment = #{record.totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="record.avgstar != null" >
+        avgStar = #{record.avgstar,jdbcType=REAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -367,7 +399,10 @@
       insurance = #{record.insurance,jdbcType=REAL},
       nodeductibles = #{record.nodeductibles,jdbcType=REAL},
       count = #{record.count,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      totalStar = #{record.totalstar,jdbcType=INTEGER},
+      totalComment = #{record.totalcomment,jdbcType=INTEGER},
+      avgStar = #{record.avgstar,jdbcType=REAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -435,6 +470,15 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="totalstar != null" >
+        totalStar = #{totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="totalcomment != null" >
+        totalComment = #{totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="avgstar != null" >
+        avgStar = #{avgstar,jdbcType=REAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -459,7 +503,10 @@
       insurance = #{insurance,jdbcType=REAL},
       nodeductibles = #{nodeductibles,jdbcType=REAL},
       count = #{count,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      totalStar = #{totalstar,jdbcType=INTEGER},
+      totalComment = #{totalcomment,jdbcType=INTEGER},
+      avgStar = #{avgstar,jdbcType=REAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

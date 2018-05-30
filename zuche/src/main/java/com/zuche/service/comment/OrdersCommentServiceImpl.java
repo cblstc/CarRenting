@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.zuche.entity.OrdersComment;
 import com.zuche.entity.OrdersCommentExample;
 import com.zuche.entity.OrdersCommentExample.Criteria;
@@ -42,9 +43,9 @@ public class OrdersCommentServiceImpl implements OrdersCommentService {
 		if (conds != null) {
 			for (String fieldName : conds.keySet()) {  // 遍历字段名
 				String fieldValue = conds.get(fieldName);  // 获得字段对应的值
-				/*if (fieldName != null && fieldName.equals("pageNum")) {
+				if (fieldName != null && fieldName.equals("pageNum")) {
 					PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
-				}*/
+				}
 				if (fieldName != null && fieldName.equals("id")) {
 					criteria.andIdEqualTo(new Integer(fieldValue));  // id
 				}
