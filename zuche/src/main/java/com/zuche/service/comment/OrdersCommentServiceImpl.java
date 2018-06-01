@@ -43,17 +43,19 @@ public class OrdersCommentServiceImpl implements OrdersCommentService {
 		if (conds != null) {
 			for (String fieldName : conds.keySet()) {  // 遍历字段名
 				String fieldValue = conds.get(fieldName);  // 获得字段对应的值
-				if (fieldName != null && fieldName.equals("pageNum")) {
-					PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
-				}
-				if (fieldName != null && fieldName.equals("id")) {
-					criteria.andIdEqualTo(new Integer(fieldValue));  // id
-				}
-				if (fieldName != null && fieldName.equals("userId")) {
-					criteria.andUserIdEqualTo(Integer.parseInt(fieldValue));  // 用户id
-				}
-				if (fieldName != null && fieldName.equals("ordersId")) {
-					criteria.andOrdersIdEqualTo(fieldValue);  // 订单id
+				if (fieldName != null) {
+					if (fieldName.equals("pageNum")) {
+						PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
+					}
+					if (fieldName.equals("id")) {
+						criteria.andIdEqualTo(new Integer(fieldValue));  // id
+					}
+					if (fieldName.equals("userId")) {
+						criteria.andUserIdEqualTo(Integer.parseInt(fieldValue));  // 用户id
+					}
+					if (fieldName.equals("ordersId")) {
+						criteria.andOrdersIdEqualTo(fieldValue);  // 订单id
+					}
 				}
 			}
 		}

@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.zuche.entity.Joins;
 import com.zuche.entity.Store;
+import com.zuche.mapper.JoinsMapper;
 import com.zuche.mapper.StoreMapper;
 import com.zuche.random.RandomStore;
 import com.zuche.random.RandomUser;
@@ -78,6 +80,23 @@ public class StoreInsert {
 			distance = new BigDecimal(distance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			storeDistances.put(store, distance);
 			System.out.println(store.getStorename() + "距离梅州：" + distance + "m");
+		}
+	}
+	
+	@Autowired 
+	private JoinsMapper joinsMapper;
+	
+	@Test
+	public void insertJoins() throws Exception {
+		for (int i=0; i<10; i++) {
+			Joins joins = new Joins();
+			joins.setCompany("湛江花圃门店");
+			joins.setName("陈晨");
+			joins.setPhone("13432825705");
+			joins.setEmail("13432825705@163.com");
+			joins.setNote("我想加盟");
+			joins.setStatus(1);
+			joinsMapper.insert(joins);
 		}
 	}
 

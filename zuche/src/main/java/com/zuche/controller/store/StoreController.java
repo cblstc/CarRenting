@@ -112,10 +112,7 @@ public class StoreController {
 			break;
 		case "CarList":  /* 汽车列表 */
 			List<StoreCar> storeCars = storeCarService.findCarByCondition(storeCar.getBrand(), storeCar.getModel(), 
-					storeCar.getConfiguration(), pageNum);
-			Page<StoreCar> storeCarsPage = (Page<StoreCar>) storeCars;
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("total", storeCarsPage.getPages() * 5);
+					storeCar.getConfiguration(), store.getId(), pageNum);
 			model.addAttribute("storeCars", storeCars);
 			model.addAttribute("brand", storeCar.getBrand());
 			model.addAttribute("model", storeCar.getModel());
@@ -138,16 +135,11 @@ public class StoreController {
 			break;
 		case "OrdersList":  /* 订单列表 */
 			Map<String, String> conds = new HashMap<String, String>();
-			pageNum = pageNum == null ? 1 : pageNum;
 			Integer status = orders.getStatus() == null ? 0 : orders.getStatus();
 			
-			conds.put("pageNum", pageNum.toString());
 			conds.put("status", status.toString());
 			conds.put("storeId", store.getId().toString());
 			List<Orders> orderss = ordersService.findOrdersByCondition(conds);
-			Page<Orders> orderssPage = (Page<Orders>) orderss;
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("total", orderssPage.getPages() * 5);
 			model.addAttribute("orderss", orderss);
 			model.addAttribute("status", orders.getStatus());
 			
@@ -155,27 +147,17 @@ public class StoreController {
 			break;
 		case "OrdersCommentList":  /* 订单评论列表 */
 			Map<String, String> ocConds = new HashMap<String, String>();
-			pageNum = pageNum == null ? 1 : pageNum;
-			ocConds.put("pageNum", pageNum.toString());
 			ocConds.put("storeId", store.getId().toString());
 			
 			List<OrdersComment> ordersComments = ordersCommentService.findOrdersCommentByCondition(ocConds);
-			Page<OrdersComment> ordersCommentsPage = (Page<OrdersComment>) ordersComments;
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("total", ordersCommentsPage.getPages() * 5);
 			model.addAttribute("ordersComments", ordersComments);
 			result = "store/ordersCommentList";
 			break;
 		case "StoreCommentList":  /* 门店评论列表 */
 			Map<String, String> scConds = new HashMap<String, String>();
-			pageNum = pageNum == null ? 1 : pageNum;
-			scConds.put("pageNum", pageNum.toString());
 			scConds.put("storeId", store.getId().toString());
 			
 			List<StoreComment> storeComments = storeCommentService.findStoreCommentByCondition(scConds);
-			Page<StoreComment> storeCommentsPage = (Page<StoreComment>) storeComments;
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("total", storeCommentsPage.getPages() * 5);
 			model.addAttribute("storeComments", storeComments);
 			result = "store/storeCommentList";
 			break;

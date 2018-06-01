@@ -188,7 +188,7 @@ public class SystemController {
 			String username = UUIDUtils.getUUID().substring(0, 8);
 			String password = UUIDUtils.getUUID().substring(0, 8);
 			// 发送账号给申请人
-			joinsService.sendAccount(username, password, existJoins.getEmail());  
+	        joinsService.sendAccount(username, password, existJoins.getEmail());  // 可能会被检测垃圾邮件，发不出去
 			// 保存账号
 			StoreUser storeUser = new StoreUser();
 			storeUser.setUsername(username);

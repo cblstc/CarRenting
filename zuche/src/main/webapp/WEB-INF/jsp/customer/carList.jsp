@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="address-date-choice">
         <form action="#" id="date-choice-form" method="post">
         <div class="public-container clearfloat">
-            <img class="left-float car-to-img" src="${pageContext.request.contextPath }/images/car-to.jpg">
+            <img class="left-float car-to-img" src="${pageContext.request.contextPath }/images/car-to-2.png">
             <div class="choice-date left-float">
                 <div class="choice-date-block"><span class="date-text">取车时间</span><!--
                 --><input readonly required placeholder="请选择开始日期" class="date-choice get-date-choice" name="gettime" type="text"></div>
@@ -90,8 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         2. 租车时长不低于4个小时<br/>
                         租期的计算方式：<br/>
                         超过4个小时算一天，例：1天4小时的租期为两天，1天3小时的租期为一天"></i></p>
-                <input type="submit" class="choice-btn" value="进入门店">
-                <!--@Todo 根据门店名称查询门店的信息，然后跳转到carList页面-->
+                <!-- <input type="submit" class="choice-btn" value="进入门店"> -->
+                <input type="button" class="choice-btn" value="进入门店" onclick="javascript: alert('敬请期待！')">
             </div>
         </div>
         </form>
@@ -123,15 +123,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <p class="brand-title">品牌</p>
                     <div class="brand-content">
                         <a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common brand-name-specify">不限</p></a><!--
-                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">大众</p></a><!--
-                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">比亚迪</p></a><!--
+                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">奥迪</p></a><!--
+                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">保时捷</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">丰田</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">马自达</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">斯巴鲁</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">长安</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">本田</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">日产</p></a><!--
-                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">保时捷</p></a><!--
+                        --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">科尼赛格</p></a><!--
                         --><a href="javascript:void(0)" onclick="selectBrand(this);"><p class="brand-name-common">大众</p></a><!--
                         -->
                     </div>
@@ -143,6 +143,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
 
             <div class="car-content left-float">
+            	<c:if test="${fn:length(storeCars) == 0 }">
+            	<div class="single-car clearfloat">
+            		<span>该门店暂未发布车辆，请到其他店逛逛？</span>
+            	</div>
+            	</c:if>
             	<c:forEach var="storeCar" items="${storeCars }">
                 <!-- 车辆一条记录: start -->
                 <div class="single-car clearfloat">
@@ -177,15 +182,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</c:forEach>
 				
 				<!-- 车辆分页 start -->
-                <div class="clearfloat"><div class="m-style car-pagenator right-float"></div></div>
+                <!-- <div class="clearfloat"><div class="m-style car-pagenator right-float"></div></div>
                 <div class="clearfloat">
                     <p class="car-tips right-float">
                         总记录
-                        <span class="count">100</span>条，每页显示
+                        <span class="count"></span>条，每页显示
                         <span class="count">10</span>条，总页数为
                         <span class="count">10</span>页
                     </p>
-                </div>
+                </div> -->
                 <!-- 车辆分页 end -->
             </div>
         </div>
@@ -386,15 +391,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	var returnDate = $(".return-date-choice").val();
         	var rentdays = $(".rentdays").text();
         	if (getDate == "") {
-        		layer.msg("取车日期为空");
+        		layer.msg("取车日期为空", {
+        	        icon: 2,
+        	        time: 10000,
+        	        closeBtn: 1,
+        	        offset: '60px'
+        	    });
+        		$('html,body').animate({scrollTop: '0px'}, 800);
         		return;
         	}
         	if (returnDate == "") {
-        		layer.msg("还车日期为空");
+        		layer.msg("还车日期为空", {
+        	        icon: 2,
+        	        time: 10000,
+        	        closeBtn: 1,
+        	        offset: '60px'
+        	    });
+        		$('html,body').animate({scrollTop: '0px'}, 800);
         		return;
         	}
         	if (rentdays == "??" || rentdays <= 0) {
-        		layer.msg("取车还车间隔不小于4小时");
+        		layer.msg("取车还车间隔不小于4小时", {
+        	        icon: 2,
+        	        time: 10000,
+        	        closeBtn: 1,
+        	        offset: '60px'
+        	    });
+        		$('html,body').animate({scrollTop: '0px'}, 800);
         		return;
         	}
         	window.open("${pageContext.request.contextPath }/toCarDetail?id=" + id + 
@@ -407,7 +430,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="r-result">
 			<input id="suggestId"  class="form-control searchInput" type="text" placeholder="地址搜索框" />
 		</div>
-        <button class="btn btn-primary confirmBtn">搜索附近门店</button>
+        <button class="btn btn-primary confirmBtn" onclick="javascript: alert('敬请期待！');">搜索附近门店</button>
         <div class="searchTip">请选择地址并搜索门店<br/>以下显示10个与<span style="color: blue;">${store.storename }</span>最近的门店</div>
         <div class="storeNameBox">
         <c:forEach var="storeDistance" items="${storeDistances }" begin="1">
@@ -513,6 +536,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         /* 显示评论 */
         function showComment(target) {
+        	alert("敬请期待！");
+        	return;
             var title = target == "car" ? "汽车评论列表" : "门店评论列表";
 
             layer.open({

@@ -103,13 +103,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<td class="f-14 td-manage">
 								<c:choose>
 									<c:when test="${orders.status == 2}">
-										<button class="btn btn-primary btn-xs" onclick="javascript: window.location.href='${pageContext.request.contextPath }/store/changeOrdersStatus?id=${orders.id}&status=2'">开始租赁</button>
+										<button class="btn btn-primary btn-xs" onclick="changeOrdersStatus('${orders.id}', 2);">开始租赁</button>
 									</c:when>
 									<c:when test="${orders.status == 3}">
-										<button class="btn btn-primary btn-xs" onclick="javascript: window.location.href='${pageContext.request.contextPath }/store/changeOrdersStatus?id=${orders.id}&status=3'"">批准退款</button>
+										<button class="btn btn-primary btn-xs" onclick="changeOrdersStatus('${orders.id}', 3);">批准退款</button>
 									</c:when>
 									<c:when test="${orders.status == 5}">
-										<button class="btn btn-danger btn-xs" onclick="javascript: window.location.href='${pageContext.request.contextPath }/store/changeOrdersStatus?id=${orders.id}&status=5'"">结束租赁</button>
+										<button class="btn btn-danger btn-xs" onclick="changeOrdersStatus('${orders.id}', 5);">结束租赁</button>
 									</c:when>
 									<c:otherwise>
 										无
@@ -162,6 +162,19 @@ function refund_refuse(obj,id){
 		$(obj).remove();
 		layer.msg('已下架!',{icon: 5,time:1000});
 	});
+}
+
+/**
+ * 改变订单状态
+ */
+function changeOrdersStatus(ordersId, status) {
+	layer.confirm('确定执行该操作？', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+		  window.location.href="${pageContext.request.contextPath }/store/changeOrdersStatus?id=" + 
+			 ordersId + "&status=" + status;
+		}, function(){
+		});
 }
 
 

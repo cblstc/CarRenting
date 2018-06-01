@@ -66,6 +66,7 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public List<Orders> findOrdersByCondition(Map<String, String> conds) {
 		OrdersExample ordersExample = new OrdersExample();
+		ordersExample.setOrderByClause("time desc");  // 根据时间排序
 		Criteria criteria = ordersExample.createCriteria();
 		
 		if (conds != null) {

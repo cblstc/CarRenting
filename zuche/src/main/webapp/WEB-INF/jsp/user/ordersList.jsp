@@ -29,6 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         .comment-star img {
             margin-right: -8px;
         }
+        
+        #orderTable th, #orderTable td {
+        	vertical-align: middle;
+        	text-align: center;
+        }
     </style>
 
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-3.2.1.min.js"></script>
@@ -78,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <th>时间</th>
                             <th>图片</th>
                             <th>门店</th>
-                            <th>日均价</th>
+                            <th>租赁费用</th>
                             <th>基本保险</th>
                             <th>不计免赔险</th>
                             <th>总计</th>
@@ -104,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             // url: "jsondemo/datatable_demo_1.json"
             url: "${pageContext.request.contextPath }/order/queryOrders?pageNum=1"
         },
-        pageLength: 3,  // 3条数据
+        pageLength: 5,  // 5条数据
         columns: [  // 数据绑定
             { "data": "orders.id" },
             { "data": "orders.time" },
@@ -117,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             { "data": "orders.status" },
             { "data": "orders.status" }
         ],
-
+        
         "columnDefs": [
 			{   // 时间
 			    "render": function(data, type, row, meta) {
@@ -201,7 +206,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    btns = "<button class='btn btn-primary btn-xs' onclick='javascript: window.location.href=\"${pageContext.request.contextPath }/order/pay?ordersId=" + ordersId + "\";'>付款</button><br/>";
                 	} else if (data == "2") {
                 		var ordersId = row.orders.id;
-                		btns = "<button class='btn btn-danger btn-xs' onclick='javascript: layer.msg(\"提交申请\"); window.location.href=\"${pageContext.request.contextPath }/order/applyRefund?ordersId=" + ordersId + "\";'>退款</button><br/>";
+                		btns = "<button class='btn btn-danger btn-xs' onclick='javascript: layer.msg(\"提交申请\"); window.location.href=\"${pageContext.request.contextPath }/order/applyRefund?ordersId=" + ordersId + "\";'>申请退款</button><br/>";
                 	} else if (data == "3") {
                 		btns = "<span>等待批准</span>";
                 	} else if (data == "4") {
@@ -212,7 +217,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 		var ordersId = row.orders.id;
                 		btns = "<button class='btn btn-info btn-xs' onclick='ev_comment_edit(\"" + ordersId + "\");'>评论</button><br/>";
                 	} else if (data == "7") {
-                		btns = "<button class='btn btn-info btn-xs' onclick='ev_comment_show(\"" + ordersId + "\");'>查看评论</button>";
+                		var ordersId = row.orders.id;
+                		btns = "<button class='btn btn-success btn-xs' onclick='ev_comment_show(\"" + ordersId + "\");'>查看评论</button>";
                 	}
                     return btns;
                 },
@@ -246,6 +252,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         }
     });
+    
+    t.order([1, 'desc']).draw();
     
     /* 时间戳转时间 */
     function timeStampToDate(time) {

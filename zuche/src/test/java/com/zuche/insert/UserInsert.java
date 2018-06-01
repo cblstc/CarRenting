@@ -25,7 +25,7 @@ public class UserInsert {
 	
 	@Test
 	public void insert() {
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<10; i++) {
 			String phone = RandomUser.getTel();
 			String username = RandomUser.getUsername((int) (Math.random() * 6 + 8));  // 6-12
 			String email = RandomUser.getEmail(5, 30);

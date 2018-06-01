@@ -60,6 +60,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/user/**"/>
             <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/comment/**"/>
             <!-- <mvc:exclude-mapping path="/admin/**"/> -->
             <bean class="com.zuche.intercepter.UserLoginInterceptor"/>
         </mvc:interceptor>

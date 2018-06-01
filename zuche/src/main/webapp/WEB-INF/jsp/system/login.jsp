@@ -52,7 +52,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/jquery.validate.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/validate-methods.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery.validation/1.14.0/messages_zh.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
   <script>
+  var flag = "${preLogin}";
+  if (flag != null && flag != "") {
+  	layer.msg(flag, {
+          icon: 3,
+          time: 10000,
+          offset: '10px'
+      });
+  }
     /* 表单校验 */
     $('#login-form').validate();
   </script>

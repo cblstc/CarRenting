@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -27,12 +29,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="main-content">
         <div class="public-container car-container">
             <div class="car-content clearfloat">
-                <img class="car-img left-float" src="${pageContext.request.contextPath }/images/car-1.jpg">
+                <img class="car-img left-float" src="${pageContext.request.contextPath }/uploads/${fn:split(storeCar.carphoto, ';')[0]}">
                 <div class="car-desc-box left-float">
                     <dl>
                         <dt class="car-name">${storeCar.model }</dt>
-                        <dd class="car-desc">${storeCar.displacement }|${storeCar.seats }人|${storeCar.brand }人</dd>
-                        <dd><button class="conf-btn" onclick="javascript: window.open('carDetail.html');">查看配置信息</button></dd>
+                        <dd class="car-desc">${storeCar.displacement }|${storeCar.seats }人|${storeCar.brand }</dd>
+                        <dd><button class="conf-btn" onclick="javascript: alert('尽情期待');">查看配置信息</button></dd>
                     </dl>
                 </div>
                 <div class="date-address-box left-float">

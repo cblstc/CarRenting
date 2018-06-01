@@ -114,7 +114,7 @@ public class JoinsServiceImpl implements JoinsService {
 	 */
 	@Override
 	public void sendPass(String email) {
-		String url = "http://" + IPUtils.getLocalIpAddr() + ":8080/zuche/store/toLogin";
+		String url = "http://" + IPUtils.getLocalIpAddr() + ":8081/zuche/store/toLogin";
 		String content = "您好！经过管理员的审核，您的平台账号已经重新开启，门店平台入口：" + url;
 		try {
 			MailUtils.sendMail("13432825705@163.com", "13432825705", "chenbolong95", 

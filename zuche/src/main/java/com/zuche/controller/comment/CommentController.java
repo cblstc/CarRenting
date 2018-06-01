@@ -119,7 +119,7 @@ public class CommentController {
 	public void showComment(OrdersComment ordersComment, HttpServletResponse response) throws Exception {
 		Map<String,String> conds = new HashMap<String,String>();
 		conds.put("userId", ordersComment.getUserId().toString());
-		conds.put("orderId", ordersComment.getOrdersId());
+		conds.put("ordersId", ordersComment.getOrdersId());
 		List<OrdersComment> ordersComments = ordersCommentService.findOrdersCommentByCondition(conds);  // 查询评论
 		if (ordersComments != null && ordersComments.size() > 0) {
 			OrdersComment existOrdersComment= ordersComments.get(0);

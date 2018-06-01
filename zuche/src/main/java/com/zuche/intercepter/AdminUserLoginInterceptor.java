@@ -41,6 +41,7 @@ public class AdminUserLoginInterceptor implements HandlerInterceptor {
         	return true;
         }
         //不符合条件的，跳转到登录界面  
+        request.setAttribute("preLogin", "请先登录！");
         request.getRequestDispatcher("/system/toLogin").forward(request, response); 
         return false;
 	}

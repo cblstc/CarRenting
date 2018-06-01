@@ -1,6 +1,7 @@
 package com.zuche.service.store;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zuche.entity.StoreCar;
 
@@ -20,7 +21,7 @@ public interface StoreCarService {
 	 * @return
 	 */
 	List<StoreCar> findCarByCondition(String brand, String model,
-			String configuration, Integer pageNum);
+			String configuration, Integer storeId, Integer pageNum);
 
 	/**
 	 * 根据字段查询
@@ -41,4 +42,11 @@ public interface StoreCarService {
 	 * @param storeCar 车辆信息
 	 */
 	void updateCar(StoreCar storeCar);
+
+	/**
+	 * 条件查询门店车辆
+	 * @param conds
+	 * @return
+	 */
+	List<StoreCar> findStoreCarByCondition(Map<String, String> conds);
 }

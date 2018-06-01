@@ -69,7 +69,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="failJoins('${joins.id }');" iconCls="icon-no" plain="true">拒绝</a>
                 		</c:when>
                 		<c:when test="${joins.status == 2 }">
-                			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="failJoins('${joins.id }');" iconCls="icon-no" plain="true">拒绝</a>
                 		</c:when>
                 		<c:otherwise>
                 			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="passJoins('${joins.id }');" iconCls="icon-ok" plain="true">通过</a>

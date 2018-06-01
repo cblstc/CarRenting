@@ -74,6 +74,7 @@ label.error {
 <script type="text/javascript" src="${pageContext.request.contextPath }/jsp/store/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/jsp/store/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/jsp/store/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
 <script>
 /*var _hmt = _hmt || [];
 (function() {
@@ -82,6 +83,15 @@ label.error {
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();*/
+var flag = "${preLogin}";
+if (flag != null && flag != "") {
+	layer.msg(flag, {
+        icon: 3,
+        time: 10000,
+        offset: '60px'
+    });
+}
+
 
 /* 校验表单 */
 $('#login-form').validate({});

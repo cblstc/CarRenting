@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.zuche.entity.Joins;
 import com.zuche.entity.Store;
 import com.zuche.entity.StoreCar;
@@ -63,7 +64,7 @@ public class CustomerController {
 	 */
 	@RequestMapping("/to{page}")
 	@Token(save=true)
-	public String toPage(@PathVariable String page, Model model, HttpServletRequest request, HttpServletResponse response, Integer id) throws Exception {
+	public String toPage(@PathVariable String page, Model model, HttpServletRequest request, HttpServletResponse response, Integer id, Integer pageNum) throws Exception {
 		
 		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
 		
@@ -92,17 +93,21 @@ public class CustomerController {
 			List<StoreCar> storeCars = null;  // 当前门店下的车辆
 			List<StoreDistance> storeDistances = null;  // 当前门店附近的门店
 			
+			Map<String, String> conds = new HashMap<String, String>();  // 车辆查询条件
+			conds.put("status", "1");  // 车辆状态
+			
 			if (id != null && id.intValue() != 0) {  // 如果门店id不为空，说明用户点击进入了一个门店，那么根据id查询门店
 				store = storeService.findStoreByField(id.toString(), "id");
-				storeCars = storeCarService.findCarByField(id.toString(), "storeId");
+				conds.put("storeId", store.getId().toString());
 			} else {  // 如果门店id为空，那么查找最近的一个门店
 				storeDistances = storeService.findNearbyStore(Double.parseDouble(latitude), Double.parseDouble(longitude), 11);
 				if (storeDistances != null && storeDistances.size() > 0) {
 					StoreDistance storeDistance = storeDistances.get(0);
 					store = storeService.findStoreByField(storeDistance.getId().toString(), "id");
-					storeCars = storeCarService.findCarByField(storeDistance.getId().toString(), "storeId");
+					conds.put("storeId", storeDistance.getId().toString());
 				}
 			}
+			storeCars = storeCarService.findStoreCarByCondition(conds);
 			
 			latitude = store.getLatitude().toString();
 			longitude = store.getLongitude().toString();

@@ -1,6 +1,7 @@
 package com.zuche.service.store;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class StoreCarServiceImpl implements StoreCarService {
 	 */
 	@Override
 	public List<StoreCar> findCarByCondition(String brand, String model,
-			String configuration, Integer pageNum) {
+			String configuration, Integer storeId, Integer pageNum) {
 		// 分页
-		PageHelper.startPage(pageNum, 5);
+//		PageHelper.startPage(pageNum, 5);
 		
 		StoreCarExample storeCarExample = new StoreCarExample();
 		Criteria criteria = storeCarExample.createCriteria();
@@ -43,6 +44,9 @@ public class StoreCarServiceImpl implements StoreCarService {
 		if (configuration != null && !configuration.trim().equals("") && !configuration.trim().equals("0")) {
 			criteria.andConfigurationEqualTo(configuration);
 		}
+		if (storeId != null && storeId.intValue() != 0) {
+			criteria.andStoreIdEqualTo(storeId);
+		} 
 		
 		List<StoreCar> existCars = storeCarMapper.selectByExample(storeCarExample);
 		return existCars;
@@ -84,5 +88,46 @@ public class StoreCarServiceImpl implements StoreCarService {
 	@Override
 	public void updateCar(StoreCar storeCar) {
 		storeCarMapper.updateByPrimaryKey(storeCar);  
+	}
+	
+	/**
+	 * 条件查询车辆
+	 */
+	@Override
+	public List<StoreCar> findStoreCarByCondition(Map<String, String> conds) {
+		StoreCarExample storeCarExample = new StoreCarExample();
+		Criteria criteria = storeCarExample.createCriteria();
+		
+		if (conds != null) {
+			for (String fieldName : conds.keySet()) {  // 遍历字段名
+				String fieldValue = conds.get(fieldName);  // 获得字段对应的值
+				if (fieldName != null) {
+					if (fieldName.equals("pageNum")) {
+						PageHelper.startPage(Integer.parseInt(fieldValue), 5); // 分页
+					}
+					if (fieldName.equals("id")) {
+						criteria.andIdEqualTo(new Integer(fieldValue));  // id
+					}
+					if (fieldName.equals("storeId")) {
+						criteria.andStoreIdEqualTo(Integer.parseInt(fieldValue));  // 门店id
+					}
+					if (fieldName.equals("brand")) {
+						criteria.andBrandEqualTo(fieldValue);  // 车辆品牌
+					}
+					if (fieldName.equals("model")) {
+						criteria.andModelEqualTo(fieldValue);  // 车辆型号
+					}
+					if (fieldName.equals("configuration")) {
+						criteria.andConfigurationEqualTo(fieldValue);  // 车辆配置
+					}
+					if (fieldName.equals("status")) {
+						criteria.andStatusEqualTo(Integer.parseInt(fieldValue));  // 车辆状态
+					}
+				}
+			}
+		}
+		
+		List<StoreCar> existCars = storeCarMapper.selectByExample(storeCarExample);
+		return existCars;
 	}
 }
