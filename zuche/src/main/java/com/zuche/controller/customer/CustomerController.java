@@ -68,6 +68,8 @@ public class CustomerController {
 		
 		StoreUser storeUser = (StoreUser) request.getSession().getAttribute("storeUser");
 		
+		System.out.println(storeUser);
+		
 		String result = null;
 		
 		switch (page) {
