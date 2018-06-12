@@ -3,8 +3,7 @@
 <mapper namespace="com.zuche.mapper.StoreMapper" >
   <resultMap id="BaseResultMap" type="com.zuche.entity.Store" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="store_user_id" property="storeUserId" jdbcType="INTEGER" />
     <result column="storename" property="storename" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
@@ -13,13 +12,11 @@
     <result column="longitude" property="longitude" jdbcType="REAL" />
     <result column="latitude" property="latitude" jdbcType="REAL" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="traffic" property="traffic" jdbcType="VARCHAR" />
     <result column="totalStar" property="totalstar" jdbcType="INTEGER" />
     <result column="totalComment" property="totalcomment" jdbcType="INTEGER" />
     <result column="avgStar" property="avgstar" jdbcType="REAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zuche.entity.Store" extends="BaseResultMap" >
-    <result column="traffic" property="traffic" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,28 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, password, storename, phone, startTime, endTime, address, longitude, 
-    latitude, description, totalStar, totalComment, avgStar, status
+    id, store_user_id, storename, phone, startTime, endTime, address, longitude, latitude, 
+    description, traffic, totalStar, totalComment, avgStar, status
   </sql>
-  <sql id="Blob_Column_List" >
-    traffic
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zuche.entity.StoreExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from store
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.StoreExample" >
     select
     <if test="distinct" >
@@ -116,11 +94,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from store
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -135,18 +111,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.Store" >
-    insert into store (id, username, password, 
-      storename, phone, startTime, 
-      endTime, address, longitude, 
-      latitude, description, totalStar, 
-      totalComment, avgStar, status, 
-      traffic)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{storename,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{longitude,jdbcType=REAL}, 
-      #{latitude,jdbcType=REAL}, #{description,jdbcType=VARCHAR}, #{totalstar,jdbcType=INTEGER}, 
-      #{totalcomment,jdbcType=INTEGER}, #{avgstar,jdbcType=REAL}, #{status,jdbcType=INTEGER}, 
-      #{traffic,jdbcType=LONGVARCHAR})
+    insert into store (id, store_user_id, storename, 
+      phone, startTime, endTime, 
+      address, longitude, latitude, 
+      description, traffic, totalStar, 
+      totalComment, avgStar, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{storeUserId,jdbcType=INTEGER}, #{storename,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{address,jdbcType=VARCHAR}, #{longitude,jdbcType=REAL}, #{latitude,jdbcType=REAL}, 
+      #{description,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{totalstar,jdbcType=INTEGER}, 
+      #{totalcomment,jdbcType=INTEGER}, #{avgstar,jdbcType=REAL}, #{status,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.Store" >
     insert into store
@@ -154,11 +130,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="password != null" >
-        password,
+      <if test="storeUserId != null" >
+        store_user_id,
       </if>
       <if test="storename != null" >
         storename,
@@ -184,6 +157,9 @@
       <if test="description != null" >
         description,
       </if>
+      <if test="traffic != null" >
+        traffic,
+      </if>
       <if test="totalstar != null" >
         totalStar,
       </if>
@@ -196,19 +172,13 @@
       <if test="status != null" >
         status,
       </if>
-      <if test="traffic != null" >
-        traffic,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="storeUserId != null" >
+        #{storeUserId,jdbcType=INTEGER},
       </if>
       <if test="storename != null" >
         #{storename,jdbcType=VARCHAR},
@@ -234,6 +204,9 @@
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
+      <if test="traffic != null" >
+        #{traffic,jdbcType=VARCHAR},
+      </if>
       <if test="totalstar != null" >
         #{totalstar,jdbcType=INTEGER},
       </if>
@@ -245,9 +218,6 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
-      </if>
-      <if test="traffic != null" >
-        #{traffic,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -263,11 +233,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null" >
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.storeUserId != null" >
+        store_user_id = #{record.storeUserId,jdbcType=INTEGER},
       </if>
       <if test="record.storename != null" >
         storename = #{record.storename,jdbcType=VARCHAR},
@@ -293,6 +260,9 @@
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
       </if>
+      <if test="record.traffic != null" >
+        traffic = #{record.traffic,jdbcType=VARCHAR},
+      </if>
       <if test="record.totalstar != null" >
         totalStar = #{record.totalstar,jdbcType=INTEGER},
       </if>
@@ -305,32 +275,7 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.traffic != null" >
-        traffic = #{record.traffic,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update store
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      storename = #{record.storename,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      startTime = #{record.starttime,jdbcType=TIMESTAMP},
-      endTime = #{record.endtime,jdbcType=TIMESTAMP},
-      address = #{record.address,jdbcType=VARCHAR},
-      longitude = #{record.longitude,jdbcType=REAL},
-      latitude = #{record.latitude,jdbcType=REAL},
-      description = #{record.description,jdbcType=VARCHAR},
-      totalStar = #{record.totalstar,jdbcType=INTEGER},
-      totalComment = #{record.totalcomment,jdbcType=INTEGER},
-      avgStar = #{record.avgstar,jdbcType=REAL},
-      status = #{record.status,jdbcType=INTEGER},
-      traffic = #{record.traffic,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -338,8 +283,7 @@
   <update id="updateByExample" parameterType="map" >
     update store
     set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
+      store_user_id = #{record.storeUserId,jdbcType=INTEGER},
       storename = #{record.storename,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       startTime = #{record.starttime,jdbcType=TIMESTAMP},
@@ -348,6 +292,7 @@
       longitude = #{record.longitude,jdbcType=REAL},
       latitude = #{record.latitude,jdbcType=REAL},
       description = #{record.description,jdbcType=VARCHAR},
+      traffic = #{record.traffic,jdbcType=VARCHAR},
       totalStar = #{record.totalstar,jdbcType=INTEGER},
       totalComment = #{record.totalcomment,jdbcType=INTEGER},
       avgStar = #{record.avgstar,jdbcType=REAL},
@@ -359,11 +304,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zuche.entity.Store" >
     update store
     <set >
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="storeUserId != null" >
+        store_user_id = #{storeUserId,jdbcType=INTEGER},
       </if>
       <if test="storename != null" >
         storename = #{storename,jdbcType=VARCHAR},
@@ -389,6 +331,9 @@
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="traffic != null" >
+        traffic = #{traffic,jdbcType=VARCHAR},
+      </if>
       <if test="totalstar != null" >
         totalStar = #{totalstar,jdbcType=INTEGER},
       </if>
@@ -401,35 +346,12 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="traffic != null" >
-        traffic = #{traffic,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.Store" >
-    update store
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      storename = #{storename,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      startTime = #{starttime,jdbcType=TIMESTAMP},
-      endTime = #{endtime,jdbcType=TIMESTAMP},
-      address = #{address,jdbcType=VARCHAR},
-      longitude = #{longitude,jdbcType=REAL},
-      latitude = #{latitude,jdbcType=REAL},
-      description = #{description,jdbcType=VARCHAR},
-      totalStar = #{totalstar,jdbcType=INTEGER},
-      totalComment = #{totalcomment,jdbcType=INTEGER},
-      avgStar = #{avgstar,jdbcType=REAL},
-      status = #{status,jdbcType=INTEGER},
-      traffic = #{traffic,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zuche.entity.Store" >
     update store
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+    set store_user_id = #{storeUserId,jdbcType=INTEGER},
       storename = #{storename,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       startTime = #{starttime,jdbcType=TIMESTAMP},
@@ -438,10 +360,19 @@
       longitude = #{longitude,jdbcType=REAL},
       latitude = #{latitude,jdbcType=REAL},
       description = #{description,jdbcType=VARCHAR},
+      traffic = #{traffic,jdbcType=VARCHAR},
       totalStar = #{totalstar,jdbcType=INTEGER},
       totalComment = #{totalcomment,jdbcType=INTEGER},
       avgStar = #{avgstar,jdbcType=REAL},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 查询最近的门店 -->
+  <select id="findNearbyStore" parameterType="com.zuche.entity.Distance" resultType="com.zuche.entity.StoreDistance" >
+    SELECT *, 
+    (POWER(MOD(ABS(longitude - #{1}),360),2) + POWER(ABS(latitude - #{0}),2)) AS distance
+        FROM store
+        ORDER BY distance LIMIT #{2}
+  </select>
 </mapper>

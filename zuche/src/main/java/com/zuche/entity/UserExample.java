@@ -1,6 +1,7 @@
 package com.zuche.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserExample {
@@ -441,6 +442,126 @@ public class UserExample {
 
         public Criteria andEmailNotBetween(String value1, String value2) {
             addCriterion("email not between", value1, value2, "email");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIsNull() {
+            addCriterion("role is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIsNotNull() {
+            addCriterion("role is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleEqualTo(Integer value) {
+            addCriterion("role =", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotEqualTo(Integer value) {
+            addCriterion("role <>", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleGreaterThan(Integer value) {
+            addCriterion("role >", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleGreaterThanOrEqualTo(Integer value) {
+            addCriterion("role >=", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleLessThan(Integer value) {
+            addCriterion("role <", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleLessThanOrEqualTo(Integer value) {
+            addCriterion("role <=", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIn(List<Integer> values) {
+            addCriterion("role in", values, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotIn(List<Integer> values) {
+            addCriterion("role not in", values, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleBetween(Integer value1, Integer value2) {
+            addCriterion("role between", value1, value2, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotBetween(Integer value1, Integer value2) {
+            addCriterion("role not between", value1, value2, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeIsNull() {
+            addCriterion("registTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeIsNotNull() {
+            addCriterion("registTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeEqualTo(Date value) {
+            addCriterion("registTime =", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeNotEqualTo(Date value) {
+            addCriterion("registTime <>", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeGreaterThan(Date value) {
+            addCriterion("registTime >", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("registTime >=", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeLessThan(Date value) {
+            addCriterion("registTime <", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeLessThanOrEqualTo(Date value) {
+            addCriterion("registTime <=", value, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeIn(List<Date> values) {
+            addCriterion("registTime in", values, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeNotIn(List<Date> values) {
+            addCriterion("registTime not in", values, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeBetween(Date value1, Date value2) {
+            addCriterion("registTime between", value1, value2, "registtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisttimeNotBetween(Date value1, Date value2) {
+            addCriterion("registTime not between", value1, value2, "registtime");
             return (Criteria) this;
         }
 

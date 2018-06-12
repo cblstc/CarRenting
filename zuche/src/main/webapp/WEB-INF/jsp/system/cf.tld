@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+  
+    <description>custom JSTL 1.1 functions library</description>  
+    <display-name>JSTL functions</display-name>  
+    <tlib-version>1.1</tlib-version>  
+    <short-name>cf</short-name>  
+    <uri>com.data.web.view.function</uri>  
+  
+    <function>  
+        <description>对象序列化为json字符串</description>  
+        <name>toJSON</name>  
+        <function-class>com.zuche.utils.JSONUtils</function-class>  
+        <function-signature>java.lang.String toJSON(java.lang.Object)</function-signature>  
+    </function>  
+      
+</taglib>  

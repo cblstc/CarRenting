@@ -1,7 +1,5 @@
 package com.zuche.entity;
 
-import java.util.Date;
-
 public class StoreCar {
     private Integer id;
 
@@ -13,7 +11,7 @@ public class StoreCar {
 
     private String configuration;
 
-    private Date year;
+    private String carphoto;
 
     private Integer seats;
 
@@ -35,7 +33,21 @@ public class StoreCar {
 
     private Integer aircell;
 
-    private String carphoto;
+    private Float price;
+
+    private Float insurance;
+
+    private Float nodeductibles;
+
+    private Integer count;
+
+    private Integer status;
+
+    private Integer totalstar;
+
+    private Integer totalcomment;
+
+    private Float avgstar;
 
     public Integer getId() {
         return id;
@@ -77,12 +89,12 @@ public class StoreCar {
         this.configuration = configuration == null ? null : configuration.trim();
     }
 
-    public Date getYear() {
-        return year;
+    public String getCarphoto() {
+        return carphoto;
     }
 
-    public void setYear(Date year) {
-        this.year = year;
+    public void setCarphoto(String carphoto) {
+        this.carphoto = carphoto == null ? null : carphoto.trim();
     }
 
     public Integer getSeats() {
@@ -165,11 +177,67 @@ public class StoreCar {
         this.aircell = aircell;
     }
 
-    public String getCarphoto() {
-        return carphoto;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setCarphoto(String carphoto) {
-        this.carphoto = carphoto == null ? null : carphoto.trim();
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Float insurance) {
+        this.insurance = insurance;
+    }
+
+    public Float getNodeductibles() {
+        return nodeductibles;
+    }
+
+    public void setNodeductibles(Float nodeductibles) {
+        this.nodeductibles = nodeductibles;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getTotalstar() {
+        return totalstar;
+    }
+
+    public void setTotalstar(Integer totalstar) {
+        this.totalstar = totalstar;
+    }
+
+    public Integer getTotalcomment() {
+        return totalcomment;
+    }
+
+    public void setTotalcomment(Integer totalcomment) {
+        this.totalcomment = totalcomment;
+    }
+
+    public Float getAvgstar() {
+        return avgstar;
+    }
+
+    public void setAvgstar(Float avgstar) {
+        this.avgstar = avgstar;
     }
 }

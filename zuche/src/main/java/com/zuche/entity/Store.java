@@ -2,19 +2,21 @@ package com.zuche.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Store {
     private Integer id;
 
-    private String username;
-
-    private String password;
+    private Integer storeUserId;
 
     private String storename;
 
     private String phone;
 
+    @DateTimeFormat(pattern="HH:mm")
     private Date starttime;
-
+    
+    @DateTimeFormat(pattern="HH:mm")
     private Date endtime;
 
     private String address;
@@ -25,6 +27,8 @@ public class Store {
 
     private String description;
 
+    private String traffic;
+
     private Integer totalstar;
 
     private Integer totalcomment;
@@ -32,8 +36,6 @@ public class Store {
     private Float avgstar;
 
     private Integer status;
-
-    private String traffic;
 
     public Integer getId() {
         return id;
@@ -43,20 +45,12 @@ public class Store {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Integer getStoreUserId() {
+        return storeUserId;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setStoreUserId(Integer storeUserId) {
+        this.storeUserId = storeUserId;
     }
 
     public String getStorename() {
@@ -123,6 +117,14 @@ public class Store {
         this.description = description == null ? null : description.trim();
     }
 
+    public String getTraffic() {
+        return traffic;
+    }
+
+    public void setTraffic(String traffic) {
+        this.traffic = traffic == null ? null : traffic.trim();
+    }
+
     public Integer getTotalstar() {
         return totalstar;
     }
@@ -155,11 +157,17 @@ public class Store {
         this.status = status;
     }
 
-    public String getTraffic() {
-        return traffic;
-    }
-
-    public void setTraffic(String traffic) {
-        this.traffic = traffic == null ? null : traffic.trim();
-    }
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", storeUserId=" + storeUserId
+				+ ", storename=" + storename + ", phone=" + phone
+				+ ", starttime=" + starttime + ", endtime=" + endtime
+				+ ", address=" + address + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", description=" + description
+				+ ", traffic=" + traffic + ", totalstar=" + totalstar
+				+ ", totalcomment=" + totalcomment + ", avgstar=" + avgstar
+				+ ", status=" + status + "]";
+	}
+    
+    
 }

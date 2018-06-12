@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/reset.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/login.css" type="text/css">
+    
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/common/jquery-3.2.1.min.js"></script>
-    
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
     
 </head>
 
@@ -55,6 +56,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <jsp:include page="../common/public-footer.jsp"></jsp:include>
 
 <script type="text/javascript">
+	var flag = "${preLogin}";
+	if (flag != null && flag != "") {
+		layer.msg(flag, {
+            icon: 3,
+            time: 10000,
+            offset: '60px'
+        });
+	}
     // 登录前台校验
     function validate() {
         var username = $(".username").val();

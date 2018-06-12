@@ -7,23 +7,25 @@ public class Orders {
 
     private Integer storeCarId;
 
-    private Integer userCarId;
-
     private Float price;
 
     private Float insurance;
 
     private Float nodeductibles;
 
-    private Float poundage;
-
     private Float totalmoney;
-
-    private Float disposit;
 
     private Date gettime;
 
     private Date returntime;
+
+    private Date time;
+
+    private Integer status;
+
+    private Integer userId;
+    
+    private Integer storeId;
 
     public String getId() {
         return id;
@@ -39,14 +41,6 @@ public class Orders {
 
     public void setStoreCarId(Integer storeCarId) {
         this.storeCarId = storeCarId;
-    }
-
-    public Integer getUserCarId() {
-        return userCarId;
-    }
-
-    public void setUserCarId(Integer userCarId) {
-        this.userCarId = userCarId;
     }
 
     public Float getPrice() {
@@ -73,28 +67,12 @@ public class Orders {
         this.nodeductibles = nodeductibles;
     }
 
-    public Float getPoundage() {
-        return poundage;
-    }
-
-    public void setPoundage(Float poundage) {
-        this.poundage = poundage;
-    }
-
     public Float getTotalmoney() {
         return totalmoney;
     }
 
     public void setTotalmoney(Float totalmoney) {
         this.totalmoney = totalmoney;
-    }
-
-    public Float getDisposit() {
-        return disposit;
-    }
-
-    public void setDisposit(Float disposit) {
-        this.disposit = disposit;
     }
 
     public Date getGettime() {
@@ -112,4 +90,37 @@ public class Orders {
     public void setReturntime(Date returntime) {
         this.returntime = returntime;
     }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+    
 }

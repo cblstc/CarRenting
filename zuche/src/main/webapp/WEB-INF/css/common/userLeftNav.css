@@ -20,10 +20,10 @@
     padding: 10px 10px 10px 20px;
 }
 .left-nav .nav-text:hover {
-    color: #fabe00;
+    color: #FF4049;
     background-color: #fff8e8;
 }
 .left-nav .active {
-    color: #fabe00;
+    color: #FF4049;
     background-color: #fff8e8;
 }

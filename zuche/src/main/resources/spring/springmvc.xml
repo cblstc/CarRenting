@@ -18,7 +18,16 @@
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/images/" mapping="/images/**"/> 
-	<mvc:resources location="/WEB-INF/uploads/" mapping="/uploads/**"/> 
+	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**"/>
+	<mvc:resources location="/WEB-INF/uploads/" mapping="/uploads/**"/>
+	<!-- h-ui的资源放在这里面 -->
+	<mvc:resources location="/WEB-INF/jsp/store/lib/" mapping="/jsp/store/lib/**"/>
+	<mvc:resources location="/WEB-INF/jsp/store/static/" mapping="/jsp/store/static/**"/>                                                                                       
+	<mvc:resources location="/WEB-INF/jsp/store/temp/" mapping="/jsp/store/temp/**"/>    
+	<mvc:resources location="/WEB-INF/jsp/store/css/" mapping="/jsp/store/css/**"/>
+	<mvc:resources location="/WEB-INF/jsp/store/js/" mapping="/jsp/store/js/**"/>
+	<mvc:resources location="/WEB-INF/jsp/store/images/" mapping="/jsp/store/images/**"/>     
+	<mvc:resources location="/WEB-INF/jsp/store/fonts/" mapping="/jsp/store/fonts/**"/>                                                                                   
 	
 	<!-- 定义文件上传解析器 -->
 	<bean id="multipartResolver"
@@ -45,6 +54,27 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/><!--这个地方时你要拦截得路径 我这个意思是拦截所有得URL-->
             <bean class="com.zuche.intercepter.TokenIntercepter"/>
+        </mvc:interceptor>
+        
+        <!-- 用户登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/user/**"/>
+            <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/comment/**"/>
+            <!-- <mvc:exclude-mapping path="/admin/**"/> -->
+            <bean class="com.zuche.intercepter.UserLoginInterceptor"/>
+        </mvc:interceptor>
+        
+        <!-- 门店登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/store/**"/>
+            <bean class="com.zuche.intercepter.StoreUserLoginInterceptor"/>
+        </mvc:interceptor>
+        
+        <!-- 管理员登录拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/system/**"/>
+            <bean class="com.zuche.intercepter.AdminUserLoginInterceptor"/>
         </mvc:interceptor>
 	</mvc:interceptors>
 </beans>

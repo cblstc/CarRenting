@@ -1,5 +1,9 @@
 package com.zuche.entity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class User {
     private Integer id;
 
@@ -10,6 +14,11 @@ public class User {
     private String password;
 
     private String email;
+
+    private Integer role;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss") 
+    private Date registtime;
 
     private Integer status;
 
@@ -53,6 +62,22 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Date getRegisttime() {
+        return registtime;
+    }
+
+    public void setRegisttime(Date registtime) {
+        this.registtime = registtime;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -60,4 +85,13 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", phone=" + phone + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", role="
+				+ role + ", registtime=" + registtime + ", status=" + status
+				+ "]";
+	}
+    
 }

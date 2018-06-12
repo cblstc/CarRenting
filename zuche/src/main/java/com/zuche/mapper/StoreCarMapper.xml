@@ -7,7 +7,7 @@
     <result column="brand" property="brand" jdbcType="VARCHAR" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="configuration" property="configuration" jdbcType="VARCHAR" />
-    <result column="year" property="year" jdbcType="TIMESTAMP" />
+    <result column="carPhoto" property="carphoto" jdbcType="VARCHAR" />
     <result column="seats" property="seats" jdbcType="INTEGER" />
     <result column="doors" property="doors" jdbcType="INTEGER" />
     <result column="displacement" property="displacement" jdbcType="VARCHAR" />
@@ -18,9 +18,14 @@
     <result column="gearbox" property="gearbox" jdbcType="INTEGER" />
     <result column="skylight" property="skylight" jdbcType="INTEGER" />
     <result column="aircell" property="aircell" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zuche.entity.StoreCar" extends="BaseResultMap" >
-    <result column="carPhoto" property="carphoto" jdbcType="LONGVARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="insurance" property="insurance" jdbcType="REAL" />
+    <result column="nodeductibles" property="nodeductibles" jdbcType="REAL" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="totalStar" property="totalstar" jdbcType="INTEGER" />
+    <result column="totalComment" property="totalcomment" jdbcType="INTEGER" />
+    <result column="avgStar" property="avgstar" jdbcType="REAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -81,28 +86,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, store_id, brand, model, configuration, year, seats, doors, displacement, navigator, 
-    pdc, drivenMode, fuelTankage, gearbox, skylight, aircell
+    id, store_id, brand, model, configuration, carPhoto, seats, doors, displacement, 
+    navigator, pdc, drivenMode, fuelTankage, gearbox, skylight, aircell, price, insurance, 
+    nodeductibles, count, status, totalStar, totalComment, avgStar
   </sql>
-  <sql id="Blob_Column_List" >
-    carPhoto
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zuche.entity.StoreCarExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from store_car
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zuche.entity.StoreCarExample" >
     select
     <if test="distinct" >
@@ -117,11 +104,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from store_car
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -137,17 +122,23 @@
   </delete>
   <insert id="insert" parameterType="com.zuche.entity.StoreCar" >
     insert into store_car (id, store_id, brand, 
-      model, configuration, year, 
+      model, configuration, carPhoto, 
       seats, doors, displacement, 
       navigator, pdc, drivenMode, 
       fuelTankage, gearbox, skylight, 
-      aircell, carPhoto)
+      aircell, price, insurance, 
+      nodeductibles, count, status, 
+      totalStar, totalComment, avgStar
+      )
     values (#{id,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, 
-      #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, #{year,jdbcType=TIMESTAMP}, 
+      #{model,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR}, #{carphoto,jdbcType=VARCHAR}, 
       #{seats,jdbcType=INTEGER}, #{doors,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, 
       #{navigator,jdbcType=INTEGER}, #{pdc,jdbcType=INTEGER}, #{drivenmode,jdbcType=INTEGER}, 
       #{fueltankage,jdbcType=INTEGER}, #{gearbox,jdbcType=INTEGER}, #{skylight,jdbcType=INTEGER}, 
-      #{aircell,jdbcType=INTEGER}, #{carphoto,jdbcType=LONGVARCHAR})
+      #{aircell,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{insurance,jdbcType=REAL}, 
+      #{nodeductibles,jdbcType=REAL}, #{count,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{totalstar,jdbcType=INTEGER}, #{totalcomment,jdbcType=INTEGER}, #{avgstar,jdbcType=REAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zuche.entity.StoreCar" >
     insert into store_car
@@ -167,8 +158,8 @@
       <if test="configuration != null" >
         configuration,
       </if>
-      <if test="year != null" >
-        year,
+      <if test="carphoto != null" >
+        carPhoto,
       </if>
       <if test="seats != null" >
         seats,
@@ -200,8 +191,29 @@
       <if test="aircell != null" >
         aircell,
       </if>
-      <if test="carphoto != null" >
-        carPhoto,
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="insurance != null" >
+        insurance,
+      </if>
+      <if test="nodeductibles != null" >
+        nodeductibles,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="totalstar != null" >
+        totalStar,
+      </if>
+      <if test="totalcomment != null" >
+        totalComment,
+      </if>
+      <if test="avgstar != null" >
+        avgStar,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -220,8 +232,8 @@
       <if test="configuration != null" >
         #{configuration,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
-        #{year,jdbcType=TIMESTAMP},
+      <if test="carphoto != null" >
+        #{carphoto,jdbcType=VARCHAR},
       </if>
       <if test="seats != null" >
         #{seats,jdbcType=INTEGER},
@@ -253,8 +265,29 @@
       <if test="aircell != null" >
         #{aircell,jdbcType=INTEGER},
       </if>
-      <if test="carphoto != null" >
-        #{carphoto,jdbcType=LONGVARCHAR},
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="insurance != null" >
+        #{insurance,jdbcType=REAL},
+      </if>
+      <if test="nodeductibles != null" >
+        #{nodeductibles,jdbcType=REAL},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="totalstar != null" >
+        #{totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="totalcomment != null" >
+        #{totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="avgstar != null" >
+        #{avgstar,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -282,8 +315,8 @@
       <if test="record.configuration != null" >
         configuration = #{record.configuration,jdbcType=VARCHAR},
       </if>
-      <if test="record.year != null" >
-        year = #{record.year,jdbcType=TIMESTAMP},
+      <if test="record.carphoto != null" >
+        carPhoto = #{record.carphoto,jdbcType=VARCHAR},
       </if>
       <if test="record.seats != null" >
         seats = #{record.seats,jdbcType=INTEGER},
@@ -315,33 +348,31 @@
       <if test="record.aircell != null" >
         aircell = #{record.aircell,jdbcType=INTEGER},
       </if>
-      <if test="record.carphoto != null" >
-        carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR},
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.insurance != null" >
+        insurance = #{record.insurance,jdbcType=REAL},
+      </if>
+      <if test="record.nodeductibles != null" >
+        nodeductibles = #{record.nodeductibles,jdbcType=REAL},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalstar != null" >
+        totalStar = #{record.totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalcomment != null" >
+        totalComment = #{record.totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="record.avgstar != null" >
+        avgStar = #{record.avgstar,jdbcType=REAL},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update store_car
-    set id = #{record.id,jdbcType=INTEGER},
-      store_id = #{record.storeId,jdbcType=INTEGER},
-      brand = #{record.brand,jdbcType=VARCHAR},
-      model = #{record.model,jdbcType=VARCHAR},
-      configuration = #{record.configuration,jdbcType=VARCHAR},
-      year = #{record.year,jdbcType=TIMESTAMP},
-      seats = #{record.seats,jdbcType=INTEGER},
-      doors = #{record.doors,jdbcType=INTEGER},
-      displacement = #{record.displacement,jdbcType=VARCHAR},
-      navigator = #{record.navigator,jdbcType=INTEGER},
-      pdc = #{record.pdc,jdbcType=INTEGER},
-      drivenMode = #{record.drivenmode,jdbcType=INTEGER},
-      fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
-      gearbox = #{record.gearbox,jdbcType=INTEGER},
-      skylight = #{record.skylight,jdbcType=INTEGER},
-      aircell = #{record.aircell,jdbcType=INTEGER},
-      carPhoto = #{record.carphoto,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -353,7 +384,7 @@
       brand = #{record.brand,jdbcType=VARCHAR},
       model = #{record.model,jdbcType=VARCHAR},
       configuration = #{record.configuration,jdbcType=VARCHAR},
-      year = #{record.year,jdbcType=TIMESTAMP},
+      carPhoto = #{record.carphoto,jdbcType=VARCHAR},
       seats = #{record.seats,jdbcType=INTEGER},
       doors = #{record.doors,jdbcType=INTEGER},
       displacement = #{record.displacement,jdbcType=VARCHAR},
@@ -363,7 +394,15 @@
       fuelTankage = #{record.fueltankage,jdbcType=INTEGER},
       gearbox = #{record.gearbox,jdbcType=INTEGER},
       skylight = #{record.skylight,jdbcType=INTEGER},
-      aircell = #{record.aircell,jdbcType=INTEGER}
+      aircell = #{record.aircell,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=REAL},
+      insurance = #{record.insurance,jdbcType=REAL},
+      nodeductibles = #{record.nodeductibles,jdbcType=REAL},
+      count = #{record.count,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      totalStar = #{record.totalstar,jdbcType=INTEGER},
+      totalComment = #{record.totalcomment,jdbcType=INTEGER},
+      avgStar = #{record.avgstar,jdbcType=REAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -383,8 +422,8 @@
       <if test="configuration != null" >
         configuration = #{configuration,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
-        year = #{year,jdbcType=TIMESTAMP},
+      <if test="carphoto != null" >
+        carPhoto = #{carphoto,jdbcType=VARCHAR},
       </if>
       <if test="seats != null" >
         seats = #{seats,jdbcType=INTEGER},
@@ -416,19 +455,40 @@
       <if test="aircell != null" >
         aircell = #{aircell,jdbcType=INTEGER},
       </if>
-      <if test="carphoto != null" >
-        carPhoto = #{carphoto,jdbcType=LONGVARCHAR},
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="insurance != null" >
+        insurance = #{insurance,jdbcType=REAL},
+      </if>
+      <if test="nodeductibles != null" >
+        nodeductibles = #{nodeductibles,jdbcType=REAL},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="totalstar != null" >
+        totalStar = #{totalstar,jdbcType=INTEGER},
+      </if>
+      <if test="totalcomment != null" >
+        totalComment = #{totalcomment,jdbcType=INTEGER},
+      </if>
+      <if test="avgstar != null" >
+        avgStar = #{avgstar,jdbcType=REAL},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zuche.entity.StoreCar" >
+  <update id="updateByPrimaryKey" parameterType="com.zuche.entity.StoreCar" >
     update store_car
     set store_id = #{storeId,jdbcType=INTEGER},
       brand = #{brand,jdbcType=VARCHAR},
       model = #{model,jdbcType=VARCHAR},
       configuration = #{configuration,jdbcType=VARCHAR},
-      year = #{year,jdbcType=TIMESTAMP},
+      carPhoto = #{carphoto,jdbcType=VARCHAR},
       seats = #{seats,jdbcType=INTEGER},
       doors = #{doors,jdbcType=INTEGER},
       displacement = #{displacement,jdbcType=VARCHAR},
@@ -439,26 +499,14 @@
       gearbox = #{gearbox,jdbcType=INTEGER},
       skylight = #{skylight,jdbcType=INTEGER},
       aircell = #{aircell,jdbcType=INTEGER},
-      carPhoto = #{carphoto,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zuche.entity.StoreCar" >
-    update store_car
-    set store_id = #{storeId,jdbcType=INTEGER},
-      brand = #{brand,jdbcType=VARCHAR},
-      model = #{model,jdbcType=VARCHAR},
-      configuration = #{configuration,jdbcType=VARCHAR},
-      year = #{year,jdbcType=TIMESTAMP},
-      seats = #{seats,jdbcType=INTEGER},
-      doors = #{doors,jdbcType=INTEGER},
-      displacement = #{displacement,jdbcType=VARCHAR},
-      navigator = #{navigator,jdbcType=INTEGER},
-      pdc = #{pdc,jdbcType=INTEGER},
-      drivenMode = #{drivenmode,jdbcType=INTEGER},
-      fuelTankage = #{fueltankage,jdbcType=INTEGER},
-      gearbox = #{gearbox,jdbcType=INTEGER},
-      skylight = #{skylight,jdbcType=INTEGER},
-      aircell = #{aircell,jdbcType=INTEGER}
+      price = #{price,jdbcType=REAL},
+      insurance = #{insurance,jdbcType=REAL},
+      nodeductibles = #{nodeductibles,jdbcType=REAL},
+      count = #{count,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      totalStar = #{totalstar,jdbcType=INTEGER},
+      totalComment = #{totalcomment,jdbcType=INTEGER},
+      avgStar = #{avgstar,jdbcType=REAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

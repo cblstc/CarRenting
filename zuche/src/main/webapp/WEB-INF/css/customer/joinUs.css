@@ -1,0 +1,193 @@
+/*-- welcome --*/
+.welcome{
+    padding:3em 0 3em;
+}
+.welcome h2,.services h3,.services1 h3,.advantages h3,.history-left h3,.history-right h3,.gallery h3,.contact h3,.newsletter-info-agile-w3ls h3{
+    color: #222;
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-size: 2.5em;
+    padding-left: 0.7em;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.welcome h2:before,.services h3:before,.contact h3:before,.gallery h3:before,.services1 h3:before,.history-left h3:before,.history-right h3:before{
+    content: '';
+    height: 100%;
+    border-left: 6px solid #FF4049;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+p.ever{
+    margin:.5em 0 0;
+    color:#999;
+    font-size:14px;
+    line-height:1.8em;
+    padding-left:1em;
+}
+.welcome-grd{
+    border-radius: 170px;
+    box-shadow: 0px 0px 5px #D8D8D8;
+    padding: 1em 1em 0 1em;
+    position: relative;
+    min-height: 250px;
+    transition:.5s all;
+    -webkit-transition:.5s all;
+    -moz-transition:.5s all;
+    -o-transition:.5s all;
+    -ms-transition:.5s all;
+}
+.welcome-grid:hover div.welcome-grd{
+    transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+    -o-transform: rotateY(360deg);
+    -ms-transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    transition: 0.5s all ease;
+    -webkit-transition: 0.5s all ease;
+    -moz-transition: 0.5s all ease;
+    -o-transition: 0.5s all ease;
+    -ms-transition: 0.5s all ease;
+}
+.welcome-grd:hover{
+    box-shadow: 0px 0px 5px #FF4049;
+}
+.welcome-grd:hover div.icons{
+    background:#FF4049;
+}
+.welcome-grd h4{
+    text-transform:capitalize;
+    font-size:1.3em;
+    color:#FF4049;
+    margin:2.5em 0 1em;
+    text-align:center;
+}
+.welcome-grd p{
+    margin:0;
+    color:#999;
+    font-size:14px;
+    text-align:center;
+    line-height:1.8em;
+}
+.icons{
+    width:70px;
+    height:70px;
+    background:#146eb4;
+    margin:0 auto;
+    border-radius:60px;
+    -webkit-border-radius:60px;
+    -moz-border-radius:60px;
+    -o-border-radius:60px;
+    -ms-border-radius:60px;
+    position:absolute;
+    top: -10%;
+    left: 37%;
+}
+.icons span{
+    color: #fff;
+    font-size: 1.3em;
+    left: 1.1em;
+    top: 1em;
+}
+.welcome-grids{
+    margin:6em 0 0;
+}
+/*-- //welcome --*/
+
+/*-- contact --*/
+.contact-us1-bottom{
+    margin:3em 0 0;
+}
+.contact-us1-bottom form{
+    float:left;
+    width:50%;
+}
+.contact-us1-bottom input[type="text"],.contact-us1-bottom input[type="email"],.contact-us1-bottom textarea {
+    outline: none;
+    padding: 10px 10px;
+    background: none;
+    color: #8C969D;
+    font-size: 14px;
+    border: 1px solid #BCBCBC;
+    width: 48.3%;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.contact-us1-bottom input[type="email"]{
+    /*margin:0 0 0 1em;*/
+}
+.contact-us1-bottom textarea {
+    min-height:150px;
+    resize:none;
+    width:98%;
+}
+.contact-us1-bottom input[type="submit"] {
+    margin-bottom: 40px;
+    background: #FF4049;
+    color: #fff;
+    outline: none;
+    padding: 10px 0px;
+    width: 30%;
+    font-size: 16px;
+    border:none;
+    transition:.5s all;
+    -webkit-transition:.5s all;
+    -moz-transition:.5s all;
+    -o-transition:.5s all;
+    -ms-transition:.5s all;
+}
+.contact-us1-bottom input[type="submit"]:hover {
+    background:#FF5150;
+}
+.home-radio-clock{
+    float:left;
+    width:20%;
+    margin-left: 5em;
+}
+.home-radio-clock-right{
+    float:left;
+    width:20%;
+}
+.home-radio-clock ul{
+    padding:0;
+    margin:0;
+}
+.home-radio-clock ul li{
+    padding-left: 4em;
+    color: #999;
+    font-size: 14px;
+    list-style-type:none;
+    margin: 0 0 1em;
+    letter-spacing: 1px;
+}
+.home-radio-clock-right ul{
+    padding:0;
+    margin:0;
+}
+.home-radio-clock-right ul li{
+    color: #999;
+    font-size: 14px;
+    list-style-type:none;
+    letter-spacing: 1px;
+}
+.home-radio-clock ul li i{
+    font-size:1.5em;
+    left: -15px;
+    color:#222;
+}
+.home-radio-clock-right ul li span{
+    display:block;
+}
+.home-radio-clock-right ul li.lst{
+    margin:1em 0 2em;
+}
+.map{
+    margin:3em 0 0;
+}
+.map iframe{
+    width:100%;
+    min-height:400px;
+}
+/*-- //contact --*/

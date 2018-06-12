@@ -3,7 +3,6 @@ package com.zuche.service.user;
 import java.util.List;
 
 import com.zuche.entity.User;
-import com.zuche.entity.UserCar;
 import com.zuche.entity.UserInfo;
 
 /**
@@ -46,13 +45,13 @@ public interface UserService {
 	 * @param user
 	 * @param method
 	 */
-	void saveCar(UserCar userCar, User user, String method);
+	/*void saveCar(UserCar userCar, User user, String method);*/
 
 	/**
 	 * 查询所有车辆
 	 * @return
 	 */
-	List<UserCar> selectCars();
+	/*List<UserCar> selectCars();*/
 
 	/**
 	 * 根据电话查询用户
@@ -81,5 +80,16 @@ public interface UserService {
 	 * @param user
 	 */
 	void updateUser(User user);
+
+	/**
+	 * 根据条件查询用户
+	 * @param username 用户名
+	 * @param phone 电话号码
+	 * @param email 电子邮箱
+	 * @param pageNum 页数
+	 * @return
+	 */
+	List<User> findUserByCondition(String username, String phone, String email, Integer pageNum);
+
 
 }

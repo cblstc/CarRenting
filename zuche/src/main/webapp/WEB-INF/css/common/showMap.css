@@ -1,0 +1,45 @@
+.searchInput { /* 地图搜索框 */
+    float: left;
+    margin: 10px 5px 10px 25px;
+    width: 300px;
+}
+
+.confirmBtn { /* 提交定位按钮 */
+    float: left;
+    margin: 10px 0 10px 0;
+}
+
+#searchResultPanel { /* 地址搜索结果面板 */
+    clear: both;
+    border:1px solid #C0C0C0;
+    width:300px;
+    height:auto;
+    display:none;
+}
+
+.searchTip { /* 搜索提示文字 */
+    clear: both;
+    margin: 0 0 10px 25px;
+    color: red;
+}
+
+.storeNameBox {  /* 门店名称放置处 */
+    clear: both;
+    margin: 0 0 10px 25px;
+}
+
+.storeNameBox .storeName {
+    color: #428bca;
+    margin-right: 30px;
+}
+
+#allmap {  /* 地图 */
+    margin: 0 auto;
+    border: 1px solid black;
+    width: 600px;
+    height: 400px;
+}
+
+.tangram-suggestion-main { /* 设置搜索结果提示的z-index大于layer的z-index */
+    z-index: 9999999999;
+}

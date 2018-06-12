@@ -7,6 +7,8 @@ public class AdminUser {
 
     private String password;
 
+    private Integer role;
+
     private Integer status;
 
     public Integer getId() {
@@ -31,6 +33,14 @@ public class AdminUser {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public Integer getStatus() {

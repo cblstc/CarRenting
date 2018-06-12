@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>   
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -15,10 +17,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/reset.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/common.css">
     <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/common/userTopNav.css">
-    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath }/css/improveAccount.css">
 
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/userTopNav.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/layer/layer.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=HHNwksT3c9XuGE9iwPrL0LLgSF0KzQsg"></script>
 </head>
 <body>
@@ -27,17 +29,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="my-cargo-logo-content left-float">
                 <img class="my-cargo-logo" src="${pageContext.request.contextPath }/images/my-cargo-logo.png"><br/>
                 <div class="weacher-content">
-                    <span class="address-text"></span>
-                    <span class="weather-text"></span>
-                    <span class="temp-text"></span>
+                    <span class="address-text">广州</span>
+                    <span class="weather-text">晴</span>
+                    <span class="temp-text">20°</span>
                 </div>
             </div>
             <div class="user-img-box left-float">
-                <img class="user-img" src="${pageContext.request.contextPath }/images/choice-3.png">
+                <img class="user-img" src="${pageContext.request.contextPath }/images/user/head-if-non.png">
             </div>
             <div class="user-desc left-float">
-                <div class="user-name">134328**05</div>
-                <div class="owner-text">车主</div>
+            	<c:choose>
+            		<c:when test="${user.username != null }">
+            			<div class="user-name">${user.username }</div>	
+            		</c:when>
+            		<c:otherwise>
+            			<div class="user-name">${user.phone }</div>	
+            		</c:otherwise>
+            	</c:choose>
                 <div class="renter-text">租友</div>
             </div>
             <div class="date-content left-float clearfloat">
@@ -49,27 +57,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="regist-time-content left-float">
                 <img class="regist-time-png" src="${pageContext.request.contextPath }/images/regist-time.png"><!--
-                    --><div class="regist-time">2015/12/01 14:00:00加入</div>
+                    --><div class="regist-time"><fmt:formatDate value="${user.registtime }" pattern="yyyy-MM-dd HH:mm:ss"/>加入</div>
             </div>
         </div>
     </div>
     
     <script type="text/javascript">
     $(function() {
-    	weatherReport();
+    	setTimeout(weatherReport(), 1000);
     });
     
     function weatherReport() {
     	
-    	if (window.navigator.geolocation) {
+    	var geolocation = new BMap.Geolocation();
+    	if (geolocation) {
+	    	geolocation.getCurrentPosition(function(r){
+	    		var lat = r.latitude;
+	    		var lng = r.longitude;
+	    		weatherReportByLocation(lat + "," + lng);
+	    	});
+    	} else {
+    		layer.msg("您的浏览器暂时无法获取地理位置,将为您显示广州天气");
+    		weatherReportByLocation(lat + "," + lng);
+    	}
+    	/* if (window.navigator.geolocation) {
     		// 如果浏览器支持html5定位，就定位
     		window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
     	} else {
-    		weatherReportByLocation("39.915,116.404");  // 北京天气
+    		weatherReportByLocation("23.13,113.27");  // 广州天气
     	}
     	// 定位成功
     	function handleSuccess(position){
             // 获取到当前位置经纬度 
+            alert(lng + "-" + lat);
             var lng = position.coords.longitude;
             var lat = position.coords.latitude;
             var location = lat + "," + lng;
@@ -77,8 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
     	// 定位失败
         function handleError(error){
-        	weatherReportByLocation("39.915,116.404");  // 北京天气
-        }
+    		layer.msg("定位失败,为您显示广州天气");
+        	weatherReportByLocation("23.13,113.27");  // 广州天气
+        } */
     }
     
     // 根据经纬度查询天气
