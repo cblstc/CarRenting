@@ -112,7 +112,6 @@ public class CommentController {
 	/**
 	 * 查看评论
 	 * @param ordersComment
-	 * @param model
 	 * @throws Exception
 	 */
 	@RequestMapping("/showComment")
